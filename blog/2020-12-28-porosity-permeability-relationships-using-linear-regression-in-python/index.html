@@ -1,46 +1,288 @@
-<!doctype html><html lang=en-uk><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content><meta name=author content="map[]"><title>Porosity-Permeability Relationships Using Linear Regression in Python</title><link rel="shortcut icon" href=https://andymcdgeo.github.io/images/gt_favicon.png><link href=https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css rel=stylesheet><script defer src=https://use.fontawesome.com/releases/v5.0.11/js/all.js integrity=sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C crossorigin=anonymous></script><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700"><link rel=stylesheet href=/assets/css/main.min.610344935510f725f6a14107a9325cf48a31bd92742472cb4e419c43c0ef84d2.css media=all></head><body class=home><header id=header><div id=head style=background-image:url(https://andymcdgeo.github.io/images/header_img.jpg),linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5))><h1 id=logo class=text-center><img class=img-circle src=https://andymcdgeo.github.io/images/andy.png alt>
-<span class=title>Andy McDonald</span>
-<span class=tagline>Petrophysicist | Geoscientist | Data Scientsist</span><div class=social-head><a href=https://www.linkedin.com/andymcdonaldgeo target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
-<a href=https://www.researchgate.net/profile/Andrew-Mcdonald-15 target=_blank><i class="fab fa-researchgate fa-1x"></i></a>
-<a href=https://twitter.com/geoandymcd target=_blank><i class="fab fa-twitter-square fa-1x"></i></a>
-<a href=https://github.com/andymcdgeo target=_blank><i class="fab fa-github-square fa-1x"></i></a>
-<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a>
-<a href=mailto:some.email@somewhere.com target=_blank><i class="fas fa-envelope-square fa-1x"></i></a></div></h1></div><div class=landing></div><nav class="navbar navbar-default navbar-sticky"><div class=container-fluid><div class=navbar-header><button type=button class=navbar-toggle data-toggle=collapse data-target=#bs-example-navbar-collapse-1 aria-expanded=true>
-<span class=sr-only>Toggle navigation</span>
-<span class=icon-bar></span><span class=icon-bar></span><span class=icon-bar></span></button></div><div class="navbar-collapse collapse" id=bs-example-navbar-collapse-1><ul class="nav navbar-nav"><li><a href=/>Home</a></li><li><a href=/blog/>Blog</a></li><li><a href=/projects/>Projects</a></li><li><a href=/publications/>Publications</a></li><li><a href=/about/about/>About</a></li></ul></div></div></nav></header><main id=main><div class=container><div class="row topspace"><div class="col-sm-8 col-sm-offset-2"><article class=post><header class=entry-header><figure><img src=/images/featured/2020-12-28-%20Porosity%20Permeability%20Linear%20Regression%20Crossplots.jpg alt="Porosity-Permeability Relationships Using Linear Regression in Python" class=img-fluid></figure><h2 class=title>Porosity-Permeability Relationships Using Linear Regression in Python</h2><div class=entry-meta><span class=posted-on><i class="far fa-calendar-alt"></i>December 28, 2020<i class="far fa-clock"></i> 9 min read
-<span class=post-categories><i class="far fa-folder"></i><ul><li><a href=https://andymcdgeo.github.io/categories/petrophysics/>petrophysics</a></li><li><a href=https://andymcdgeo.github.io/categories/python/>python</a></li></ul></span></span></div></header><div class=row><div class=col-sm-12><div id=share><style>#share-buttons{display:inline-block;vertical-align:middle}#share-buttons:after{content:"";display:block;clear:both}#share-buttons>div{position:relative;text-align:left;height:36px;width:32px;float:left;text-align:center}#share-buttons>div>svg{height:16px;fill:#d5d5d5;margin-top:10px}#share-buttons>div:hover{cursor:pointer}#share-buttons>div.facebook:hover>svg{fill:#3b5998}#share-buttons>div.twitter:hover>svg{fill:#55acee}#share-buttons>div.linkedin:hover>svg{fill:#0077b5}#share-buttons>div.pinterest:hover>svg{fill:#cb2027}#share-buttons>div.gplus:hover>svg{fill:#dd4b39}#share-buttons>div.mail:hover>svg{fill:#7d7d7d}#share-buttons>div.instagram:hover>svg{fill:#c73b92}#share-buttons>div.facebook>svg{height:18px;margin-top:9px}#share-buttons>div.twitter>svg{height:20px;margin-top:8px}#share-buttons>div.linkedin>svg{height:19px;margin-top:7px}#share-buttons>div.pinterest>svg{height:20px;margin-top:9px}#share-buttons>div.gplus>svg{height:17px;margin-top:9px;position:relative;left:1px}#share-buttons>div.mail>svg{height:14px;margin-top:11px}</style><span style=color:silver>Share on:</span><div id=share-buttons><div class=facebook title="Share this on Facebook" onclick="window.open('http://www.facebook.com/share.php?u=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759H734V905H479V609h255V391q0-186 104-288.5T1115 0q147 0 228 12z"/></svg></div><div class=twitter title="Share this on Twitter" onclick="window.open('http://twitter.com/home?status=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5T1369.5 1125 1185 1335.5t-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5T285 1033q33 5 61 5 43 0 85-11-112-23-185.5-111.5T172 710v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5T884 653q-8-38-8-74 0-134 94.5-228.5T1199 256q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"/></svg></div><div class=linkedin title="Share this on Linkedin" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/&title=&summary=&source=')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M477 625v991H147V625h330zm21-306q1 73-50.5 122T312 490h-2q-82 0-132-49t-50-122q0-74 51.5-122.5T314 148t133 48.5T498 319zm1166 729v568h-329v-530q0-105-40.5-164.5T1168 862q-63 0-105.5 34.5T999 982q-11 30-11 81v553H659q2-399 2-647t-1-296l-1-48h329v144h-2q20-32 41-56t56.5-52 87-43.5T1285 602q171 0 275 113.5t104 332.5z"/></svg></div><div class=gplus title="Share this on Google Plus" onclick="window.open('https://plus.google.com/share?url=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/')"><svg viewBox="0 0 2304 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1437 913q0 208-87 370.5t-248 254-369 91.5q-149 0-285-58t-234-156-156-234T0 896t58-285 156-234 234-156 285-58q286 0 491 192l-199 191Q908 433 733 433q-123 0-227.5 62T340 663.5 279 896t61 232.5T505.5 1297t227.5 62q83 0 152.5-23t114.5-57.5 78.5-78.5 49-83 21.5-74H733V791h692q12 63 12 122zm867-122v210h-209v209h-210v-209h-209V791h209V582h210v209h209z"/></svg></div><div class=mail title="Share this through Email" onclick="window.open('mailto:?&body=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1792 710v794q0 66-47 113t-113 47H160q-66 0-113-47T0 1504V710q44 49 101 87 362 246 497 345 57 42 92.5 65.5t94.5 48 110 24.5h2q51 0 110-24.5t94.5-48 92.5-65.5q170-123 498-345 57-39 1e2-87zm0-294q0 79-49 151t-122 123q-376 261-468 325-10 7-42.5 30.5t-54 38-52 32.5-57.5 27-50 9h-2q-23 0-50-9t-57.5-27-52-32.5-54-38T639 1015q-91-64-262-182.5T172 690q-62-42-117-115.5T0 438q0-78 41.5-130T160 256h1472q65 0 112.5 47t47.5 113z"/></svg></div></div></div></div></div><div class=row><div class=col-sm-12><div id=toc><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#importing-libraries-and-core-data>Importing Libraries and Core Data</a></li><li><a href=#plotting-porosity-vs-permeability>Plotting Porosity vs Permeability</a></li><li><a href=#deriving-relationship-between-porosity-and-permeability>Deriving Relationship Between Porosity and Permeability</a><ul><li><a href=#numpy-polyfit>Numpy polyfit()</a></li><li><a href=#statsmodels-linear-regression>Statsmodels Linear Regression</a></li></ul></li><li><a href=#predicting-a-continuous-permeability-from-log-porosity>Predicting a Continuous Permeability from Log Porosity</a></li><li><a href=#visualising-the-final-predicted-curve>Visualising the Final Predicted Curve</a></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div></div></div><div class=entry-content><p>Core data analysis is a key component in the evaluation of a field or discovery, as it provides direct samples of the geological formations in the subsurface over the interval of interest. It is often considered the ‘ground truth’ by many and is used as a reference for calibrating well log measurements and petrophysical analysis. Core data is expensive to obtain and not acquired on every well at every depth. Instead, it may be acquired at discrete intervals on a small number of wells within a field and then used as a reference for other wells.</p><p>Once the core data has been extracted from the well it is taken to a lab to be analysed. Along the length of the retrieved core sample a number of measurements are made. Two of which are porosity and permeability, both key components of a petrophysical analysis.</p><ul><li><p><strong>Porosity</strong> is defined as the volume of space between the solid grains relative to the total rock volume. It provides an indication of the potential storage space for hydrocarbons.</p></li><li><p><strong>Permeability</strong> provides an indication of how easy fluids can flow through the rock.</p></li></ul><p>Porosity is a key control on permeability, with larger pores resulting in wider pathways for the reservoir fluids to flow through.</p><p>Well logging tools do not provide a direct measurement for permeability and therefore it has to be inferred through relationships with core data from the same field or well, or from empirically derived equations.</p><p>One common method is to plot porosity (on a linear scale) against permeability (on a logarithmic scale) and observe the trend. From this, a regression can be applied to the porosity permeability (poro-perm) crossplot to derive an equation, which can subsequently be used to predict a continuous permeability from a computed porosity in any well.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*YzIuv0Ct5Vdyq_QXN0kzIA.png alt="Porosity vs Permeability Crossplot with Python Statsmodels prediction (red line)."></p><p>In this article, I will cover how carry out a porosity-permeability regression using two methods within Python: <a href=https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html>numpy’s polyfit</a> and <a href="https://www.google.com/search?client=safari&rls=en&q=ols+statsmodel&ie=UTF-8&oe=UTF-8">statsmodels Ordinary Least Squares regression</a>.</p><p>The notebook for this article can be found on my Python and Petrophysics Github series which can accessed at the link below:</p><p><a href=https://github.com/andymcdgeo/Petrophysics-Python-Series>https://github.com/andymcdgeo/Petrophysics-Python-Series</a></p><p>Additionally, a list of previous articles, notebooks and blog posts can be found on my website here:</p><p><a href=http://andymcdonald.scot/python-and-petrophysics>http://andymcdonald.scot/python-and-petrophysics</a></p><h2 id=importing-libraries-and-core-data>Importing Libraries and Core Data</h2><p>To begin, we will import a number of common libraries before we start working with the actual data. For this article we will be using <a href=https://pandas.pydata.org>pandas</a>, <a href=https://matplotlib.org>matplotlib</a> and <a href=https://numpy.org/doc/stable/index.html>numpy</a>. These three libraries allow us to load, work with and visualise our data.</p><pre><code>import pandas as pd
+<!DOCTYPE html>
+<html lang="en-uk">
+  <head>
+  	<meta charset="utf-8">
+  	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+  	<meta name="description" content="">
+  	<meta name="author"      content="map[]">
+    
+    	<title>Porosity-Permeability Relationships Using Linear Regression in Python</title>
+	<link rel="shortcut icon" href="http://andymcdgeo.github.io/images/gt_favicon.png">
+
+	
+	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+	
+	
+	<script defer src="https://use.fontawesome.com/releases/v5.0.11/js/all.js" integrity="sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C" crossorigin="anonymous"></script>
+	
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
+	
+  
+
+  <link rel="stylesheet" href="/assets/css/main.min.60d08235164fd1d18fb214bf83a6edc999d293a08e6bfefc16b979e96d2cb87a.css" media="all">
+
+   
+  
+
+  </head>
+  
+  <body class="home">
+
+    
+      <header id="header">
+  <div id="head" style="background-image:url('http://andymcdgeo.github.io/images/header_img.jpg'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));">
+    <h1 id="logo" class="text-center">
+      <img class='img-circle' src="http://andymcdgeo.github.io/images/andy.png" alt="">
+      <span class="title">Andy McDonald</span>
+      <span class="tagline">Petrophysicist | Geoscientist | Data Scientsist</span>
+
+      <div class="social-head">
+        
+          <a href="https://www.linkedin.com/andymcdonaldgeo" target="_blank"><i class="fab fa-linkedin fa-1x"></i></a>
+        
+          <a href="https://twitter.com/nickname" target="_blank"><i class="fab fa-twitter-square fa-1x"></i></a>
+        
+          <a href="https://github.com/andymcdgeo" target="_blank"><i class="fab fa-github-square fa-1x"></i></a>
+        
+          <a href="https://andymcdonaldgeo.medium.com" target="_blank"><i class="fab fa-medium fa-1x"></i></a>
+        
+        
+      </div>
+   </h1>
+</div>
+
+<div class="landing">
+  
+</div>
+
+<nav class="navbar navbar-default navbar-sticky">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="true">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav">
+            
+                
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/blog/">Blog</a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/projects/">Projects</a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/publications/">Publications</a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/about/about/">About</a>
+                </li>
+                
+            
+            </ul>
+
+        </div> 
+        
+    </div>
+</nav>
+
+</header>
+    
+ 
+    
+<main id="main">
+
+    <div class="container">
+
+        <div class="row topspace">
+            <div class="col-sm-8 col-sm-offset-2">
+
+                <article class="post">
+                    <header class="entry-header">
+                        <h1 class="title is-1">Porosity-Permeability Relationships Using Linear Regression in Python</h1>
+
+                      
+                    
+                    <figure>
+                        <img src="/images/featured/2020-12-28-%20Porosity%20Permeability%20Linear%20Regression%20Crossplots.jpg" alt="Porosity-Permeability Relationships Using Linear Regression in Python" />
+                    </figure>
+
+                    
+                        <div class="entry-meta">
+                            <span class="posted-on">
+                                <time class="entry-date published" datetime="December 28, 2020">December 28, 2020</time> |  
+                                9  minutes 
+                            </span>
+
+
+                        </div>
+                    </header>
+                    
+                    <div class="entry-content">
+                        <!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Core data analysis is a key component in the evaluation of a field or discovery, as it provides direct samples of the geological formations in the subsurface over the interval of interest. It is often considered the ‘ground truth’ by many and is used as a reference for calibrating well log measurements and petrophysical analysis. Core data is expensive to obtain and not acquired on every well at every depth. Instead, it may be acquired at discrete intervals on a small number of wells within a field and then used as a reference for other wells.</p>
+<p>Once the core data has been extracted from the well it is taken to a lab to be analysed. Along the length of the retrieved core sample a number of measurements are made. Two of which are porosity and permeability, both key components of a petrophysical analysis.</p>
+<ul>
+<li>
+<p><strong>Porosity</strong> is defined as the volume of space between the solid grains relative to the total rock volume. It provides an indication of the potential storage space for hydrocarbons.</p>
+</li>
+<li>
+<p><strong>Permeability</strong> provides an indication of how easy fluids can flow through the rock.</p>
+</li>
+</ul>
+<p>Porosity is a key control on permeability, with larger pores resulting in wider pathways for the reservoir fluids to flow through.</p>
+<p>Well logging tools do not provide a direct measurement for permeability and therefore it has to be inferred through relationships with core data from the same field or well, or from empirically derived equations.</p>
+<p>One common method is to plot porosity (on a linear scale) against permeability (on a logarithmic scale) and observe the trend. From this, a regression can be applied to the porosity permeability (poro-perm) crossplot to derive an equation, which can subsequently be used to predict a continuous permeability from a computed porosity in any well.</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*YzIuv0Ct5Vdyq_QXN0kzIA.png" alt="Porosity vs Permeability Crossplot with Python Statsmodels prediction (red line)."></p>
+<p>In this article, I will cover how carry out a porosity-permeability regression using two methods within Python: <a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html">numpy’s polyfit</a> and <a href="https://www.google.com/search?client=safari&amp;rls=en&amp;q=ols+statsmodel&amp;ie=UTF-8&amp;oe=UTF-8">statsmodels Ordinary Least Squares regression</a>.</p>
+<p>The notebook for this article can be found on my Python and Petrophysics Github series which can accessed at the link below:</p>
+<p><a href="https://github.com/andymcdgeo/Petrophysics-Python-Series">https://github.com/andymcdgeo/Petrophysics-Python-Series</a></p>
+<p>Additionally, a list of previous articles, notebooks and blog posts can be found on my website here:</p>
+<p><a href="http://andymcdonald.scot/python-and-petrophysics">http://andymcdonald.scot/python-and-petrophysics</a></p>
+<h2 id="importing-libraries-and-core-data">Importing Libraries and Core Data</h2>
+<p>To begin, we will import a number of common libraries before we start working with the actual data. For this article we will be using <a href="https://pandas.pydata.org">pandas</a>, <a href="https://matplotlib.org">matplotlib</a> and <a href="https://numpy.org/doc/stable/index.html">numpy</a>. These three libraries allow us to load, work with and visualise our data.</p>
+<pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-</code></pre><p>The dataset we are using comes from the publicly available <a href=https://www.equinor.com/en/what-we-do/norwegian-continental-shelf-platforms/volve.html>Equinor Volve Field dataset</a> released in 2018. The files used in this tutorial are from 15/9- 19A which contain full regular core analysis data and well log data. To load this data in we can use pd.read_csv and pass in the file name.</p><p>This dataset has already been depth aligned to well log data, so no adjustments to the sample depth are required.</p><p>When core slabs are analysed, a limited number of measurements are made at irregular intervals. In some cases, measurements may not be possible, for example in really tight (low permeability) sections. As a result, we can tell pandas to load any missing values / blank cells as Not a Number (NaN) by adding the argument na_values=' ' .</p><pre><code>core_data = pd.read_csv(&quot;Data/15_9-19A-CORE.csv&quot;, na_values=' ')
-</code></pre><p>Once we have the data loaded, we can view the details of what is in it by calling upon the .head() and .describe() methods.</p><p>The .head() method returns the first five rows of the dataframe and the header row.</p><pre><code>core_data.head()
-</code></pre><p><img src=https://cdn-images-1.medium.com/max/2000/1*GN9uf_BtFG9RhI0CikFxTA.png alt="Results from the head function of our pandas dataframe. This shows us the first 5 rows of data and column headers."></p><p>The .describe() method returns useful statistics about the numeric data contained within the dataframe such as the mean, standard deviation, maximum and minimum values.</p><pre><code>core_data.describe()
-</code></pre><p><img src=https://cdn-images-1.medium.com/max/2000/1*DjUfdM1deVJ2aGlITuJNkA.png alt="Results from the describe function of pandas on our core dataframe."></p><h2 id=plotting-porosity-vs-permeability>Plotting Porosity vs Permeability</h2><p>Using our core_data dataframe we can simply and quickly plot our data by adding .plot to the end of our dataframe and supplying some arguments. In this case we want a scatter plot (also known in petrophysics as a crossplot), with the x-axis as CPOR — Core Porosity and the y-axis as CKH — Core Permeability.</p><pre><code>core_data.plot(kind=&quot;scatter&quot;, x=&quot;CPOR&quot;, y=&quot;CKH&quot;)
-</code></pre><p><img src=https://cdn-images-1.medium.com/max/3600/1*-_qrQvehwVIpreVrD09shg.png alt="Simple linear-linear scatterplot of porosity vs permeability using matplotlib and pandas."></p><p>From this scatter plot we notice that there is a large concentration of points at low permeabilities with a few points at the higher end. We can tidy up our plot by converting the y axis to a logaritmic scale and adding a grid. This generates the the poro-perm crossplot that we are familiar with in petrophysics.</p><pre><code>core_data.plot(kind=&quot;scatter&quot;, x=&quot;CPOR&quot;, y=&quot;CKH&quot;)
+</code></pre>
+<p>The dataset we are using comes from the publicly available <a href="https://www.equinor.com/en/what-we-do/norwegian-continental-shelf-platforms/volve.html">Equinor Volve Field dataset</a> released in 2018. The files used in this tutorial are from 15/9- 19A which contain full regular core analysis data and well log data. To load this data in we can use pd.read_csv and pass in the file name.</p>
+<p>This dataset has already been depth aligned to well log data, so no adjustments to the sample depth are required.</p>
+<p>When core slabs are analysed, a limited number of measurements are made at irregular intervals. In some cases, measurements may not be possible, for example in really tight (low permeability) sections. As a result, we can tell pandas to load any missing values / blank cells as Not a Number (NaN) by adding the argument na_values=' ' .</p>
+<pre><code>core_data = pd.read_csv(&quot;Data/15_9-19A-CORE.csv&quot;, na_values=' ')
+</code></pre>
+<p>Once we have the data loaded, we can view the details of what is in it by calling upon the .head() and .describe() methods.</p>
+<p>The .head() method returns the first five rows of the dataframe and the header row.</p>
+<pre><code>core_data.head()
+</code></pre>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*GN9uf_BtFG9RhI0CikFxTA.png" alt="Results from the head function of our pandas dataframe. This shows us the first 5 rows of data and column headers."></p>
+<p>The .describe() method returns useful statistics about the numeric data contained within the dataframe such as the mean, standard deviation, maximum and minimum values.</p>
+<pre><code>core_data.describe()
+</code></pre>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*DjUfdM1deVJ2aGlITuJNkA.png" alt="Results from the describe function of pandas on our core dataframe."></p>
+<h2 id="plotting-porosity-vs-permeability">Plotting Porosity vs Permeability</h2>
+<p>Using our core_data dataframe we can simply and quickly plot our data by adding .plot to the end of our dataframe and supplying some arguments. In this case we want a scatter plot (also known in petrophysics as a crossplot), with the x-axis as CPOR — Core Porosity and the y-axis as CKH — Core Permeability.</p>
+<pre><code>core_data.plot(kind=&quot;scatter&quot;, x=&quot;CPOR&quot;, y=&quot;CKH&quot;)
+</code></pre>
+<p><img src="https://cdn-images-1.medium.com/max/3600/1*-_qrQvehwVIpreVrD09shg.png" alt="Simple linear-linear scatterplot of porosity vs permeability using matplotlib and pandas."></p>
+<p>From this scatter plot we notice that there is a large concentration of points at low permeabilities with a few points at the higher end. We can tidy up our plot by converting the y axis to a logaritmic scale and adding a grid. This generates the the poro-perm crossplot that we are familiar with in petrophysics.</p>
+<pre><code>core_data.plot(kind=&quot;scatter&quot;, x=&quot;CPOR&quot;, y=&quot;CKH&quot;)
 plt.yscale('log')
 plt.grid(True)
-</code></pre><p><img src=https://cdn-images-1.medium.com/max/3600/1*u2TCrOjhOqgqw-nEoJYAxg.png alt="Log-Linear scatterplot of porosity vs permeability using matplotlib and pandas."></p><p>We can agree that this looks much better now. We can further tidy up the plot by:</p><ul><li><p>Switching to matplotlib for making out plot</p></li><li><p>Adding labels by using ax.set_ylabel() and ax.set_xlabel()</p></li><li><p>Setting ranges for the axis using ax.axis([0,40, 0.01, 100000)</p></li><li><p>Making the y-axis values easier to read by converting the exponential notation to full numbers. This is done using FuncFormatter from matplotlib and setting up a simple for loop</p><p>from matplotlib.ticker import FuncFormatter
-fig, ax = plt.subplots()</p><p>ax.axis([0, 40, 0.01, 100000])
+</code></pre>
+<p><img src="https://cdn-images-1.medium.com/max/3600/1*u2TCrOjhOqgqw-nEoJYAxg.png" alt="Log-Linear scatterplot of porosity vs permeability using matplotlib and pandas."></p>
+<p>We can agree that this looks much better now. We can further tidy up the plot by:</p>
+<ul>
+<li>
+<p>Switching to matplotlib for making out plot</p>
+</li>
+<li>
+<p>Adding labels by using ax.set_ylabel() and ax.set_xlabel()</p>
+</li>
+<li>
+<p>Setting ranges for the axis using ax.axis([0,40, 0.01, 100000)</p>
+</li>
+<li>
+<p>Making the y-axis values easier to read by converting the exponential notation to full numbers. This is done using FuncFormatter from matplotlib and setting up a simple for loop</p>
+<p>from matplotlib.ticker import FuncFormatter
+fig, ax = plt.subplots()</p>
+<p>ax.axis([0, 40, 0.01, 100000])
 ax.plot(core_data[&lsquo;CPOR&rsquo;], core_data[&lsquo;CKHG&rsquo;], &lsquo;bo&rsquo;)
 ax.set_yscale(&lsquo;log&rsquo;)
 ax.grid(True)
 ax.set_ylabel(&lsquo;Core Perm (mD)')
-ax.set_xlabel(&lsquo;Core Porosity (%)')</p><p>#Format the axes so that they show whole numbers
+ax.set_xlabel(&lsquo;Core Porosity (%)')</p>
+<p>#Format the axes so that they show whole numbers
 for axis in [ax.yaxis, ax.xaxis]:
 formatter = FuncFormatter(lambda y, _: &lsquo;{:.16g}'.format(y))
-axis.set_major_formatter(formatter)</p></li></ul><p><img src=https://cdn-images-1.medium.com/max/3600/1*-732VIjNSubs-NoDFqJM4g.png alt="Formatted log-linear scatter plot of porosity vs permeability using matplotlib."></p><p>Isn’t that much better than the previous plot? We can now use this nicer looking plot within a petrophysical report or passing to other subsurface people within the team.</p><h2 id=deriving-relationship-between-porosity-and-permeability>Deriving Relationship Between Porosity and Permeability</h2><p>There are two ways that we can carry out a poro-perm regression on our data:</p><ul><li><p>Using numpy’s polyfit function</p></li><li><p>Applying a regression using the statsmodels library</p></li></ul><p>Before we explore each option, we first have to create a copy of our dataframe and remove the null rows. Carrying out the regression with NaN values can result in errors.</p><pre><code>poro_perm = core_data[['CPOR', 'CKHG']].copy()
-</code></pre><p>Once it has been copied we can then drop the NaNs using dropna(). Including the argument inplace=True tells the method to replace the values in place rather than returning a copy of the dataframe.</p><pre><code>poro_perm.dropna(inplace=True)
-</code></pre><h3 id=numpy-polyfit>Numpy polyfit()</h3><p>The simplest option for applying a linear regression through the data is using the polynomial fit function from numpy. This returns an array of co-efficients. As we are wanting to use a linear fit we can specify a value of 1 at the end of the function. This tells the function we want a first degree polynomial.</p><p>Also, are we are dealing with permeability data in the logarithmic scale, we need to take the logarithm of the values using np.log10.</p><pre><code>poro_perm_polyfit = np.polyfit(core_data['CPOR'], np.log10(core_data['CKH']), 1)
-</code></pre><p>When we check the value of poor_perm_polyfit, we return:array([0.17428705, -1.55607816])</p><p>The first value is our slope and the second is our y-intercept.</p><p>Polyfit doesn’t give us much more information about the regression such as the co-efficient of determination (R-squared). For this we need to look at another model.</p><h3 id=statsmodels-linear-regression>Statsmodels Linear Regression</h3><p>The second option for generating a poro-perm linear regression is to use the Ordinary Least Squares (OLS) method from the statsmodels library.</p><p>First we need to import the library and create our data. We will assign our x value as Core Porosity (CPOR) and our y value as the log10 of Core Permeability (CKH). The y value will be the one we are aiming to build our prediction model from.</p><blockquote><p>With the statsmodel OLS we need to add a constant column to our data as an intercept is not included by default unless we are using formulas. See <a href=https://www.statsmodels.org/devel/generated/statsmodels.regression.linear_model.OLS.html>here</a> for the documentation.</p></blockquote><pre><code>import statsmodels.api as sm
+axis.set_major_formatter(formatter)</p>
+</li>
+</ul>
+<p><img src="https://cdn-images-1.medium.com/max/3600/1*-732VIjNSubs-NoDFqJM4g.png" alt="Formatted log-linear scatter plot of porosity vs permeability using matplotlib."></p>
+<p>Isn’t that much better than the previous plot? We can now use this nicer looking plot within a petrophysical report or passing to other subsurface people within the team.</p>
+<h2 id="deriving-relationship-between-porosity-and-permeability">Deriving Relationship Between Porosity and Permeability</h2>
+<p>There are two ways that we can carry out a poro-perm regression on our data:</p>
+<ul>
+<li>
+<p>Using numpy’s polyfit function</p>
+</li>
+<li>
+<p>Applying a regression using the statsmodels library</p>
+</li>
+</ul>
+<p>Before we explore each option, we first have to create a copy of our dataframe and remove the null rows. Carrying out the regression with NaN values can result in errors.</p>
+<pre><code>poro_perm = core_data[['CPOR', 'CKHG']].copy()
+</code></pre>
+<p>Once it has been copied we can then drop the NaNs using dropna(). Including the argument inplace=True tells the method to replace the values in place rather than returning a copy of the dataframe.</p>
+<pre><code>poro_perm.dropna(inplace=True)
+</code></pre>
+<h3 id="numpy-polyfit">Numpy polyfit()</h3>
+<p>The simplest option for applying a linear regression through the data is using the polynomial fit function from numpy. This returns an array of co-efficients. As we are wanting to use a linear fit we can specify a value of 1 at the end of the function. This tells the function we want a first degree polynomial.</p>
+<p>Also, are we are dealing with permeability data in the logarithmic scale, we need to take the logarithm of the values using np.log10.</p>
+<pre><code>poro_perm_polyfit = np.polyfit(core_data['CPOR'], np.log10(core_data['CKH']), 1)
+</code></pre>
+<p>When we check the value of poor_perm_polyfit, we return:array([0.17428705, -1.55607816])</p>
+<p>The first value is our slope and the second is our y-intercept.</p>
+<p>Polyfit doesn’t give us much more information about the regression such as the co-efficient of determination (R-squared). For this we need to look at another model.</p>
+<h3 id="statsmodels-linear-regression">Statsmodels Linear Regression</h3>
+<p>The second option for generating a poro-perm linear regression is to use the Ordinary Least Squares (OLS) method from the statsmodels library.</p>
+<p>First we need to import the library and create our data. We will assign our x value as Core Porosity (CPOR) and our y value as the log10 of Core Permeability (CKH). The y value will be the one we are aiming to build our prediction model from.</p>
+<blockquote>
+<p>With the statsmodel OLS we need to add a constant column to our data as an intercept is not included by default unless we are using formulas. See <a href="https://www.statsmodels.org/devel/generated/statsmodels.regression.linear_model.OLS.html">here</a> for the documentation.</p>
+</blockquote>
+<pre><code>import statsmodels.api as sm
 
 x = core_data['CPOR']
 x = sm.add_constant(x)
 y = np.log10(core_data['CKHG'])
-</code></pre><p>We can confirm the values of x by calling upon it and in Jupyter it will return a dataframe as seen here:</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*h1hWFdhosCC3BFw7SzPP1g.png alt="Our x variables: core porosity (CPOR) and a constant column of 1s."></p><p>The next step is to build and fit our model. With the OLS method, we can supply an argument for missing values. In this example I have set it to drop. This will remove or drop the missing values from the data.</p><pre><code>model = sm.OLS(y, x, missing='drop')
+</code></pre>
+<p>We can confirm the values of x by calling upon it and in Jupyter it will return a dataframe as seen here:</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*h1hWFdhosCC3BFw7SzPP1g.png" alt="Our x variables: core porosity (CPOR) and a constant column of 1s."></p>
+<p>The next step is to build and fit our model. With the OLS method, we can supply an argument for missing values. In this example I have set it to drop. This will remove or drop the missing values from the data.</p>
+<pre><code>model = sm.OLS(y, x, missing='drop')
 results = model.fit()
-</code></pre><p>Once we have fitted the model, we can view a full summary of the regression by calling upon .summary()</p><pre><code>results.summary()
-</code></pre><p>Which returns a nicely formatted table like the one below and includes key statistics as the R-squared and standard error.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*NMAwycT8nl-qv2VJsaGGSA.png alt="OLS summary from statsmodels for a linear regression."></p><p>We can also obtain the key parameters: slope and intercept, by calling upon results.params.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*sjFJ6pEakHlzre9SSRw5Eg.png alt="Slope and intercept values from our linear regression."></p><p>If we want to access one of the parameters, for example the slope or constant for the CPOR value, we can access it like a list:</p><pre><code>results.params[1]
-</code></pre><p>Which returns a value of: 0.174287</p><p>We can then piece together the equation we will use to predict our permeability:</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*7u_jTo-3Vs_xIS_naSIPLQ.png alt="Relationship for permeability and porosity from Ordinary Least Squares Regression."></p><p>Finally, we can take our equation and apply it to our scatter plot using the line:</p><pre><code>ax.semilogy(core_data['CPOR'], 10**(results.params[1] * core_data['CPOR'] + results.params[0]), 'r-')
-</code></pre><p>The whole code for the scatter plot:</p><pre><code>from matplotlib.ticker import FuncFormatter
+</code></pre>
+<p>Once we have fitted the model, we can view a full summary of the regression by calling upon .summary()</p>
+<pre><code>results.summary()
+</code></pre>
+<p>Which returns a nicely formatted table like the one below and includes key statistics as the R-squared and standard error.</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*NMAwycT8nl-qv2VJsaGGSA.png" alt="OLS summary from statsmodels for a linear regression."></p>
+<p>We can also obtain the key parameters: slope and intercept, by calling upon results.params.</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*sjFJ6pEakHlzre9SSRw5Eg.png" alt="Slope and intercept values from our linear regression."></p>
+<p>If we want to access one of the parameters, for example the slope or constant for the CPOR value, we can access it like a list:</p>
+<pre><code>results.params[1]
+</code></pre>
+<p>Which returns a value of: 0.174287</p>
+<p>We can then piece together the equation we will use to predict our permeability:</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*7u_jTo-3Vs_xIS_naSIPLQ.png" alt="Relationship for permeability and porosity from Ordinary Least Squares Regression."></p>
+<p>Finally, we can take our equation and apply it to our scatter plot using the line:</p>
+<pre><code>ax.semilogy(core_data['CPOR'], 10**(results.params[1] * core_data['CPOR'] + results.params[0]), 'r-')
+</code></pre>
+<p>The whole code for the scatter plot:</p>
+<pre><code>from matplotlib.ticker import FuncFormatter
 fig, ax = plt.subplots()
 
 ax.axis([0, 30, 0.01, 100000])
@@ -56,9 +298,20 @@ ax.semilogy(core_data['CPOR'], 10**(results.params[1] * core_data['CPOR'] + resu
 for axis in [ax.yaxis, ax.xaxis]:
     formatter = FuncFormatter(lambda y, _: '{:.16g}'.format(y))
     axis.set_major_formatter(formatter)
-</code></pre><p><img src=https://cdn-images-1.medium.com/max/2000/1*YzIuv0Ct5Vdyq_QXN0kzIA.png alt="Porosity vs Permeability Crossplot with Python Statsmodels prediction (red line)."></p><h2 id=predicting-a-continuous-permeability-from-log-porosity>Predicting a Continuous Permeability from Log Porosity</h2><p>Now that we have our equation and we are happy with the results, we can apply this to our log porosity to generate a continuous permeability curve.</p><p>First, we need to load in the well log data for this well:</p><pre><code>well = pd.read_csv('Data/15_9-19.csv', skiprows=[1])
-</code></pre><p>And then apply our derived formula to the PHIT curve:</p><pre><code>well['PERM']= 10**(results.params[1] * (well['PHIT']*100) + results.params[0])
-</code></pre><p>When we check the well header using well.head()we can see our newly created curve at the end of the dataframe.</p><h2 id=visualising-the-final-predicted-curve>Visualising the Final Predicted Curve</h2><p>The final step in our workflow is to plot the PHIT curve and the predicted permeability curve on a log plot alongside the core measurements:</p><pre><code>fig, ax = plt.subplots(figsize=(5,10))
+</code></pre>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*YzIuv0Ct5Vdyq_QXN0kzIA.png" alt="Porosity vs Permeability Crossplot with Python Statsmodels prediction (red line)."></p>
+<h2 id="predicting-a-continuous-permeability-from-log-porosity">Predicting a Continuous Permeability from Log Porosity</h2>
+<p>Now that we have our equation and we are happy with the results, we can apply this to our log porosity to generate a continuous permeability curve.</p>
+<p>First, we need to load in the well log data for this well:</p>
+<pre><code>well = pd.read_csv('Data/15_9-19.csv', skiprows=[1])
+</code></pre>
+<p>And then apply our derived formula to the PHIT curve:</p>
+<pre><code>well['PERM']= 10**(results.params[1] * (well['PHIT']*100) + results.params[0])
+</code></pre>
+<p>When we check the well header using well.head()we can see our newly created curve at the end of the dataframe.</p>
+<h2 id="visualising-the-final-predicted-curve">Visualising the Final Predicted Curve</h2>
+<p>The final step in our workflow is to plot the PHIT curve and the predicted permeability curve on a log plot alongside the core measurements:</p>
+<pre><code>fig, ax = plt.subplots(figsize=(5,10))
 ax1 = plt.subplot2grid((1,2), (0,0), rowspan=1, colspan = 1)
 ax2 = plt.subplot2grid((1,2), (0,1), rowspan=1, colspan = 1, sharey = ax1)
 
@@ -97,7 +350,127 @@ for ax in [ax2]:
     
 plt.tight_layout()
 fig.subplots_adjust(wspace = 0.3)
-</code></pre><p>This generates a simple two track log plot with our core measurements represented by black dots and our continuous curves by blue lines.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*GWk8hBBwMOBYoUE8B0xkXQ.png alt="Final permeability prediction from core measurements using Python statsmodels library and ordinary least squares regression."></p><p>As seen in track 2, our predicted permeability from a simple linear regression tracks the core permeability reasonably well. However, between about 3860 and 3875, our prediction reads lower than the actual core measurements. Also, it becomes harder to visualise the correlation at the lower interval to the more thinly bedded nature of the geology.</p><h2 id=conclusion>Conclusion</h2><p>In this walkthrough, we have covered what core porosity and permeability area and how we can predict the latter from the former to generate an equation that can be used to predict a continuous curve. This can subsequently be used in geological models or reservoir simulations.</p><p>As noted at the end, there are a few small mismatches. These would benefit from further investigation and potentially further modelling either by refining the regression or by applying another machine learning model.</p></div></article></div></div><div class=row><div class="col-sm-8 col-sm-offset-2"><div id=share><style>#share-buttons{display:inline-block;vertical-align:middle}#share-buttons:after{content:"";display:block;clear:both}#share-buttons>div{position:relative;text-align:left;height:36px;width:32px;float:left;text-align:center}#share-buttons>div>svg{height:16px;fill:#d5d5d5;margin-top:10px}#share-buttons>div:hover{cursor:pointer}#share-buttons>div.facebook:hover>svg{fill:#3b5998}#share-buttons>div.twitter:hover>svg{fill:#55acee}#share-buttons>div.linkedin:hover>svg{fill:#0077b5}#share-buttons>div.pinterest:hover>svg{fill:#cb2027}#share-buttons>div.gplus:hover>svg{fill:#dd4b39}#share-buttons>div.mail:hover>svg{fill:#7d7d7d}#share-buttons>div.instagram:hover>svg{fill:#c73b92}#share-buttons>div.facebook>svg{height:18px;margin-top:9px}#share-buttons>div.twitter>svg{height:20px;margin-top:8px}#share-buttons>div.linkedin>svg{height:19px;margin-top:7px}#share-buttons>div.pinterest>svg{height:20px;margin-top:9px}#share-buttons>div.gplus>svg{height:17px;margin-top:9px;position:relative;left:1px}#share-buttons>div.mail>svg{height:14px;margin-top:11px}</style><span style=color:silver>Share on:</span><div id=share-buttons><div class=facebook title="Share this on Facebook" onclick="window.open('http://www.facebook.com/share.php?u=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759H734V905H479V609h255V391q0-186 104-288.5T1115 0q147 0 228 12z"/></svg></div><div class=twitter title="Share this on Twitter" onclick="window.open('http://twitter.com/home?status=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5T1369.5 1125 1185 1335.5t-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5T285 1033q33 5 61 5 43 0 85-11-112-23-185.5-111.5T172 710v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5T884 653q-8-38-8-74 0-134 94.5-228.5T1199 256q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"/></svg></div><div class=linkedin title="Share this on Linkedin" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/&title=&summary=&source=')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M477 625v991H147V625h330zm21-306q1 73-50.5 122T312 490h-2q-82 0-132-49t-50-122q0-74 51.5-122.5T314 148t133 48.5T498 319zm1166 729v568h-329v-530q0-105-40.5-164.5T1168 862q-63 0-105.5 34.5T999 982q-11 30-11 81v553H659q2-399 2-647t-1-296l-1-48h329v144h-2q20-32 41-56t56.5-52 87-43.5T1285 602q171 0 275 113.5t104 332.5z"/></svg></div><div class=gplus title="Share this on Google Plus" onclick="window.open('https://plus.google.com/share?url=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/')"><svg viewBox="0 0 2304 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1437 913q0 208-87 370.5t-248 254-369 91.5q-149 0-285-58t-234-156-156-234T0 896t58-285 156-234 234-156 285-58q286 0 491 192l-199 191Q908 433 733 433q-123 0-227.5 62T340 663.5 279 896t61 232.5T505.5 1297t227.5 62q83 0 152.5-23t114.5-57.5 78.5-78.5 49-83 21.5-74H733V791h692q12 63 12 122zm867-122v210h-209v209h-210v-209h-209V791h209V582h210v209h209z"/></svg></div><div class=mail title="Share this through Email" onclick="window.open('mailto:?&body=https://andymcdgeo.github.io/blog/2020-12-28-porosity-permeability-relationships-using-linear-regression-in-python/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1792 710v794q0 66-47 113t-113 47H160q-66 0-113-47T0 1504V710q44 49 101 87 362 246 497 345 57 42 92.5 65.5t94.5 48 110 24.5h2q51 0 110-24.5t94.5-48 92.5-65.5q170-123 498-345 57-39 1e2-87zm0-294q0 79-49 151t-122 123q-376 261-468 325-10 7-42.5 30.5t-54 38-52 32.5-57.5 27-50 9h-2q-23 0-50-9t-57.5-27-52-32.5-54-38T639 1015q-91-64-262-182.5T172 690q-62-42-117-115.5T0 438q0-78 41.5-130T160 256h1472q65 0 112.5 47t47.5 113z"/></svg></div></div></div></div></div><div class=clearfix></div><div class=row><div class="col-sm-8 col-sm-offset-2"><div id=comments><div id=disqus_thread></div><script>(function(){var a=document,b=a.createElement('script');b.src='https://andymcdonald-scot.disqus.com/embed.js',b.setAttribute('data-timestamp',+new Date),(a.head||a.body).appendChild(b)})()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></div></div></div><div class=clearfix></div></div></main><footer id=footer><div class=container><div class=row><div class="col-md-3 widget"><h3 class=widget-title>Follow me</h3><div class=widget-body><p class=follow-me-icons><a href=https://www.linkedin.com/andymcdonaldgeo target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
-<a href=https://twitter.com/geoandymcd target=_blank><i class="fab fa-twitter-square fa-1x"></i></a>
-<a href=https://github.com/andymcdgeo target=_blank><i class="fab fa-github-square fa-1x"></i></a>
-<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a></p></div></div></div></div></footer><footer id=underfooter><div class=container><div class=row><div class="col-md-6 widget"><div class=widget-body><p></p></div></div><div class="col-md-6 widget"><div class=widget-body><p class=text-right>Copyright &copy; 2021, Andy McDonald<br>Powered by: <a href=https://gohugo.io/ rel=poweredby>Hugo</a></p></div></div></div></div></footer><script src=https://code.jquery.com/jquery-1.12.4.min.js></script><script src=https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js></script><script src=https://andymcdgeo.github.io/js/bundle.min.00e4b79049366199ff1b6ac7cbd8302877370d1bf4ff0db6be4c4190e2e43f9143709df60bd35ed5c6f6495ad18afc509d468b7be1665c90f32b62afa4c7114c.js integrity="sha512-AOS3kEk2YZn/G2rHy9gwKHc3DRv0/w22vkxBkOLkP5FDcJ32C9Ne1cb2SVrRivxQnUaLe+FmXJDzK2KvpMcRTA=="></script><script id=dsq-count-scr src=//andymcdonald-scot.disqus.com/count.js async></script></body></html></body></html>
+</code></pre>
+<p>This generates a simple two track log plot with our core measurements represented by black dots and our continuous curves by blue lines.</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*GWk8hBBwMOBYoUE8B0xkXQ.png" alt="Final permeability prediction from core measurements using Python statsmodels library and ordinary least squares regression."></p>
+<p>As seen in track 2, our predicted permeability from a simple linear regression tracks the core permeability reasonably well. However, between about 3860 and 3875, our prediction reads lower than the actual core measurements. Also, it becomes harder to visualise the correlation at the lower interval to the more thinly bedded nature of the geology.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In this walkthrough, we have covered what core porosity and permeability area and how we can predict the latter from the former to generate an equation that can be used to predict a continuous curve. This can subsequently be used in geological models or reservoir simulations.</p>
+<p>As noted at the end, there are a few small mismatches. These would benefit from further investigation and potentially further modelling either by refining the regression or by applying another machine learning model.</p>
+
+                    </div>
+                </article>
+
+            </div>
+        </div> 
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+
+                <div id="share">
+                    
+                </div>
+            </div>
+        </div> 
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+
+                <div id="comments">
+                    
+                </div>
+            </div>
+        </div> 
+        <div class="clearfix"></div>
+
+    </div> 
+
+</main>
+
+    
+    
+      <footer id="footer">
+	<div class="container">
+		<div class="row">
+			
+
+			
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Follow me</h3>
+				<div class="widget-body">
+					<p class="follow-me-icons">
+            
+							
+								<a href="https://www.linkedin.com/andymcdonaldgeo" target="_blank"><i class="fab fa-linkedin fa-1x"></i></a>
+							
+            
+							
+								<a href="https://twitter.com/nickname" target="_blank"><i class="fab fa-twitter-square fa-1x"></i></a>
+							
+            
+							
+								<a href="https://github.com/andymcdgeo" target="_blank"><i class="fab fa-github-square fa-1x"></i></a>
+							
+            
+							
+								<a href="https://andymcdonaldgeo.medium.com" target="_blank"><i class="fab fa-medium fa-1x"></i></a>
+							
+            
+					</p>
+				</div>
+			</div>
+			
+
+			
+
+			
+
+		</div> 
+	</div>
+</footer>
+
+<footer id="underfooter">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p></p>
+				</div>
+			</div>
+
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p class="text-right">
+						Copyright &copy; 2021, Andy McDonald<br>
+						Powered by: <a href="https://gohugo.io/" rel="poweredby">Hugo</a>
+					</p>
+				</div>
+			</div>
+
+		</div> 
+	</div>
+</footer>
+
+
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
+
+
+
+
+<script src="http://andymcdgeo.github.io/js/bundle.min.00e4b79049366199ff1b6ac7cbd8302877370d1bf4ff0db6be4c4190e2e43f9143709df60bd35ed5c6f6495ad18afc509d468b7be1665c90f32b62afa4c7114c.js" integrity="sha512-AOS3kEk2YZn/G2rHy9gwKHc3DRv0/w22vkxBkOLkP5FDcJ32C9Ne1cb2SVrRivxQnUaLe&#43;FmXJDzK2KvpMcRTA=="></script>
+
+
+<script id="dsq-count-scr" src="//hugo-initio-site.disqus.com/count.js" async></script>
+</body>
+</html>
+
+    
+  </body>
+  
+</html>

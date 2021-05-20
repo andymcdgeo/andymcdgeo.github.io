@@ -1,1 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>lasio on Andy McDonald</title><link>https://andymcdgeo.github.io/tags/lasio/</link><description>Recent content in lasio on Andy McDonald</description><generator>Hugo -- gohugo.io</generator><language>en-uk</language><lastBuildDate>Sun, 30 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://andymcdgeo.github.io/tags/lasio/index.xml" rel="self" type="application/rss+xml"/><item><title>Loading and Displaying Well Log Data from LAS Files with Python</title><link>https://andymcdgeo.github.io/blog/2020-08-30-loading-and-displaying-well-log-data-from-las-files-with-python/</link><pubDate>Sun, 30 Aug 2020 00:00:00 +0000</pubDate><guid>https://andymcdgeo.github.io/blog/2020-08-30-loading-and-displaying-well-log-data-from-las-files-with-python/</guid><description>Anyone who has worked or is currently working within the oil and gas industry will understand that there are a large variety of formats that well log data can be stored in. Some of the common formats that we as petrophysicists work with include LAS, ASCII and CSV files.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>lasio on Andy McDonald</title>
+    <link>http://andymcdgeo.github.io/tags/lasio/</link>
+    <description>Recent content in lasio on Andy McDonald</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Sun, 30 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://andymcdgeo.github.io/tags/lasio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Loading and Displaying Well Log Data from LAS Files with Python</title>
+      <link>http://andymcdgeo.github.io/blog/2020-08-30-loading-and-displaying-well-log-data-from-las-files-with-python/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://andymcdgeo.github.io/blog/2020-08-30-loading-and-displaying-well-log-data-from-las-files-with-python/</guid>
+      <description>Anyone who has worked or is currently working within the oil and gas industry will understand that there are a large variety of formats that well log data can be stored in. Some of the common formats that we as petrophysicists work with include LAS, ASCII and CSV files.</description>
+    </item>
+    
+  </channel>
+</rss>
