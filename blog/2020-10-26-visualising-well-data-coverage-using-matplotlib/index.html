@@ -1,422 +1,93 @@
-<!DOCTYPE html>
-<html lang="en-uk">
-  <head>
-  	<meta charset="utf-8">
-  	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
-  	<meta name="description" content="">
-  	<meta name="author"      content="map[]">
-    
-    	<title>Visualising Well Data Coverage Using matplotlib</title>
-	<link rel="shortcut icon" href="http://andymcdgeo.github.io/images/gt_favicon.png">
+<!doctype html><html lang=en-uk><head><link href=https://gmpg.org/xfn/11 rel=profile><link rel=canonical href=https://andymcdgeo.github.io/blog/2020-10-26-visualising-well-data-coverage-using-matplotlib/><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=generator content="Hugo 0.83.1"><title>Visualising Well Data Coverage Using matplotlib • Andy McDonald</title><meta name=twitter:card content="summary"><meta name=twitter:title content="Visualising Well Data Coverage Using matplotlib"><meta name=twitter:description content="Exploratory Data Analysis (EDA) is an integral part of Data Science. The same is true for the petrophysical domain and can often be referred to as the Log QC or data review stage of a project. It is at this stage that we begin to go through the data in detail and identify what data we really have, where we have it and what is the quality of the gathered data."><meta property="og:title" content="Visualising Well Data Coverage Using matplotlib"><meta property="og:description" content="Exploratory Data Analysis (EDA) is an integral part of Data Science. The same is true for the petrophysical domain and can often be referred to as the Log QC or data review stage of a project. It is at this stage that we begin to go through the data in detail and identify what data we really have, where we have it and what is the quality of the gathered data."><meta property="og:type" content="article"><meta property="og:url" content="https://andymcdgeo.github.io/blog/2020-10-26-visualising-well-data-coverage-using-matplotlib/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2020-10-26T00:00:00+00:00"><meta property="article:modified_time" content="2020-10-26T00:00:00+00:00"><meta property="og:site_name" content="Andy McDonald"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css><link rel=stylesheet href=/scss/hyde-hyde.a1b0c9bce32a9d5a987631e695bbe6fea465a012ae0e1d72012d3c44d516dd77.css integrity="sha256-obDJvOMqnVqYdjHmlbvm/qRloBKuDh1yAS08RNUW3Xc="><link rel=stylesheet href=/scss/print.2744dcbf8a0b2e74f8a50e4b34e5f441be7cf93cc7de27029121c6a09f9e77bc.css integrity="sha256-J0Tcv4oLLnT4pQ5LNOX0Qb58+TzH3icCkSHGoJ+ed7w=" media=print><link rel=stylesheet href=/scss/tocbot.5ef07cebc3c477b54270456f149ee02922479bb7555fd344b2c69f953b0e7e5e.css integrity="sha256-XvB868PEd7VCcEVvFJ7gKSJHm7dVX9NEssaflTsOfl4="><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js></script><script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]--><link rel=apple-touch-icon-precomposed sizes=144x144 href=/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=/favicon.png></head><body><div class=sidebar><div class=container><div class=sidebar-about><span class=site__title><a href=https://andymcdgeo.github.io/>Andy McDonald</a></span><div class=author-image><img src=https://andymcdgeo.github.io/img/andy.png alt="Author Image" class="img--circle img--headshot element--center"></div><p class=site__description>Petrophysicist | Data Scientist</p></div><div class=collapsible-menu><input type=checkbox id=menuToggle>
+<label for=menuToggle>Andy McDonald</label><div class=menu-content><div><ul class=sidebar-nav><li><a href=/about/><span>About</span></a></li><li><a href=/blog/><span>Blog</span></a></li><li><a href=/projects/><span>Projects</span></a></li></ul></div><section class=social><a href=https://twitter.com/%3cusername%3e rel=me><i class="fab fa-twitter fa-lg" aria-hidden=true></i></a>
+<a href=https://github.com/%3cusername%3e rel=me><i class="fab fa-github fa-lg" aria-hidden=true></i></a>
+<a href=https://linkedin.com/in/%3cusername%3e rel=me><i class="fab fa-linkedin fa-lg" aria-hidden=true></i></a>
+<a href=mailto:your-email@example.com rel=me><i class="fas fa-at fa-lg" aria-hidden=true></i></a></section></div></div><div class=copyright>&copy; 2021 Andy McDonald</div></div></div><div class="content container"><article><header><h1>Visualising Well Data Coverage Using matplotlib</h1><figure><img src=/images/featured/2020-10-26-VisualisingWellDataCoverageUsingMatplotlib.jpg alt="Visualising Well Data Coverage Using matplotlib" class=img-fluid></figure><div class=post__meta><i class="fas fa-calendar-alt"></i> Oct 26, 2020
+in
+<a class="badge badge-category" href=/categories/data-quality>DATA QUALITY</a>
+•
+<a class="badge badge-category" href=/categories/petrophysics>PETROPHYSICS</a>
+•
+<a class="badge badge-category" href=/categories/python>PYTHON</a><br><i class="fas fa-tags"></i>
+<a class="badge badge-tag" href=/tags/petrophysics>petrophysics</a>
+<a class="badge badge-tag" href=/tags/python>python</a>
+<a class="badge badge-tag" href=/tags/matplotlib>matplotlib</a>
+<a class="badge badge-tag" href=/tags/missing-data>missing data</a><br><i class="fas fa-clock"></i> 7 min read</div></header><div class=toc-wrapper><input type=checkbox id=tocToggle>
+<label for=tocToggle>Table of Content</label><div class=toc id=TableOfContents></div></div><div class=post><p>Exploratory Data Analysis (EDA) is an integral part of Data Science. The same is true for the petrophysical domain and can often be referred to as the Log QC or data review stage of a project. It is at this stage that we begin to go through the data in detail and identify what data we really have, where we have it and what is the quality of the gathered data.</p><p>A significant portion of the time that we spend (in some cases up to 90%! — Kohlleffel, 2015) working with well log data is spent trying to understand it and wrangle it into a state that is fit for interpretation. The remaining 10% is when we can get down to the business of carrying out the petrophysical interpretation. This can vary depending on the initial state of the project being worked on.</p><p>At the QC stage, we often we find ourselves with multiple input files, random curve names, missing data and extra curves that have no immediate use. This can lead to confusion and frustration, especially when working with multiple tools and vintage datasets. In cases where we have missing data, we need to identify it and determine the best way to handle it. This can be difficult to do by looking at single LAS files in a text editor, but it can be made easier using software. One such method is by using Python, a common and popular programming language.</p><p>In this short article, we will go over how to visualise data coverage within 3 wells of the Volve dataset that was released by Equinor in 2018.</p><p>You can find the full Jupyter Notebook for this example within 9 **— Visualising Data Covere.ipynb **of my <strong>Petrophysics and Python Series</strong> on GitHub at the following link:
+<a href=https://github.com/andymcdgeo/Petrophysics-Python-Series/><strong>andymcdgeo/Petrophysics-Python-Series</strong>
+*This series of Jupyter Notebooks take you through various aspects of working with Python and Petrophysical data.*github.com</a></p><h2 id=loading-the-data-and-libraries>Loading the Data and Libraries</h2><p>As with any Python project we need to load in the required data and libraries. For this article, we will be using pandas and matplotlib.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    <span style=color:#f92672>import</span> pandas <span style=color:#f92672>as</span> pd
+    <span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#f92672>as</span> plt
 
-	
-	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
-	
-	
-	<script defer src="https://use.fontawesome.com/releases/v5.0.11/js/all.js" integrity="sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C" crossorigin="anonymous"></script>
-	
-	
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
-	
-  
-
-  <link rel="stylesheet" href="/assets/css/main.min.60d08235164fd1d18fb214bf83a6edc999d293a08e6bfefc16b979e96d2cb87a.css" media="all">
-
-   
-  
-
-  </head>
-  
-  <body class="home">
-
-    
-      <header id="header">
-  <div id="head" style="background-image:url('http://andymcdgeo.github.io/images/header_img.jpg'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));">
-    <h1 id="logo" class="text-center">
-      <img class='img-circle' src="http://andymcdgeo.github.io/images/andy.png" alt="">
-      <span class="title">Andy McDonald</span>
-      <span class="tagline">Petrophysicist | Geoscientist | Data Scientsist</span>
-
-      <div class="social-head">
-        
-          <a href="https://www.linkedin.com/andymcdonaldgeo" target="_blank"><i class="fab fa-linkedin fa-1x"></i></a>
-        
-          <a href="https://twitter.com/nickname" target="_blank"><i class="fab fa-twitter-square fa-1x"></i></a>
-        
-          <a href="https://github.com/andymcdgeo" target="_blank"><i class="fab fa-github-square fa-1x"></i></a>
-        
-          <a href="https://andymcdonaldgeo.medium.com" target="_blank"><i class="fab fa-medium fa-1x"></i></a>
-        
-        
-      </div>
-   </h1>
-</div>
-
-<div class="landing">
-  
-</div>
-
-<nav class="navbar navbar-default navbar-sticky">
-    <div class="container-fluid">
-
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="true">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-
-        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
-
-            <ul class="nav navbar-nav">
-            
-                
-                <li>
-                    <a href="/">Home</a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/blog/">Blog</a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/projects/">Projects</a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/publications/">Publications</a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/about/about/">About</a>
-                </li>
-                
-            
-            </ul>
-
-        </div> 
-        
-    </div>
-</nav>
-
-</header>
-    
- 
-    
-<main id="main">
-
-    <div class="container">
-
-        <div class="row topspace">
-            <div class="col-sm-8 col-sm-offset-2">
-
-                <article class="post">
-                    <header class="entry-header">
-                        <h1 class="title is-1">Visualising Well Data Coverage Using matplotlib</h1>
-
-                      
-                    
-                    <figure>
-                        <img src="/images/featured/2020-10-26-VisualisingWellDataCoverageUsingMatplotlib.jpg" alt="Visualising Well Data Coverage Using matplotlib" />
-                    </figure>
-
-                    
-                        <div class="entry-meta">
-                            <span class="posted-on">
-                                <time class="entry-date published" datetime="October 26, 2020">October 26, 2020</time> |  
-                                7  minutes 
-                            </span>
-
-
-                        </div>
-                    </header>
-                    
-                    <div class="entry-content">
-                        <!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<p>Exploratory Data Analysis (EDA) is an integral part of Data Science. The same is true for the petrophysical domain and can often be referred to as the Log QC or data review stage of a project. It is at this stage that we begin to go through the data in detail and identify what data we really have, where we have it and what is the quality of the gathered data.</p>
-<p>A significant portion of the time that we spend (in some cases up to 90%! — Kohlleffel, 2015) working with well log data is spent trying to understand it and wrangle it into a state that is fit for interpretation. The remaining 10% is when we can get down to the business of carrying out the petrophysical interpretation. This can vary depending on the initial state of the project being worked on.</p>
-<p>At the QC stage, we often we find ourselves with multiple input files, random curve names, missing data and extra curves that have no immediate use. This can lead to confusion and frustration, especially when working with multiple tools and vintage datasets. In cases where we have missing data, we need to identify it and determine the best way to handle it. This can be difficult to do by looking at single LAS files in a text editor, but it can be made easier using software. One such method is by using Python, a common and popular programming language.</p>
-<p>In this short article, we will go over how to visualise data coverage within 3 wells of the Volve dataset that was released by Equinor in 2018.</p>
-<p>You can find the full Jupyter Notebook for this example within 9 **— Visualising Data Covere.ipynb **of my <strong>Petrophysics and Python Series</strong> on GitHub at the following link:
-<a href="https://github.com/andymcdgeo/Petrophysics-Python-Series/"><strong>andymcdgeo/Petrophysics-Python-Series</strong>
-*This series of Jupyter Notebooks take you through various aspects of working with Python and Petrophysical data.*github.com</a></p>
-<h2 id="loading-the-data-and-libraries">Loading the Data and Libraries</h2>
-<p>As with any Python project we need to load in the required data and libraries. For this article, we will be using pandas and matplotlib.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
-    <span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-
-    <span style="color:#75715e"># Load in our data from a CSV file</span>
-    data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#39;Data/VolveWells.csv&#39;</span>)
-    data<span style="color:#f92672">.</span>head()
-</code></pre></div><p>This will return:</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*piwz8YmmO9KijT-3pJhiCw.png" alt=""></p>
-<p>From a first glance, we can see that we have 12 columns in our dataset. The first column is the Well, followed by the Depth curve, which is subsequently followed by each of the logging curves.</p>
-<p>To identify what wells we have in our dataset we could call data[&lsquo;WELL&rsquo;].unique() which will return an array, but we can get a nicer format by implementing a short for loop and printing out each value.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">for</span> well <span style="color:#f92672">in</span> data[<span style="color:#960050;background-color:#1e0010">‘</span>WELL<span style="color:#960050;background-color:#1e0010">’</span>]<span style="color:#f92672">.</span>unique():
-        <span style="color:#66d9ef">print</span>(well)
-</code></pre></div><p>This will return a list of 3 wells:</p>
-<ul>
-<li>
-<p>15/9-F-1 C</p>
-</li>
-<li>
-<p>15/9-F-4</p>
-</li>
-<li>
-<p>15/9-F-7</p>
-</li>
-</ul>
-<h2 id="data-preparation">Data Preparation</h2>
-<p>In order for our plot to work as intended, we need to modify the column order of our dataset. This can be achieved by first creating a list of the columns in the order that we want.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    plot_cols <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;WELL&#39;</span>, <span style="color:#e6db74">&#39;DEPTH&#39;</span>, <span style="color:#e6db74">&#39;CALI&#39;</span>, <span style="color:#e6db74">&#39;BS&#39;</span>, <span style="color:#e6db74">&#39;GR&#39;</span>, <span style="color:#e6db74">&#39;NEU&#39;</span>, <span style="color:#e6db74">&#39;DEN&#39;</span>, <span style="color:#e6db74">&#39;PEF&#39;</span>, <span style="color:#e6db74">&#39;RDEP&#39;</span>, <span style="color:#e6db74">&#39;RMED&#39;</span>, <span style="color:#e6db74">&#39;AC&#39;</span>, <span style="color:#e6db74">&#39;ACS&#39;</span>]
-</code></pre></div><p>Then we can replace the existing dataframe with the new column order:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    data <span style="color:#f92672">=</span> data[plot_cols]
-    data<span style="color:#f92672">.</span>head()
-</code></pre></div><p>We can then call upon data.head() to view the new dataframe.</p>
-<p><img src="https://cdn-images-1.medium.com/max/2190/1*WiIJUSbGLKtetpSl0UMdVw.png" alt=""></p>
-<p>The next step involves creating a copy of our dataframe. This will allow us to keep the original dataframe for further work later in a project.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    data_nan <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>copy()
-</code></pre></div><p>In order for the plot to display as intended, we need to replace the values in the dataframe.</p>
-<p>In places where we have a real value we will assign it a number which will be dependent on its position in the dataframe. In places where we have a NaN (Not a Number) value, we are going to give it a value of number - 1. This will allow us to shade between one number and another whilst using a single subplot for each well. This keeps things simple and negates the need for creating subplots for each curve in each well.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">for</span> num, col <span style="color:#f92672">in</span> enumerate(data_nan<span style="color:#f92672">.</span>columns[<span style="color:#ae81ff">2</span>:]):
-        data_nan[col] <span style="color:#f92672">=</span> data_nan[col]<span style="color:#f92672">.</span>notnull() <span style="color:#f92672">*</span> (num <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
-        data_nan[col]<span style="color:#f92672">.</span>replace(<span style="color:#ae81ff">0</span>, num, inplace<span style="color:#f92672">=</span>True)
-</code></pre></div><p>Breaking down the above piece of code:</p>
-<ul>
-<li>
-<p><code>for num, col in enumerate(data_nan.columns[2:]:</code>
+    <span style=color:#75715e># Load in our data from a CSV file</span>
+    data <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#39;Data/VolveWells.csv&#39;</span>)
+    data<span style=color:#f92672>.</span>head()
+</code></pre></div><p>This will return:</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*piwz8YmmO9KijT-3pJhiCw.png alt></p><p>From a first glance, we can see that we have 12 columns in our dataset. The first column is the Well, followed by the Depth curve, which is subsequently followed by each of the logging curves.</p><p>To identify what wells we have in our dataset we could call data[&lsquo;WELL&rsquo;].unique() which will return an array, but we can get a nicer format by implementing a short for loop and printing out each value.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    <span style=color:#66d9ef>for</span> well <span style=color:#f92672>in</span> data[<span style=color:#960050;background-color:#1e0010>‘</span>WELL<span style=color:#960050;background-color:#1e0010>’</span>]<span style=color:#f92672>.</span>unique():
+        <span style=color:#66d9ef>print</span>(well)
+</code></pre></div><p>This will return a list of 3 wells:</p><ul><li><p>15/9-F-1 C</p></li><li><p>15/9-F-4</p></li><li><p>15/9-F-7</p></li></ul><h2 id=data-preparation>Data Preparation</h2><p>In order for our plot to work as intended, we need to modify the column order of our dataset. This can be achieved by first creating a list of the columns in the order that we want.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    plot_cols <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;WELL&#39;</span>, <span style=color:#e6db74>&#39;DEPTH&#39;</span>, <span style=color:#e6db74>&#39;CALI&#39;</span>, <span style=color:#e6db74>&#39;BS&#39;</span>, <span style=color:#e6db74>&#39;GR&#39;</span>, <span style=color:#e6db74>&#39;NEU&#39;</span>, <span style=color:#e6db74>&#39;DEN&#39;</span>, <span style=color:#e6db74>&#39;PEF&#39;</span>, <span style=color:#e6db74>&#39;RDEP&#39;</span>, <span style=color:#e6db74>&#39;RMED&#39;</span>, <span style=color:#e6db74>&#39;AC&#39;</span>, <span style=color:#e6db74>&#39;ACS&#39;</span>]
+</code></pre></div><p>Then we can replace the existing dataframe with the new column order:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    data <span style=color:#f92672>=</span> data[plot_cols]
+    data<span style=color:#f92672>.</span>head()
+</code></pre></div><p>We can then call upon data.head() to view the new dataframe.</p><p><img src=https://cdn-images-1.medium.com/max/2190/1*WiIJUSbGLKtetpSl0UMdVw.png alt></p><p>The next step involves creating a copy of our dataframe. This will allow us to keep the original dataframe for further work later in a project.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    data_nan <span style=color:#f92672>=</span> data<span style=color:#f92672>.</span>copy()
+</code></pre></div><p>In order for the plot to display as intended, we need to replace the values in the dataframe.</p><p>In places where we have a real value we will assign it a number which will be dependent on its position in the dataframe. In places where we have a NaN (Not a Number) value, we are going to give it a value of number - 1. This will allow us to shade between one number and another whilst using a single subplot for each well. This keeps things simple and negates the need for creating subplots for each curve in each well.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    <span style=color:#66d9ef>for</span> num, col <span style=color:#f92672>in</span> enumerate(data_nan<span style=color:#f92672>.</span>columns[<span style=color:#ae81ff>2</span>:]):
+        data_nan[col] <span style=color:#f92672>=</span> data_nan[col]<span style=color:#f92672>.</span>notnull() <span style=color:#f92672>*</span> (num <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>)
+        data_nan[col]<span style=color:#f92672>.</span>replace(<span style=color:#ae81ff>0</span>, num, inplace<span style=color:#f92672>=</span>True)
+</code></pre></div><p>Breaking down the above piece of code:</p><ul><li><p><code>for num, col in enumerate(data_nan.columns[2:]:</code>
 This line is going to loop through each column from column number 2 onwards.
-enumerate() allows us to create a counter/index value as we loop through each column</p>
-</li>
-<li>
-<p><code>data_nan[col] = data_nan[col].notnull()*(num+1)</code>
-Here we are converting the real values to a boolean (True or False). This is then converted to the column number plus 1 when true. When it is false, the values will be set to 0.</p>
-</li>
-<li>
-<p><code>data_nan[col].replace(0, num, inplace=True)</code>
-We can now replace any 0 values with the column number.</p>
-</li>
-</ul>
-<h2 id="plotting-the-data">Plotting the Data</h2>
-<p>Now we have come to the plotting stage. In order for each well to plot in a separate subplot, we have to group the dataframe by the well name:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    grouped <span style="color:#f92672">=</span> data_nan<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;WELL&#39;</span>)
-</code></pre></div><p>To plot the data we can call upon this short piece of code. I have added short comments to describe what each part is doing.</p>
-<p>We use <code>ax.fillbetweenx()</code> to fill between our two values for each curve that we set up earlier. For example, CALI has two values to indicate data presence: 1 when there is a real value and 0 when there is a NaN. Similarly, GR has two values: 3 when there is real data and 2 when there is a NaN.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#75715e">#Setup the labels we want to display on the x-axis</span>
-    labels <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;CALI&#39;</span>, <span style="color:#e6db74">&#39;BS&#39;</span>, <span style="color:#e6db74">&#39;GR&#39;</span>, <span style="color:#e6db74">&#39;NEU&#39;</span>, <span style="color:#e6db74">&#39;DEN&#39;</span>, <span style="color:#e6db74">&#39;PEF&#39;</span>, <span style="color:#e6db74">&#39;RDEP&#39;</span>, <span style="color:#e6db74">&#39;RMED&#39;</span>, <span style="color:#e6db74">&#39;AC&#39;</span>, <span style="color:#e6db74">&#39;ACS&#39;</span>]
+enumerate() allows us to create a counter/index value as we loop through each column</p></li><li><p><code>data_nan[col] = data_nan[col].notnull()*(num+1)</code>
+Here we are converting the real values to a boolean (True or False). This is then converted to the column number plus 1 when true. When it is false, the values will be set to 0.</p></li><li><p><code>data_nan[col].replace(0, num, inplace=True)</code>
+We can now replace any 0 values with the column number.</p></li></ul><h2 id=plotting-the-data>Plotting the Data</h2><p>Now we have come to the plotting stage. In order for each well to plot in a separate subplot, we have to group the dataframe by the well name:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    grouped <span style=color:#f92672>=</span> data_nan<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#39;WELL&#39;</span>)
+</code></pre></div><p>To plot the data we can call upon this short piece of code. I have added short comments to describe what each part is doing.</p><p>We use <code>ax.fillbetweenx()</code> to fill between our two values for each curve that we set up earlier. For example, CALI has two values to indicate data presence: 1 when there is a real value and 0 when there is a NaN. Similarly, GR has two values: 3 when there is real data and 2 when there is a NaN.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    <span style=color:#75715e>#Setup the labels we want to display on the x-axis</span>
+    labels <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;CALI&#39;</span>, <span style=color:#e6db74>&#39;BS&#39;</span>, <span style=color:#e6db74>&#39;GR&#39;</span>, <span style=color:#e6db74>&#39;NEU&#39;</span>, <span style=color:#e6db74>&#39;DEN&#39;</span>, <span style=color:#e6db74>&#39;PEF&#39;</span>, <span style=color:#e6db74>&#39;RDEP&#39;</span>, <span style=color:#e6db74>&#39;RMED&#39;</span>, <span style=color:#e6db74>&#39;AC&#39;</span>, <span style=color:#e6db74>&#39;ACS&#39;</span>]
 
-    <span style="color:#75715e">#Setup the figure and the subplots</span>
-    fig, axs <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">10</span>))
+    <span style=color:#75715e>#Setup the figure and the subplots</span>
+    fig, axs <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>subplots(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>3</span>, figsize<span style=color:#f92672>=</span>(<span style=color:#ae81ff>20</span>,<span style=color:#ae81ff>10</span>))
 
-    <span style="color:#75715e">#Loop through each well and column in the grouped dataframe</span>
-    <span style="color:#66d9ef">for</span> (name, df), ax <span style="color:#f92672">in</span> zip(grouped, axs<span style="color:#f92672">.</span>flat):
-        ax<span style="color:#f92672">.</span>set_xlim(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">9</span>)
+    <span style=color:#75715e>#Loop through each well and column in the grouped dataframe</span>
+    <span style=color:#66d9ef>for</span> (name, df), ax <span style=color:#f92672>in</span> zip(grouped, axs<span style=color:#f92672>.</span>flat):
+        ax<span style=color:#f92672>.</span>set_xlim(<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>9</span>)
         
-        <span style="color:#75715e">#Setup the depth range</span>
-        ax<span style="color:#f92672">.</span>set_ylim(<span style="color:#ae81ff">5000</span>, <span style="color:#ae81ff">0</span>)
+        <span style=color:#75715e>#Setup the depth range</span>
+        ax<span style=color:#f92672>.</span>set_ylim(<span style=color:#ae81ff>5000</span>, <span style=color:#ae81ff>0</span>)
         
-        <span style="color:#75715e">#Create multiple fill betweens for each curve# This is between</span>
-        <span style="color:#75715e"># the number representing null values and the number representing</span>
-        <span style="color:#75715e"># actual values</span>
+        <span style=color:#75715e>#Create multiple fill betweens for each curve# This is between</span>
+        <span style=color:#75715e># the number representing null values and the number representing</span>
+        <span style=color:#75715e># actual values</span>
         
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">0</span>, df<span style="color:#f92672">.</span>CALI, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;grey&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">1</span>, df<span style="color:#f92672">.</span>BS, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;lightgrey&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">2</span>, df<span style="color:#f92672">.</span>GR, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;mediumseagreen&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">3</span>, df<span style="color:#f92672">.</span>NEU, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;lightblue&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">4</span>, df<span style="color:#f92672">.</span>DEN, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;lightcoral&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">5</span>, df<span style="color:#f92672">.</span>PEF, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;violet&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">6</span>, df<span style="color:#f92672">.</span>RDEP, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;darksalmon&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">7</span>, df<span style="color:#f92672">.</span>RMED, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;wheat&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">8</span>, df<span style="color:#f92672">.</span>AC, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;thistle&#39;</span>)
-        ax<span style="color:#f92672">.</span>fill_betweenx(df<span style="color:#f92672">.</span>DEPTH, <span style="color:#ae81ff">9</span>, df<span style="color:#f92672">.</span>ACS, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;tan&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>0</span>, df<span style=color:#f92672>.</span>CALI, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;grey&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>1</span>, df<span style=color:#f92672>.</span>BS, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;lightgrey&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>2</span>, df<span style=color:#f92672>.</span>GR, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;mediumseagreen&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>3</span>, df<span style=color:#f92672>.</span>NEU, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;lightblue&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>4</span>, df<span style=color:#f92672>.</span>DEN, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;lightcoral&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>5</span>, df<span style=color:#f92672>.</span>PEF, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;violet&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>6</span>, df<span style=color:#f92672>.</span>RDEP, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;darksalmon&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>7</span>, df<span style=color:#f92672>.</span>RMED, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;wheat&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>8</span>, df<span style=color:#f92672>.</span>AC, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;thistle&#39;</span>)
+        ax<span style=color:#f92672>.</span>fill_betweenx(df<span style=color:#f92672>.</span>DEPTH, <span style=color:#ae81ff>9</span>, df<span style=color:#f92672>.</span>ACS, facecolor<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;tan&#39;</span>)
         
-        <span style="color:#75715e">#Setup the grid, axis labels and ticks</span>
-        ax<span style="color:#f92672">.</span>grid(axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;x&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;black&#39;</span>)
-        ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;DEPTH (m)&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span>, fontweight<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bold&#39;</span>)
+        <span style=color:#75715e>#Setup the grid, axis labels and ticks</span>
+        ax<span style=color:#f92672>.</span>grid(axis<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;x&#39;</span>, alpha<span style=color:#f92672>=</span><span style=color:#ae81ff>0.5</span>, color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;black&#39;</span>)
+        ax<span style=color:#f92672>.</span>set_ylabel(<span style=color:#e6db74>&#39;DEPTH (m)&#39;</span>, fontsize<span style=color:#f92672>=</span><span style=color:#ae81ff>14</span>, fontweight<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;bold&#39;</span>)
         
-        <span style="color:#75715e">#Position vertical lines at the boundaries between the bars</span>
-        ax<span style="color:#f92672">.</span>set_xticks([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">10</span>], minor<span style="color:#f92672">=</span>False)
+        <span style=color:#75715e>#Position vertical lines at the boundaries between the bars</span>
+        ax<span style=color:#f92672>.</span>set_xticks([<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>4</span>,<span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>6</span>,<span style=color:#ae81ff>7</span>,<span style=color:#ae81ff>8</span>,<span style=color:#ae81ff>9</span>,<span style=color:#ae81ff>10</span>], minor<span style=color:#f92672>=</span>False)
         
-        <span style="color:#75715e">#Position the curve names in the centre of each column</span>
-        ax<span style="color:#f92672">.</span>set_xticks([<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">1.5</span> ,<span style="color:#ae81ff">2.5</span> ,<span style="color:#ae81ff">3.5</span> ,<span style="color:#ae81ff">4.5</span> ,<span style="color:#ae81ff">5.5</span> ,<span style="color:#ae81ff">6.5</span> , <span style="color:#ae81ff">7.5</span>, <span style="color:#ae81ff">8.5</span>, <span style="color:#ae81ff">9.5</span>], minor<span style="color:#f92672">=</span>True)
+        <span style=color:#75715e>#Position the curve names in the centre of each column</span>
+        ax<span style=color:#f92672>.</span>set_xticks([<span style=color:#ae81ff>0.5</span>, <span style=color:#ae81ff>1.5</span> ,<span style=color:#ae81ff>2.5</span> ,<span style=color:#ae81ff>3.5</span> ,<span style=color:#ae81ff>4.5</span> ,<span style=color:#ae81ff>5.5</span> ,<span style=color:#ae81ff>6.5</span> , <span style=color:#ae81ff>7.5</span>, <span style=color:#ae81ff>8.5</span>, <span style=color:#ae81ff>9.5</span>], minor<span style=color:#f92672>=</span>True)
         
-        <span style="color:#75715e">#Setup the x-axis tick labels</span>
-        ax<span style="color:#f92672">.</span>set_xticklabels(labels,  rotation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;vertical&#39;</span>, minor<span style="color:#f92672">=</span>True, verticalalignment<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bottom&#39;</span>)
-        ax<span style="color:#f92672">.</span>set_xticklabels(<span style="color:#e6db74">&#39;&#39;</span>, minor<span style="color:#f92672">=</span>False)
-        ax<span style="color:#f92672">.</span>tick_params(axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;x&#39;</span>, which<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;minor&#39;</span>, pad<span style="color:#f92672">=-</span><span style="color:#ae81ff">10</span>)
+        <span style=color:#75715e>#Setup the x-axis tick labels</span>
+        ax<span style=color:#f92672>.</span>set_xticklabels(labels,  rotation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;vertical&#39;</span>, minor<span style=color:#f92672>=</span>True, verticalalignment<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;bottom&#39;</span>)
+        ax<span style=color:#f92672>.</span>set_xticklabels(<span style=color:#e6db74>&#39;&#39;</span>, minor<span style=color:#f92672>=</span>False)
+        ax<span style=color:#f92672>.</span>tick_params(axis<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;x&#39;</span>, which<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;minor&#39;</span>, pad<span style=color:#f92672>=-</span><span style=color:#ae81ff>10</span>)
         
-        <span style="color:#75715e">#Assign the well name as the title to each subplot</span>
-        ax<span style="color:#f92672">.</span>set_title(name, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>, fontweight<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bold&#39;</span>)
+        <span style=color:#75715e>#Assign the well name as the title to each subplot</span>
+        ax<span style=color:#f92672>.</span>set_title(name, fontsize<span style=color:#f92672>=</span><span style=color:#ae81ff>16</span>, fontweight<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;bold&#39;</span>)
 
-    plt<span style="color:#f92672">.</span>tight_layout()
-    plt<span style="color:#f92672">.</span>subplots_adjust(hspace<span style="color:#f92672">=</span><span style="color:#ae81ff">0.15</span>, wspace<span style="color:#f92672">=</span><span style="color:#ae81ff">0.25</span>)
-    plt<span style="color:#f92672">.</span>show()
-</code></pre></div><p>Once we run the code above, we get a matplotlib plot with 3 subplots. Each containing the data extent per well.</p>
-<p><img src="https://cdn-images-1.medium.com/max/2880/1*vDPfATgGbpXpffJkjmXRXw.png" alt=""></p>
-<p>From this plot we can determine:</p>
-<p><strong>15/9-F-1 C</strong></p>
-<ul>
-<li>
-<p>Minor gaps in the gamma ray and resistivity curves. As the gaps appear at same position on both resistivity curves we can make an initial assumption that they may be related to casing shoes. Further investigation would be needed to confirm this.</p>
-</li>
-<li>
-<p>Nuclear curves (DEN, NEU, PEF) and the caliper are only run over a short section, possibly indicating the zone of interest.</p>
-</li>
-<li>
-<p>No acoustic curves (AC and ACS)</p>
-</li>
-</ul>
-<p><strong>15/9-F-4</strong></p>
-<ul>
-<li>
-<p>Contains all available curves, with the majority over a small section towards the bottom of the well.</p>
-</li>
-<li>
-<p>There are multiple gaps in the gamma ray (GR) and acoustic shear (ACS) curves. Could be tool related. Further investigation would reveal the cause.</p>
-</li>
-</ul>
-<p><strong>15/9-F-7</strong></p>
-<ul>
-<li>
-<p>Minimal amount of data present over a short and shallow section.</p>
-</li>
-<li>
-<p>Only bitsize, gamma ray and resistivity measurements presents.</p>
-</li>
-<li>
-<p>Could potentially be caused by a tool failure or issues encountered whilst drilling. This information could be confirmed by reviewing the End of Well Reports, if they are available.</p>
-</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<p>In this short article, I have shown you how to load in data from a CSV file and visualise it in a way that you can identify where missing values are located. Understanding where you have or do not have data is a key step in exploring your dataset prior to carrying out a petrophysical interpretation or applying a machine learning model</p>
-<h2 id="references">References</h2>
-<p>Data used in this example:
-Equinor. (2018). Disclosing all Volve data. Available at: <a href="https://www.equinor.com/en/news/14jun2018-disclosing-volve-data.html">https://www.equinor.com/en/news/14jun2018-disclosing-volve-data.html</a></p>
-
-                    </div>
-                </article>
-
-            </div>
-        </div> 
-
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-
-                <div id="share">
-                    
-                </div>
-            </div>
-        </div> 
-        <div class="clearfix"></div>
-
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-
-                <div id="comments">
-                    
-                </div>
-            </div>
-        </div> 
-        <div class="clearfix"></div>
-
-    </div> 
-
-</main>
-
-    
-    
-      <footer id="footer">
-	<div class="container">
-		<div class="row">
-			
-
-			
-			<div class="col-md-3 widget">
-				<h3 class="widget-title">Follow me</h3>
-				<div class="widget-body">
-					<p class="follow-me-icons">
-            
-							
-								<a href="https://www.linkedin.com/andymcdonaldgeo" target="_blank"><i class="fab fa-linkedin fa-1x"></i></a>
-							
-            
-							
-								<a href="https://twitter.com/nickname" target="_blank"><i class="fab fa-twitter-square fa-1x"></i></a>
-							
-            
-							
-								<a href="https://github.com/andymcdgeo" target="_blank"><i class="fab fa-github-square fa-1x"></i></a>
-							
-            
-							
-								<a href="https://andymcdonaldgeo.medium.com" target="_blank"><i class="fab fa-medium fa-1x"></i></a>
-							
-            
-					</p>
-				</div>
-			</div>
-			
-
-			
-
-			
-
-		</div> 
-	</div>
-</footer>
-
-<footer id="underfooter">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-6 widget">
-				<div class="widget-body">
-					<p></p>
-				</div>
-			</div>
-
-			<div class="col-md-6 widget">
-				<div class="widget-body">
-					<p class="text-right">
-						Copyright &copy; 2021, Andy McDonald<br>
-						Powered by: <a href="https://gohugo.io/" rel="poweredby">Hugo</a>
-					</p>
-				</div>
-			</div>
-
-		</div> 
-	</div>
-</footer>
-
-
-
-
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
-
-
-
-
-<script src="http://andymcdgeo.github.io/js/bundle.min.00e4b79049366199ff1b6ac7cbd8302877370d1bf4ff0db6be4c4190e2e43f9143709df60bd35ed5c6f6495ad18afc509d468b7be1665c90f32b62afa4c7114c.js" integrity="sha512-AOS3kEk2YZn/G2rHy9gwKHc3DRv0/w22vkxBkOLkP5FDcJ32C9Ne1cb2SVrRivxQnUaLe&#43;FmXJDzK2KvpMcRTA=="></script>
-
-
-<script id="dsq-count-scr" src="//hugo-initio-site.disqus.com/count.js" async></script>
-</body>
-</html>
-
-    
-  </body>
-  
-</html>
+    plt<span style=color:#f92672>.</span>tight_layout()
+    plt<span style=color:#f92672>.</span>subplots_adjust(hspace<span style=color:#f92672>=</span><span style=color:#ae81ff>0.15</span>, wspace<span style=color:#f92672>=</span><span style=color:#ae81ff>0.25</span>)
+    plt<span style=color:#f92672>.</span>show()
+</code></pre></div><p>Once we run the code above, we get a matplotlib plot with 3 subplots. Each containing the data extent per well.</p><p><img src=https://cdn-images-1.medium.com/max/2880/1*vDPfATgGbpXpffJkjmXRXw.png alt></p><p>From this plot we can determine:</p><p><strong>15/9-F-1 C</strong></p><ul><li><p>Minor gaps in the gamma ray and resistivity curves. As the gaps appear at same position on both resistivity curves we can make an initial assumption that they may be related to casing shoes. Further investigation would be needed to confirm this.</p></li><li><p>Nuclear curves (DEN, NEU, PEF) and the caliper are only run over a short section, possibly indicating the zone of interest.</p></li><li><p>No acoustic curves (AC and ACS)</p></li></ul><p><strong>15/9-F-4</strong></p><ul><li><p>Contains all available curves, with the majority over a small section towards the bottom of the well.</p></li><li><p>There are multiple gaps in the gamma ray (GR) and acoustic shear (ACS) curves. Could be tool related. Further investigation would reveal the cause.</p></li></ul><p><strong>15/9-F-7</strong></p><ul><li><p>Minimal amount of data present over a short and shallow section.</p></li><li><p>Only bitsize, gamma ray and resistivity measurements presents.</p></li><li><p>Could potentially be caused by a tool failure or issues encountered whilst drilling. This information could be confirmed by reviewing the End of Well Reports, if they are available.</p></li></ul><h2 id=conclusion>Conclusion</h2><p>In this short article, I have shown you how to load in data from a CSV file and visualise it in a way that you can identify where missing values are located. Understanding where you have or do not have data is a key step in exploring your dataset prior to carrying out a petrophysical interpretation or applying a machine learning model</p><h2 id=references>References</h2><p>Data used in this example:
+Equinor. (2018). Disclosing all Volve data. Available at: <a href=https://www.equinor.com/en/news/14jun2018-disclosing-volve-data.html>https://www.equinor.com/en/news/14jun2018-disclosing-volve-data.html</a></p></div><div class="navigation navigation-single"><a href=/blog/2020-10-18-petrophysics-gamma-ray-normalisation-in-python/ class=navigation-prev><i aria-hidden=true class="fa fa-chevron-left"></i>
+<span class=navigation-tittle>Petrophysics: Gamma Ray Normalization in Python</span></a>
+<a href=/blog/2020-11-01-exploratory-data-analysis-with-well-log-data/ class=navigation-next><span class=navigation-tittle>Porosity-Permeability Relationships Using Linear Regression in Python</span>
+<i aria-hidden=true class="fa fa-chevron-right"></i></a></div><div id=disqus_thread></div><script type=text/javascript>(function(){var a,b;if(location.hostname==="localhost"||location.hostname==="127.0.0.1"||location.hostname==="")return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='andymcdonald-scot.disqus.com',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script><noscript>Please enable JavaScript to view the
+<a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by
+<span class=logo-disqus>Disqus</span></a></article></div><script defer src=https://use.fontawesome.com/releases/v5.12.1/js/all.js integrity=sha384-ZbbbT1gw3joYkKRqh0kWyRp32UAvdqkpbLedQJSlnI8iLQcFVxaGyrOgOJiDQTTR crossorigin=anonymous></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad()</script><script src=https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.js></script><script type=text/javascript>tocbot&&tocbot.init({tocSelector:'.toc',contentSelector:'.post',headingSelector:'h2, h3, h4',collapseDepth:4})</script></body></html>

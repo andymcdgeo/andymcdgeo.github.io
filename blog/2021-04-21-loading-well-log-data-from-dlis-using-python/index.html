@@ -1,197 +1,19 @@
-<!DOCTYPE html>
-<html lang="en-uk">
-  <head>
-  	<meta charset="utf-8">
-  	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
-  	<meta name="description" content="">
-  	<meta name="author"      content="map[]">
-    
-    	<title>Loading Well Log Data From DLIS using Python</title>
-	<link rel="shortcut icon" href="http://andymcdgeo.github.io/images/gt_favicon.png">
-
-	
-	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
-	
-	
-	<script defer src="https://use.fontawesome.com/releases/v5.0.11/js/all.js" integrity="sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C" crossorigin="anonymous"></script>
-	
-	
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
-	
-  
-
-  <link rel="stylesheet" href="/assets/css/main.min.60d08235164fd1d18fb214bf83a6edc999d293a08e6bfefc16b979e96d2cb87a.css" media="all">
-
-   
-  
-
-  </head>
-  
-  <body class="home">
-
-    
-      <header id="header">
-  <div id="head" style="background-image:url('http://andymcdgeo.github.io/images/header_img.jpg'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));">
-    <h1 id="logo" class="text-center">
-      <img class='img-circle' src="http://andymcdgeo.github.io/images/andy.png" alt="">
-      <span class="title">Andy McDonald</span>
-      <span class="tagline">Petrophysicist | Geoscientist | Data Scientsist</span>
-
-      <div class="social-head">
-        
-          <a href="https://www.linkedin.com/andymcdonaldgeo" target="_blank"><i class="fab fa-linkedin fa-1x"></i></a>
-        
-          <a href="https://twitter.com/nickname" target="_blank"><i class="fab fa-twitter-square fa-1x"></i></a>
-        
-          <a href="https://github.com/andymcdgeo" target="_blank"><i class="fab fa-github-square fa-1x"></i></a>
-        
-          <a href="https://andymcdonaldgeo.medium.com" target="_blank"><i class="fab fa-medium fa-1x"></i></a>
-        
-        
-      </div>
-   </h1>
-</div>
-
-<div class="landing">
-  
-</div>
-
-<nav class="navbar navbar-default navbar-sticky">
-    <div class="container-fluid">
-
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="true">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-
-        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
-
-            <ul class="nav navbar-nav">
-            
-                
-                <li>
-                    <a href="/">Home</a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/blog/">Blog</a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/projects/">Projects</a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/publications/">Publications</a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/about/about/">About</a>
-                </li>
-                
-            
-            </ul>
-
-        </div> 
-        
-    </div>
-</nav>
-
-</header>
-    
- 
-    
-<main id="main">
-
-    <div class="container">
-
-        <div class="row topspace">
-            <div class="col-sm-8 col-sm-offset-2">
-
-                <article class="post">
-                    <header class="entry-header">
-                        <h1 class="title is-1">Loading Well Log Data From DLIS using Python</h1>
-
-                      
-                    
-                    <figure>
-                        <img src="/images/featured/2021-04-21_Loading-Well-data-from-dlis-using-python.png" alt="Loading Well Log Data From DLIS using Python" />
-                    </figure>
-
-                    
-                        <div class="entry-meta">
-                            <span class="posted-on">
-                                <time class="entry-date published" datetime="April 21, 2021">April 21, 2021</time> |  
-                                13  minutes 
-                            </span>
-
-
-                        </div>
-                    </header>
-                    
-                    <div class="entry-content">
-                        <h2 id="loading-well-log-data-from-dlis-using-python">Loading Well Log Data From DLIS using Python</h2>
-<h3 id="a-short-tutorial-on-loading-and-displaying-processed-acoustic-waveform-data-using-dlisio-and-matplotlib">A short tutorial on loading and displaying processed acoustic waveform data using dlisio and matplotlib</h3>
-<p><img src="https://cdn-images-1.medium.com/max/3000/1*e0dawHnkhHg79BTOTvgTdg.png" alt="matplotlib plot showing a semblance map on the left and waveform data on the right. Image by the author."></p>
-<h2 id="introduction">Introduction</h2>
-<p>There are a number of different formats that well log and petrophysical data can be stored in. In the earlier articles and notebooks of this series, we have mainly focused on loading data from CSV files (<a href="https://github.com/andymcdgeo/Petrophysics-Python-Series/blob/master/01%20-%20Loading%20and%20Displaying%20Well%20Data%20From%20CSV.ipynb">here</a>) and LAS files (<a href="https://towardsdatascience.com/loading-multiple-well-log-las-files-using-python-39ac35de99dd">here</a> and <a href="https://andymcdonaldgeo.medium.com/loading-and-displaying-well-log-data-b9568efd1d8">here</a>). Even though LAS files are one of the common formats, they have a flat structure with a header section containing metadata about the well and the file followed by a series of columns containing values for each logging curve. As they are flat, they can’t easily store array data. It is possible, but the individual elements of the array are split out into individual columns/curves within a LAS file as opposed to a single array. This is where DLIS files come in.</p>
-<p>Within this article, we will cover:</p>
-<ul>
-<li>
-<p>the basics of loading a DLIS file</p>
-</li>
-<li>
-<p>exploring the contents and parameters within a DLIS file</p>
-</li>
-<li>
-<p>displaying processed acoustic waveform data</p>
-</li>
-</ul>
-<p>We will not be covering acoustic waveform processing. Just the display of previously processed data.</p>
-<p>This article was inspired by the work of Erlend M. Viggen (<a href="https://erlend-viggen.no/dlis-files/">https://erlend-viggen.no/dlis-files/</a>) who has created an excellent Jupyter Notebook which goes into more detail about working with DLIS files.</p>
-<h3 id="dlis-files">DLIS Files</h3>
-<p>Digital Log Interchange Standard (DLIS) files are structured binary files that contain data tables for well information and well logging data. The file format was developed in the late 1980’s by Schlumberger and subsequently published in 1991 by the American Petroleum Institute to create a standardised well log data format. Full details of the standard format can be found <a href="http://w3.energistics.org/rp66/v1/Toc/main.html">here.</a> The DLIS file format can often be difficult and awkward to work with at times due to the format being developed nearly 30 years ago, and different software packages and vendors can create their own flavours of DLIS by adding in new structures and object-types.</p>
-<p>DLIS files contain large amounts of metadata associated with the well and data. These sections do not contain the well data, these are stored within Frames, of which there can be many representing different logging passes/runs or processing stages (e.g. Raw or Interpreted). Frames are table objects which contain the well log data, where each column represents a logging curve, and that data is indexed by time or depth. Each logging curve within the frame is referred to as a channel. The channels can be a single dimension or multi-dimensional</p>
-<h3 id="dlisio">dlisio</h3>
-<p>dlsio is a python library that has been developed by Equinor ASA to read DLIS files and Log Information Standard79 (LIS79) files. Details of the library can be found <a href="https://dlisio.readthedocs.io/en/stable/index.html">here</a>.</p>
-<h3 id="data">Data</h3>
-<p>The data used within this article was sourced from the <a href="https://www.nlog.nl/en/welcome-nlog">NLOG: Dutch Oil and Gas Portal</a>.</p>
-<p>***Privacy Notice: *<em>DLIS files can contain information that can identify individuals that were involved in the logging operations. To protect their identity from appearing in search engine results without their explicit consent, these fields have been hidden in this article.</em></p>
-<p>This article forms part of my Python &amp; Petrophysics series. Details of the full series can be found <a href="http://andymcdonald.scot/python-and-petrophysics">here</a>. You can also find my Jupyter Notebooks and datasets on my GitHub repository at the following link
-<a href="https://github.com/andymcdgeo/Petrophysics-Python-Series"><strong>andymcdgeo/Petrophysics-Python-Series</strong>
-*This series of Jupyter Notebooks take you through various aspects of working with Python and Petrophysical data. A…*github.com</a></p>
-<p>To follow along with this article, the Jupyter Notebook can be found at the link above and the data file for this article can be found in the <a href="https://github.com/andymcdgeo/Petrophysics-Python-Series/tree/master/Data">Data subfolder</a> of the Python &amp; Petrophysics repository.</p>
-<h2 id="library-imports">Library Imports</h2>
-<p>The first step with any project is to load in the libraries that we want to use. For this notebook we will be using <a href="https://numpy.org/">NumPy</a> for working with arrays, <a href="https://pandas.pydata.org/">pandas</a> for storing data, and <a href="https://matplotlib.org/">matplotlib</a> for displaying the data. To load the data, we will be using the <a href="https://github.com/equinor/dlisio">dlisio</a> library.</p>
-<p>Also, as we will be working with dataframes to view parameters, which can be numerous, we need to change the maximum number of rows that will be displayed when that dataframe is called. This is achieved by pd.set_option(&lsquo;display.max_rows&rsquo;, 500).</p>
-<!-- raw HTML omitted -->
-<script type="application/javascript" src="https://gist.github.com/andymcdgeo/78d5d97689267e480f22c03571b106f7.js"></script>
-
-<h2 id="loading-a-dlis-file">Loading a DLIS File</h2>
-<p>As we are working with a single DLIS file, we can use the following code to load the file. A physical DLIS file can contain multiple logical files, therefore using this syntax allows the first file to be output to f and any subsequent logical files are placed into tail.</p>
-<!-- raw HTML omitted -->
-<p>We can see the contents of each of these by calling upon their names. If we call upon f, we can see that it returns a LogicalFile(00001_AC_WORK and if we call upon tail, we get a blank list, which lets us know that there are no other logical files within the DLIS.</p>
-<!-- raw HTML omitted -->
-<p>Which returns:</p>
-<pre><code>LogicalFile(00001_AC_WORK)
+<!doctype html><html lang=en-uk><head><link href=https://gmpg.org/xfn/11 rel=profile><link rel=canonical href=https://andymcdgeo.github.io/blog/2021-04-21-loading-well-log-data-from-dlis-using-python/><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=generator content="Hugo 0.83.1"><title>Loading Well Log Data From DLIS using Python • Andy McDonald</title><meta name=twitter:card content="summary"><meta name=twitter:title content="Loading Well Log Data From DLIS using Python"><meta name=twitter:description content="Introduction There are a number of different formats that well log and petrophysical data can be stored in. In the earlier articles and notebooks of this series, we have mainly focused on loading data from CSV files (here) and LAS files (here and here). Even though LAS files are one of the common formats, they have a flat structure with a header section containing metadata about the well and the file followed by a series of columns containing values for each logging curve."><meta property="og:title" content="Loading Well Log Data From DLIS using Python"><meta property="og:description" content="Introduction There are a number of different formats that well log and petrophysical data can be stored in. In the earlier articles and notebooks of this series, we have mainly focused on loading data from CSV files (here) and LAS files (here and here). Even though LAS files are one of the common formats, they have a flat structure with a header section containing metadata about the well and the file followed by a series of columns containing values for each logging curve."><meta property="og:type" content="article"><meta property="og:url" content="https://andymcdgeo.github.io/blog/2021-04-21-loading-well-log-data-from-dlis-using-python/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2021-04-21T00:00:00+00:00"><meta property="article:modified_time" content="2021-04-21T00:00:00+00:00"><meta property="og:site_name" content="Andy McDonald"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css><link rel=stylesheet href=/scss/hyde-hyde.a1b0c9bce32a9d5a987631e695bbe6fea465a012ae0e1d72012d3c44d516dd77.css integrity="sha256-obDJvOMqnVqYdjHmlbvm/qRloBKuDh1yAS08RNUW3Xc="><link rel=stylesheet href=/scss/print.2744dcbf8a0b2e74f8a50e4b34e5f441be7cf93cc7de27029121c6a09f9e77bc.css integrity="sha256-J0Tcv4oLLnT4pQ5LNOX0Qb58+TzH3icCkSHGoJ+ed7w=" media=print><link rel=stylesheet href=/scss/tocbot.5ef07cebc3c477b54270456f149ee02922479bb7555fd344b2c69f953b0e7e5e.css integrity="sha256-XvB868PEd7VCcEVvFJ7gKSJHm7dVX9NEssaflTsOfl4="><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js></script><script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]--><link rel=apple-touch-icon-precomposed sizes=144x144 href=/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=/favicon.png></head><body><div class=sidebar><div class=container><div class=sidebar-about><span class=site__title><a href=https://andymcdgeo.github.io/>Andy McDonald</a></span><div class=author-image><img src=https://andymcdgeo.github.io/img/andy.png alt="Author Image" class="img--circle img--headshot element--center"></div><p class=site__description>Petrophysicist | Data Scientist</p></div><div class=collapsible-menu><input type=checkbox id=menuToggle>
+<label for=menuToggle>Andy McDonald</label><div class=menu-content><div><ul class=sidebar-nav><li><a href=/about/><span>About</span></a></li><li><a href=/blog/><span>Blog</span></a></li><li><a href=/projects/><span>Projects</span></a></li></ul></div><section class=social><a href=https://twitter.com/%3cusername%3e rel=me><i class="fab fa-twitter fa-lg" aria-hidden=true></i></a>
+<a href=https://github.com/%3cusername%3e rel=me><i class="fab fa-github fa-lg" aria-hidden=true></i></a>
+<a href=https://linkedin.com/in/%3cusername%3e rel=me><i class="fab fa-linkedin fa-lg" aria-hidden=true></i></a>
+<a href=mailto:your-email@example.com rel=me><i class="fas fa-at fa-lg" aria-hidden=true></i></a></section></div></div><div class=copyright>&copy; 2021 Andy McDonald</div></div></div><div class="content container"><article><header><h1>Loading Well Log Data From DLIS using Python</h1><figure><img src=/images/featured/2021-04-21_Loading-Well-data-from-dlis-using-python.png alt="Loading Well Log Data From DLIS using Python" class=img-fluid></figure><div class=post__meta><i class="fas fa-calendar-alt"></i> Apr 21, 2021
+in
+<a class="badge badge-category" href=/categories/petrophysics>PETROPHYSICS</a>
+•
+<a class="badge badge-category" href=/categories/python>PYTHON</a><br><i class="fas fa-tags"></i>
+<a class="badge badge-tag" href=/tags/petrophysics>petrophysics</a>
+<a class="badge badge-tag" href=/tags/python>python</a><br><i class="fas fa-clock"></i> 13 min read</div></header><div class=toc-wrapper><input type=checkbox id=tocToggle>
+<label for=tocToggle>Table of Content</label><div class=toc id=TableOfContents></div></div><div class=post><h2 id=introduction>Introduction</h2><p>There are a number of different formats that well log and petrophysical data can be stored in. In the earlier articles and notebooks of this series, we have mainly focused on loading data from CSV files (<a href=https://github.com/andymcdgeo/Petrophysics-Python-Series/blob/master/01%20-%20Loading%20and%20Displaying%20Well%20Data%20From%20CSV.ipynb>here</a>) and LAS files (<a href=https://towardsdatascience.com/loading-multiple-well-log-las-files-using-python-39ac35de99dd>here</a> and <a href=https://andymcdonaldgeo.medium.com/loading-and-displaying-well-log-data-b9568efd1d8>here</a>). Even though LAS files are one of the common formats, they have a flat structure with a header section containing metadata about the well and the file followed by a series of columns containing values for each logging curve. As they are flat, they can’t easily store array data. It is possible, but the individual elements of the array are split out into individual columns/curves within a LAS file as opposed to a single array. This is where DLIS files come in.</p><p>Within this article, we will cover:</p><ul><li><p>the basics of loading a DLIS file</p></li><li><p>exploring the contents and parameters within a DLIS file</p></li><li><p>displaying processed acoustic waveform data</p></li></ul><p>We will not be covering acoustic waveform processing. Just the display of previously processed data.</p><p>This article was inspired by the work of Erlend M. Viggen (<a href=https://erlend-viggen.no/dlis-files/>https://erlend-viggen.no/dlis-files/</a>) who has created an excellent Jupyter Notebook which goes into more detail about working with DLIS files.</p><h3 id=dlis-files>DLIS Files</h3><p>Digital Log Interchange Standard (DLIS) files are structured binary files that contain data tables for well information and well logging data. The file format was developed in the late 1980’s by Schlumberger and subsequently published in 1991 by the American Petroleum Institute to create a standardised well log data format. Full details of the standard format can be found <a href=http://w3.energistics.org/rp66/v1/Toc/main.html>here.</a> The DLIS file format can often be difficult and awkward to work with at times due to the format being developed nearly 30 years ago, and different software packages and vendors can create their own flavours of DLIS by adding in new structures and object-types.</p><p>DLIS files contain large amounts of metadata associated with the well and data. These sections do not contain the well data, these are stored within Frames, of which there can be many representing different logging passes/runs or processing stages (e.g. Raw or Interpreted). Frames are table objects which contain the well log data, where each column represents a logging curve, and that data is indexed by time or depth. Each logging curve within the frame is referred to as a channel. The channels can be a single dimension or multi-dimensional</p><h3 id=dlisio>dlisio</h3><p>dlsio is a python library that has been developed by Equinor ASA to read DLIS files and Log Information Standard79 (LIS79) files. Details of the library can be found <a href=https://dlisio.readthedocs.io/en/stable/index.html>here</a>.</p><h3 id=data>Data</h3><p>The data used within this article was sourced from the <a href=https://www.nlog.nl/en/welcome-nlog>NLOG: Dutch Oil and Gas Portal</a>.</p><p>***Privacy Notice: *<em>DLIS files can contain information that can identify individuals that were involved in the logging operations. To protect their identity from appearing in search engine results without their explicit consent, these fields have been hidden in this article.</em></p><p>This article forms part of my Python & Petrophysics series. Details of the full series can be found <a href=http://andymcdonald.scot/python-and-petrophysics>here</a>. You can also find my Jupyter Notebooks and datasets on my GitHub repository at the following link
+<a href=https://github.com/andymcdgeo/Petrophysics-Python-Series><strong>andymcdgeo/Petrophysics-Python-Series</strong>
+*This series of Jupyter Notebooks take you through various aspects of working with Python and Petrophysical data. A…*github.com</a></p><p>To follow along with this article, the Jupyter Notebook can be found at the link above and the data file for this article can be found in the <a href=https://github.com/andymcdgeo/Petrophysics-Python-Series/tree/master/Data>Data subfolder</a> of the Python & Petrophysics repository.</p><h2 id=library-imports>Library Imports</h2><p>The first step with any project is to load in the libraries that we want to use. For this notebook we will be using <a href=https://numpy.org/>NumPy</a> for working with arrays, <a href=https://pandas.pydata.org/>pandas</a> for storing data, and <a href=https://matplotlib.org/>matplotlib</a> for displaying the data. To load the data, we will be using the <a href=https://github.com/equinor/dlisio>dlisio</a> library.</p><p>Also, as we will be working with dataframes to view parameters, which can be numerous, we need to change the maximum number of rows that will be displayed when that dataframe is called. This is achieved by pd.set_option(&lsquo;display.max_rows&rsquo;, 500).</p><script type=application/javascript src=https://gist.github.com/andymcdgeo/78d5d97689267e480f22c03571b106f7.js></script><h2 id=loading-a-dlis-file>Loading a DLIS File</h2><p>As we are working with a single DLIS file, we can use the following code to load the file. A physical DLIS file can contain multiple logical files, therefore using this syntax allows the first file to be output to f and any subsequent logical files are placed into tail.</p><p>We can see the contents of each of these by calling upon their names. If we call upon f, we can see that it returns a LogicalFile(00001_AC_WORK and if we call upon tail, we get a blank list, which lets us know that there are no other logical files within the DLIS.</p><p>Which returns:</p><pre><code>LogicalFile(00001_AC_WORK)
 []
-</code></pre>
-<p>To view the high-level contents of the file we can use the .describe() method. This returns information about the number of frames, channels, and objects within the Logical File. When we apply this to f we can see we have a file with 4frames and 484 channels (logging curves), in addition to a number of known and unknown objects.</p>
-<!-- raw HTML omitted -->
-<p>Which returns:</p>
-<pre><code>------------
+</code></pre><p>To view the high-level contents of the file we can use the .describe() method. This returns information about the number of frames, channels, and objects within the Logical File. When we apply this to f we can see we have a file with 4frames and 484 channels (logging curves), in addition to a number of known and unknown objects.</p><p>Which returns:</p><pre><code>------------
 Logical File
 ------------
 Description : LogicalFile(FMS_DSI_138PUP)
@@ -218,15 +40,7 @@ Unknown objects
 440-CHANNEL                  : 538
 440-PRESENTATION-DESCRIPTION : 1
 440-OP-CHANNEL               : 573
-</code></pre>
-<h2 id="viewing-the-files-metadata">Viewing the File’s Metadata</h2>
-<h3 id="data-origin">Data Origin</h3>
-<p>The first set of metadata we will look at is the origin. This provides information about the source of the data within the file. Occasionally, data may originate from multiple sources so we need to account for this by unpacking the origins into two variables. We can always check if there is other origin information by printing the length of the list.</p>
-<!-- raw HTML omitted -->
-<p>When we view the length of origin_tail, we can see it has a length of 2. For this article, we will focus on origin. We can view the details of it, by calling upon describe(). This provides details about the field, well, and other file information.</p>
-<!-- raw HTML omitted -->
-<p>Which returns:</p>
-<pre><code>------
+</code></pre><h2 id=viewing-the-files-metadata>Viewing the File’s Metadata</h2><h3 id=data-origin>Data Origin</h3><p>The first set of metadata we will look at is the origin. This provides information about the source of the data within the file. Occasionally, data may originate from multiple sources so we need to account for this by unpacking the origins into two variables. We can always check if there is other origin information by printing the length of the list.</p><p>When we view the length of origin_tail, we can see it has a length of 2. For this article, we will focus on origin. We can view the details of it, by calling upon describe(). This provides details about the field, well, and other file information.</p><p>Which returns:</p><pre><code>------
 Origin
 ------
 name   : DLIS_DEFINING_ORIGIN
@@ -247,12 +61,7 @@ Created                 : 2002-02-17 18:18:52
 
 Created by              : OP, (version: 9C2-303)
 Other programs/services : MESTB: Micro Electrical Scanner - B (Slim)  SGTL: Scintillation Gamma-Ray - L DTAA: Downhole Toolbus Adapter - A          DSSTB: Dipole Shear Imager - B DTCA: DTS Telemetry CartridgeACTS: Auxiliary Compression Tension Sub - B DIP: Dip Computation DIR: Directional Survey Computation HOLEV: Integrated Hole/Cement Volume
-</code></pre>
-<h3 id="frames">Frames</h3>
-<p>Frames within a DLIS file can represent different logging passes or different stages of data, such as raw well log measurements to petrophysical interpretations or processed data. Each frame has a number of properties. The example code below prints out the properties in an easy-to-read format.</p>
-<!-- raw HTML omitted -->
-<p>This returns the following summary. Which indicates that two frames exist within this file. With the first frame containing basic well log curves of bitsize (BIT), caliper (CAL), gamma ray (GR) and tension (TEN). The second frame contains the post-processed acoustic waveform data.</p>
-<pre><code>Frame Name: 		 60B
+</code></pre><h3 id=frames>Frames</h3><p>Frames within a DLIS file can represent different logging passes or different stages of data, such as raw well log measurements to petrophysical interpretations or processed data. Each frame has a number of properties. The example code below prints out the properties in an easy-to-read format.</p><p>This returns the following summary. Which indicates that two frames exist within this file. With the first frame containing basic well log curves of bitsize (BIT), caliper (CAL), gamma ray (GR) and tension (TEN). The second frame contains the post-processed acoustic waveform data.</p><pre><code>Frame Name: 		 60B
 Index Type: 		 BOREHOLE-DEPTH
 Depth Interval: 	 0 - 0 0.1 in
 Depth Spacing: 		 -60 0.1 in
@@ -289,208 +98,12 @@ Depth Spacing: 		 -15 0.1 in
 Direction: 		 DECREASING
 Num of Channels: 	 12
 Channel Names: 		 [Channel(TDEP), Channel(TIME), Channel(C1), Channel(C2), Channel(U-MBAV), Channel(AX), Channel(AY), Channel(AZ), Channel(EI), Channel(FX), Channel(FY), Channel(FZ)]
-</code></pre>
-<h3 id="parameters-within-the-dlis-file">Parameters within the DLIS File</h3>
-<p>As seen earlier, we have a number of objects associated with the DLIS file. To make them easier to read we can create a short function that creates a pandas dataframe containing the parameters.</p>
-<!-- raw HTML omitted -->
-<p>The logging parameters can be accessed by calling upon f.parameters. To access the parameters, we can use the attributes name, long_name and values and pass these into the summary function.</p>
-<!-- raw HTML omitted -->
-<p>This returns a long table of each of the parameters. The example below is a small section of that table. From it, we can see parameters such as bottom log interval, borehole salinity and bottom hole temperature.</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*oYRIU4OK4Z0rn7JgUtMUmg.png" alt="Key well parameters stored within the DLIS file. Image by author."></p>
-<h3 id="channels-within-the-dlis-file">Channels within the DLIS File</h3>
-<p>The channels within a frame are the individual curves or arrays. To view a quick summary of these, we can pass in a number of attributes to the summary_dataframe() method.</p>
-<!-- raw HTML omitted -->
-<p>This returns yet another long table with all the curves contained within the file, and the frame the data belongs to.</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*yXu8AZ4KZtZpCn0bKWbtFw.png" alt="Channels within a DLIS file represent individual logging curves. Image by the author."></p>
-<h3 id="tools-within-the-dlis-file">Tools within the DLIS File</h3>
-<p>The tools object within the DLIS file contains information relating to the tools that were used to acquire the data. We can get a summary of the tools available be calling upon the summary_dataframe method.</p>
-<!-- raw HTML omitted -->
-<p>This returns a short table containing 5 tools:</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*Z_P-qYudifdGS3Ufu8nEUA.png" alt="A list of tools stored within the DLIS file. Image by the author."></p>
-<p>As we are looking to plot acoustic waveform data, we can look at the parameters for the DSSTB — Dipole Shear Imager tool. First, we need to grab the object from the dlis and then pass it into the summary_dataframe function.</p>
-<!-- raw HTML omitted -->
-<p>From the returned table, we can view each of the parameters that relate to the tool and the processing of the data.</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*9JRTYlHZI7sxpd_Qu3gLAQ.png" alt="Tool processing parameters for the DSST tool. Image by the author."></p>
-<h2 id="plotting-data">Plotting Data</h2>
-<p>Now that some of the metadata has been explored, we can now attempt to access the data stored within the file.</p>
-<p>Frames and data can be accessed by calling upon the .object() for the file. First, we can assign the frames to variables, which will make things easier when accessing the data within them, especially if the frames contain channels/curves with the same name. The .object() method requires the type of the object being accessed, i.e. &lsquo;FRAME&rsquo; or &lsquo;CHANNEL&rsquo; and its name. In this case, we can refer back to the previous step which contains the channels and the frame names. We can see that the basic logging curves are in one frame and the acoustic data is in another.</p>
-<!-- raw HTML omitted -->
-<p>We can also directly access the channels for a specific curve. However, this can cause confusion when working with frames containing channels/curves with the same name.</p>
-<p>The example below shows how to call key properties of the channel/curve. Details of which can be found <a href="https://dlisio.readthedocs.io/en/stable/dlis/api.html#dlisio.dlis.Channel">here.</a></p>
-<!-- raw HTML omitted -->
-<p>Which returns:</p>
-<pre><code>Name: 		DTCO
+</code></pre><h3 id=parameters-within-the-dlis-file>Parameters within the DLIS File</h3><p>As seen earlier, we have a number of objects associated with the DLIS file. To make them easier to read we can create a short function that creates a pandas dataframe containing the parameters.</p><p>The logging parameters can be accessed by calling upon f.parameters. To access the parameters, we can use the attributes name, long_name and values and pass these into the summary function.</p><p>This returns a long table of each of the parameters. The example below is a small section of that table. From it, we can see parameters such as bottom log interval, borehole salinity and bottom hole temperature.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*oYRIU4OK4Z0rn7JgUtMUmg.png alt="Key well parameters stored within the DLIS file. Image by author."></p><h3 id=channels-within-the-dlis-file>Channels within the DLIS File</h3><p>The channels within a frame are the individual curves or arrays. To view a quick summary of these, we can pass in a number of attributes to the summary_dataframe() method.</p><p>This returns yet another long table with all the curves contained within the file, and the frame the data belongs to.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*yXu8AZ4KZtZpCn0bKWbtFw.png alt="Channels within a DLIS file represent individual logging curves. Image by the author."></p><h3 id=tools-within-the-dlis-file>Tools within the DLIS File</h3><p>The tools object within the DLIS file contains information relating to the tools that were used to acquire the data. We can get a summary of the tools available be calling upon the summary_dataframe method.</p><p>This returns a short table containing 5 tools:</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*Z_P-qYudifdGS3Ufu8nEUA.png alt="A list of tools stored within the DLIS file. Image by the author."></p><p>As we are looking to plot acoustic waveform data, we can look at the parameters for the DSSTB — Dipole Shear Imager tool. First, we need to grab the object from the dlis and then pass it into the summary_dataframe function.</p><p>From the returned table, we can view each of the parameters that relate to the tool and the processing of the data.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*9JRTYlHZI7sxpd_Qu3gLAQ.png alt="Tool processing parameters for the DSST tool. Image by the author."></p><h2 id=plotting-data>Plotting Data</h2><p>Now that some of the metadata has been explored, we can now attempt to access the data stored within the file.</p><p>Frames and data can be accessed by calling upon the .object() for the file. First, we can assign the frames to variables, which will make things easier when accessing the data within them, especially if the frames contain channels/curves with the same name. The .object() method requires the type of the object being accessed, i.e. &lsquo;FRAME&rsquo; or &lsquo;CHANNEL&rsquo; and its name. In this case, we can refer back to the previous step which contains the channels and the frame names. We can see that the basic logging curves are in one frame and the acoustic data is in another.</p><p>We can also directly access the channels for a specific curve. However, this can cause confusion when working with frames containing channels/curves with the same name.</p><p>The example below shows how to call key properties of the channel/curve. Details of which can be found <a href=https://dlisio.readthedocs.io/en/stable/dlis/api.html#dlisio.dlis.Channel>here.</a></p><p>Which returns:</p><pre><code>Name: 		DTCO
 Long Name: 	Delta-T Compressional
 Units: 		us/ft
 Dimension: 	[1]
-</code></pre>
-<h3 id="assigning-channels-to-variables">Assigning Channels to Variables</h3>
-<p>Now that we know how to access the frames and channels of the DLIS file, we can now assign variable names to the curves that we are looking to plot. In this article, we will be plotting:</p>
-<ul>
-<li>
-<p>DTCO: Delta-T Compressional</p>
-</li>
-<li>
-<p>DTSM: Delta-T Shear</p>
-</li>
-<li>
-<p>SPR4: STC Slowness Projection, Receiver Array — Monopole P&amp;S</p>
-</li>
-<li>
-<p>PWF4: DSST Packed Waveform Data — Monopole P&amp;S</p>
-</li>
-</ul>
-<p>We will also need to assign a depth curve (TDEP) from the frame. Looking back at the information section of the frame, the Depth Interval is 0.1 inches. This needs to be converted to metres by multiplying by 0.00254.</p>
-<!-- raw HTML omitted -->
-<p>When the depth min and max is printed out, we get the following range for the data:</p>
-<pre><code>4574.4384765625 - 4819.04052734375
-</code></pre>
-<p>To make an initial check on data, we can create a quick log plot of DTCO and DTSM against depth using matplotlib.</p>
-<!-- raw HTML omitted -->
-<p><img src="https://cdn-images-1.medium.com/max/3600/1*EM6TxG-lIoC8g5msP2pysA.png" alt="Simple plot of DTCO and DTSM curves to check their content. Image by author."></p>
-<h3 id="plotting-the-processed-semblance-map">Plotting the Processed Semblance Map</h3>
-<p>We will start with setting up a subplot with two axes and using subplot2grid. The first axis will contain the semblance plot and the second will be twinned with the first. This allows the data to be plotted on the same y-axis.</p>
-<p>To plot the semblance data we need to use imshow. When we do this, we need to pass in the extent of the array both in terms of depth range (using depth.min() and depth.max()) and the data range (40 - 240 us/ft).</p>
-<p>On top of that, the DTCO and DTSM curves can be plotted. This allows us to see how these curves were picked from the semblance map.</p>
-<!-- raw HTML omitted -->
-<p><img src="https://cdn-images-1.medium.com/max/4200/1*bx4fdkm57lxBCMGRzbeKlQ.png" alt="Acoustic waveform semblance plot using matplotlib. Acoustic compressional (sonic) and shear curves are plotted on top of the semblance map. Image by the author."></p>
-<h3 id="plotting-the-processed-waveform">Plotting the Processed Waveform</h3>
-<p>We can modify the plot to add in a subplot for the acoustic waveform data associated with the semblance map. If we look at the shape of wf_mono we can see it returns (1606, 8, 512). This indicates that the array is multi-dimensional. The middle number indicates that we have 8 receivers worth of data.</p>
-<p>To access the first receiver, which is usually the closest one to the transmitter array, we can create a slice of the data like so:</p>
-<!-- raw HTML omitted -->
-<p>This code returns the minimum and maximum values of the array, which can be used as a guide for scaling colours.</p>
-<p>Taking the plot code from the semblance map section, we can enhance it by adding another subplot. In this subplot, we will use another imshow() plot and pass in the relevant parameters. The vmin and vmax parameters can be used to tweak the image to bring out or reduce the detail within the waveform.</p>
-<!-- raw HTML omitted -->
-<p>This generates the following plot:</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*t1qhU4x3-OWCYIIPE24DhQ.png" alt="Acoustic monopole semblance map (left) and waveform for receiver 1 (right) plotted using Python’s matplotlib library. Image by the author."></p>
-<h3 id="adding-interactive-controls">Adding Interactive Controls</h3>
-<p>Rather than rerunning the cell each time the depth and/or DT plot scales require changing, we can add a few interactive widgets to help with this. This can be achieved by importing ipywidgets and IPython.display.</p>
-<p>The plot code can be placed inside a function and decorated with the widgets code. In the example below, we are passing in MinDepth, MaxDepth, MinDT and MaxDT. All four of which can be called upon in the code.</p>
-<!-- raw HTML omitted -->
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*UtDKgc0WjH30SNzhwXMBNA.png" alt="Interactive plots allow you to change key parameters without re-running the cell in the Jupyter notebook. Image by the author."></p>
-<h2 id="summary">Summary</h2>
-<p>In this article, we have covered how to load a DLIS file using the dlisio Python library. Once the DLIS file is loaded, different parameter tables and logging curves can be viewed and extracted. We have also seen how we can take processed acoustic waveform data and plot it using matplotlib. DLIS files don’t have to be daunting to work with in Python. Once the basic structure and commands from dlisio are understood it becomes much simpler.</p>
-<p><em><strong>Thanks for reading!</strong></em></p>
-<p><em>If you have found this article useful, please feel free to check out my other articles looking at various aspects of Python and well log data. You can also find my code used in this article and others at <a href="https://github.com/andymcdgeo">GitHub</a>.</em></p>
-<p><em>If you want to get in touch you can find me on <a href="https://www.linkedin.com/in/andymcdonaldgeo/">LinkedIn</a> or at my <a href="http://andymcdonald.scot/">website</a>.</em></p>
-<p><em>Interested in learning more about python and well log data or petrophysics? Follow me on <a href="https://medium.com/@andymcdonaldgeo">Medium</a>.</em></p>
-<h2 id="references">References</h2>
-<p><a href="https://erlend-viggen.no/dlis-files/">Viggen, E.M. Extracing data from DLIS Files</a>
-<a href="https://www.researchgate.net/publication/340645995_Getting_started_with_acoustic_well_log_data_using_the_dlisio_Python_library_on_the_Volve_Data_Village_dataset">Viggen, E.M, Harstad, E., and Kvalsvik J. (2020), Getting started with acoustic well log data using the dlisio Python library on the Volve Data Village dataset</a><a href="https://www.nlog.nl/en/welcome-nlog">NLOG: Dutch Oil and Gas Portal</a></p>
-
-                    </div>
-                </article>
-
-            </div>
-        </div> 
-
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-
-                <div id="share">
-                    
-                </div>
-            </div>
-        </div> 
-        <div class="clearfix"></div>
-
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-
-                <div id="comments">
-                    
-                </div>
-            </div>
-        </div> 
-        <div class="clearfix"></div>
-
-    </div> 
-
-</main>
-
-    
-    
-      <footer id="footer">
-	<div class="container">
-		<div class="row">
-			
-
-			
-			<div class="col-md-3 widget">
-				<h3 class="widget-title">Follow me</h3>
-				<div class="widget-body">
-					<p class="follow-me-icons">
-            
-							
-								<a href="https://www.linkedin.com/andymcdonaldgeo" target="_blank"><i class="fab fa-linkedin fa-1x"></i></a>
-							
-            
-							
-								<a href="https://twitter.com/nickname" target="_blank"><i class="fab fa-twitter-square fa-1x"></i></a>
-							
-            
-							
-								<a href="https://github.com/andymcdgeo" target="_blank"><i class="fab fa-github-square fa-1x"></i></a>
-							
-            
-							
-								<a href="https://andymcdonaldgeo.medium.com" target="_blank"><i class="fab fa-medium fa-1x"></i></a>
-							
-            
-					</p>
-				</div>
-			</div>
-			
-
-			
-
-			
-
-		</div> 
-	</div>
-</footer>
-
-<footer id="underfooter">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-6 widget">
-				<div class="widget-body">
-					<p></p>
-				</div>
-			</div>
-
-			<div class="col-md-6 widget">
-				<div class="widget-body">
-					<p class="text-right">
-						Copyright &copy; 2021, Andy McDonald<br>
-						Powered by: <a href="https://gohugo.io/" rel="poweredby">Hugo</a>
-					</p>
-				</div>
-			</div>
-
-		</div> 
-	</div>
-</footer>
-
-
-
-
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
-
-
-
-
-<script src="http://andymcdgeo.github.io/js/bundle.min.00e4b79049366199ff1b6ac7cbd8302877370d1bf4ff0db6be4c4190e2e43f9143709df60bd35ed5c6f6495ad18afc509d468b7be1665c90f32b62afa4c7114c.js" integrity="sha512-AOS3kEk2YZn/G2rHy9gwKHc3DRv0/w22vkxBkOLkP5FDcJ32C9Ne1cb2SVrRivxQnUaLe&#43;FmXJDzK2KvpMcRTA=="></script>
-
-
-<script id="dsq-count-scr" src="//hugo-initio-site.disqus.com/count.js" async></script>
-</body>
-</html>
-
-    
-  </body>
-  
-</html>
+</code></pre><h3 id=assigning-channels-to-variables>Assigning Channels to Variables</h3><p>Now that we know how to access the frames and channels of the DLIS file, we can now assign variable names to the curves that we are looking to plot. In this article, we will be plotting:</p><ul><li><p>DTCO: Delta-T Compressional</p></li><li><p>DTSM: Delta-T Shear</p></li><li><p>SPR4: STC Slowness Projection, Receiver Array — Monopole P&S</p></li><li><p>PWF4: DSST Packed Waveform Data — Monopole P&S</p></li></ul><p>We will also need to assign a depth curve (TDEP) from the frame. Looking back at the information section of the frame, the Depth Interval is 0.1 inches. This needs to be converted to metres by multiplying by 0.00254.</p><p>When the depth min and max is printed out, we get the following range for the data:</p><pre><code>4574.4384765625 - 4819.04052734375
+</code></pre><p>To make an initial check on data, we can create a quick log plot of DTCO and DTSM against depth using matplotlib.</p><p><img src=https://cdn-images-1.medium.com/max/3600/1*EM6TxG-lIoC8g5msP2pysA.png alt="Simple plot of DTCO and DTSM curves to check their content. Image by author."></p><h3 id=plotting-the-processed-semblance-map>Plotting the Processed Semblance Map</h3><p>We will start with setting up a subplot with two axes and using subplot2grid. The first axis will contain the semblance plot and the second will be twinned with the first. This allows the data to be plotted on the same y-axis.</p><p>To plot the semblance data we need to use imshow. When we do this, we need to pass in the extent of the array both in terms of depth range (using depth.min() and depth.max()) and the data range (40 - 240 us/ft).</p><p>On top of that, the DTCO and DTSM curves can be plotted. This allows us to see how these curves were picked from the semblance map.</p><p><img src=https://cdn-images-1.medium.com/max/4200/1*bx4fdkm57lxBCMGRzbeKlQ.png alt="Acoustic waveform semblance plot using matplotlib. Acoustic compressional (sonic) and shear curves are plotted on top of the semblance map. Image by the author."></p><h3 id=plotting-the-processed-waveform>Plotting the Processed Waveform</h3><p>We can modify the plot to add in a subplot for the acoustic waveform data associated with the semblance map. If we look at the shape of wf_mono we can see it returns (1606, 8, 512). This indicates that the array is multi-dimensional. The middle number indicates that we have 8 receivers worth of data.</p><p>To access the first receiver, which is usually the closest one to the transmitter array, we can create a slice of the data like so:</p><p>This code returns the minimum and maximum values of the array, which can be used as a guide for scaling colours.</p><p>Taking the plot code from the semblance map section, we can enhance it by adding another subplot. In this subplot, we will use another imshow() plot and pass in the relevant parameters. The vmin and vmax parameters can be used to tweak the image to bring out or reduce the detail within the waveform.</p><p>This generates the following plot:</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*t1qhU4x3-OWCYIIPE24DhQ.png alt="Acoustic monopole semblance map (left) and waveform for receiver 1 (right) plotted using Python’s matplotlib library. Image by the author."></p><h3 id=adding-interactive-controls>Adding Interactive Controls</h3><p>Rather than rerunning the cell each time the depth and/or DT plot scales require changing, we can add a few interactive widgets to help with this. This can be achieved by importing ipywidgets and IPython.display.</p><p>The plot code can be placed inside a function and decorated with the widgets code. In the example below, we are passing in MinDepth, MaxDepth, MinDT and MaxDT. All four of which can be called upon in the code.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*UtDKgc0WjH30SNzhwXMBNA.png alt="Interactive plots allow you to change key parameters without re-running the cell in the Jupyter notebook. Image by the author."></p><h2 id=summary>Summary</h2><p>In this article, we have covered how to load a DLIS file using the dlisio Python library. Once the DLIS file is loaded, different parameter tables and logging curves can be viewed and extracted. We have also seen how we can take processed acoustic waveform data and plot it using matplotlib. DLIS files don’t have to be daunting to work with in Python. Once the basic structure and commands from dlisio are understood it becomes much simpler.</p><p><em><strong>Thanks for reading!</strong></em></p><p><em>If you have found this article useful, please feel free to check out my other articles looking at various aspects of Python and well log data. You can also find my code used in this article and others at <a href=https://github.com/andymcdgeo>GitHub</a>.</em></p><p><em>If you want to get in touch you can find me on <a href=https://www.linkedin.com/in/andymcdonaldgeo/>LinkedIn</a> or at my <a href=http://andymcdonald.scot/>website</a>.</em></p><p><em>Interested in learning more about python and well log data or petrophysics? Follow me on <a href=https://medium.com/@andymcdonaldgeo>Medium</a>.</em></p><h2 id=references>References</h2><p><a href=https://erlend-viggen.no/dlis-files/>Viggen, E.M. Extracing data from DLIS Files</a></p><p><a href=https://www.researchgate.net/publication/340645995_Getting_started_with_acoustic_well_log_data_using_the_dlisio_Python_library_on_the_Volve_Data_Village_dataset>Viggen, E.M, Harstad, E., and Kvalsvik J. (2020), Getting started with acoustic well log data using the dlisio Python library on the Volve Data Village dataset</a></p><p><a href=https://www.nlog.nl/en/welcome-nlog>NLOG: Dutch Oil and Gas Portal</a></p></div><div class="navigation navigation-single"><a href=/blog/2021-02-28-adding-formation-data-to-a-well-log-plot/ class=navigation-prev><i aria-hidden=true class="fa fa-chevron-left"></i>
+<span class=navigation-tittle>Adding Formation Data to a Well Log Plot</span></a></div><div id=disqus_thread></div><script type=text/javascript>(function(){var a,b;if(location.hostname==="localhost"||location.hostname==="127.0.0.1"||location.hostname==="")return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='andymcdonald-scot.disqus.com',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script><noscript>Please enable JavaScript to view the
+<a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by
+<span class=logo-disqus>Disqus</span></a></article></div><script defer src=https://use.fontawesome.com/releases/v5.12.1/js/all.js integrity=sha384-ZbbbT1gw3joYkKRqh0kWyRp32UAvdqkpbLedQJSlnI8iLQcFVxaGyrOgOJiDQTTR crossorigin=anonymous></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad()</script><script src=https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.js></script><script type=text/javascript>tocbot&&tocbot.init({tocSelector:'.toc',contentSelector:'.post',headingSelector:'h2, h3, h4',collapseDepth:4})</script></body></html>
