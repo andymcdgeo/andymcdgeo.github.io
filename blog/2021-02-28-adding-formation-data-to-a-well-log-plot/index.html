@@ -1,37 +1,360 @@
-<!doctype html><html lang=en-uk><head><link href=https://gmpg.org/xfn/11 rel=profile><link rel=canonical href=https://andymcdgeo.github.io/blog/2021-02-28-adding-formation-data-to-a-well-log-plot/><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=generator content="Hugo 0.83.1"><title>Adding Formation Data to a Well Log Plot • Andy McDonald</title><meta name=twitter:card content="summary"><meta name=twitter:title content="Adding Formation Data to a Well Log Plot"><meta name=twitter:description content="Well log plots are a common visualization tool within geoscience and petrophysics. They allow easy visualization of data (for example, Gamma Ray, Neutron Porosity, Bulk Density, etc) that has been acquired along the length (depth) of a wellbore."><meta property="og:title" content="Adding Formation Data to a Well Log Plot"><meta property="og:description" content="Well log plots are a common visualization tool within geoscience and petrophysics. They allow easy visualization of data (for example, Gamma Ray, Neutron Porosity, Bulk Density, etc) that has been acquired along the length (depth) of a wellbore."><meta property="og:type" content="article"><meta property="og:url" content="https://andymcdgeo.github.io/blog/2021-02-28-adding-formation-data-to-a-well-log-plot/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2021-02-28T00:00:00+00:00"><meta property="article:modified_time" content="2021-02-28T00:00:00+00:00"><meta property="og:site_name" content="Andy McDonald"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css><link rel=stylesheet href=/scss/hyde-hyde.82099689c9e903b5394262dc5f47e29d6fe7b0f53781050489875ec22b7bf8eb.css integrity="sha256-ggmWicnpA7U5QmLcX0finW/nsPU3gQUEiYdewit7+Os="><link rel=stylesheet href=/scss/print.2f225bcc8d05373a7e32f083e5a2c3b25348d1ce7b8b79d926198a4b91aa7706.css integrity="sha256-LyJbzI0FNzp+MvCD5aLDslNI0c57i3nZJhmKS5GqdwY=" media=print><link rel=stylesheet href=/scss/tocbot.5ef07cebc3c477b54270456f149ee02922479bb7555fd344b2c69f953b0e7e5e.css integrity="sha256-XvB868PEd7VCcEVvFJ7gKSJHm7dVX9NEssaflTsOfl4="><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js></script><script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]--><link rel=apple-touch-icon-precomposed sizes=144x144 href=/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=/favicon.png></head><body><div class=sidebar><div class=container><div class=sidebar-about><span class=site__title><a href=https://andymcdgeo.github.io/>Andy McDonald</a></span><div class=author-image><img src=https://andymcdgeo.github.io/img/andy.png alt="Author Image" class="img--circle img--headshot element--center"></div><p class=site__description>Petrophysicist, Geoscientist, Data Scientist</p></div><div class=collapsible-menu><input type=checkbox id=menuToggle>
-<label for=menuToggle>Andy McDonald</label><div class=menu-content><div><ul class=sidebar-nav><li><a href=/about/><span>About</span></a></li><li><a href=/blog/><span>Blog</span></a></li><li><a href=/projects/><span>Publications</span></a></li><li><a href=/projects/><span>Talks</span></a></li></ul></div><section class=social><a href=https://twitter.com/https://twitter.com/geoandymcd rel=me><i class="fab fa-twitter fa-lg" aria-hidden=true></i></a>
-<a href=https://github.com/https://github.com/andymcdgeo rel=me><i class="fab fa-github fa-lg" aria-hidden=true></i></a>
-<a href=https://linkedin.com/in/https://www.linkedin.com/andymcdonaldgeo rel=me><i class="fab fa-linkedin fa-lg" aria-hidden=true></i></a>
-<a href=https://medium.com/@https://andymcdonaldgeo.medium.com rel=me><i class="fab fa-medium fa-lg" aria-hidden=true></i></a>
-<a href=mailto:your-email@example.com rel=me><i class="fas fa-at fa-lg" aria-hidden=true></i></a></section></div></div><div class=copyright>&copy; 2021 Andy McDonald</div></div></div><div class="content container"><article><header><h1>Adding Formation Data to a Well Log Plot</h1><figure><img src=/images/featured/2021-02-28_Adding-formation-data-to-a-well-log-plot.png alt="Adding Formation Data to a Well Log Plot" class=img-fluid></figure><div class=post__meta><i class="fas fa-calendar-alt"></i> Feb 28, 2021
-in
-<a class="badge badge-category" href=/categories/petrophysics>PETROPHYSICS</a>
-•
-<a class="badge badge-category" href=/categories/python>PYTHON</a><br><i class="fas fa-tags"></i>
-<a class="badge badge-tag" href=/tags/petrophysics>petrophysics</a>
-<a class="badge badge-tag" href=/tags/python>python</a>
-<a class="badge badge-tag" href=/tags/formation-data>formation data</a><br><i class="fas fa-clock"></i> 9 min read</div></header><div class=toc-wrapper><input type=checkbox id=tocToggle>
-<label for=tocToggle>Table of Content</label><div class=toc id=TableOfContents></div></div><div class=post><p>Well log plots are a common visualization tool within geoscience and petrophysics. They allow easy visualization of data (for example, Gamma Ray, Neutron Porosity, Bulk Density, etc) that has been acquired along the length (depth) of a wellbore.</p><p>I have previously covered different aspects of making these plots in the following articles:</p><ul><li><p><a href=https://towardsdatascience.com/displaying-lithology-data-using-python-and-matplotlib-58b4d251ee7a>Displaying Lithology Data on a Well Log Plot Using Python</a></p></li><li><p><a href=https://towardsdatascience.com/displaying-logging-while-drilling-lwd-image-logs-in-python-4babb6e577ba>Displaying Logging While Drilling (LWD) Image Logs in Python</a></p></li><li><p><a href=https://towardsdatascience.com/enhancing-visualization-of-well-logs-with-plot-fills-72d9dcd10c1b>Enhancing Visualization of Well Logs With Plot Fills</a></p></li><li><p><a href=https://andymcdonaldgeo.medium.com/loading-and-displaying-well-log-data-b9568efd1d8>Loading and Displaying Well Log Data</a></p></li></ul><p>In this article, I will show how to combine these different methods into a single plot function that allows you to easily reuse the code with similar data.</p><p>For the examples below you can find my Jupyter Notebook and dataset on my GitHub repository at the following link.
-<a href=https://github.com/andymcdgeo/Petrophysics-Python-Series><strong>andymcdgeo/Petrophysics-Python-Series</strong>
-*This series of Jupyter Notebooks take you through various aspects of working with Python and Petrophysical data. A…*github.com</a></p><p>This article forms part of my Python & Petrophysics series. Details of which can be found <a href=http://andymcdonald.scot/python-and-petrophysics>here</a>.</p><p>The dataset we are using comes from the publicly available <a href=https://www.equinor.com/en/what-we-do/norwegian-continental-shelf-platforms/volve.html>Equinor Volve Field dataset</a> released in 2018. The file used in this tutorial is from well 15/9- 19SR which contains a nice set of well log data.</p><h2 id=creating-a-reusable-log-plot-and-showing-formation-data>Creating a Reusable Log Plot and Showing Formation Data</h2><h3 id=setting-up-the-libraries>Setting up the Libraries</h3><p>For this article and notebook, we will be using a number of different libraries.</p><p>We will be using five libraries: <a href=https://pandas.pydata.org/>pandas</a>, <a href=https://matplotlib.org/>matplotlib</a>, <a href=https://docs.python.org/3/library/csv.html>csv</a>, <a href=https://docs.python.org/3/library/collections.html>collecitons</a>, and <a href=https://lasio.readthedocs.io/>lasio</a>. Pandas and lasio, will be used to load and store the log data, collections allow us to use a defaultdict to load in our formation tops to a dictionary. Finally, matplotlib will let us plot out well log data.</p><h3 id=loading-las-data>Loading LAS Data</h3><p>The first set of data we will load will be the LAS file from the Volve dataset. To do this we call upon the las.read() function and pass in the file. Once the file has been read, we can convert it quickly to a pandas dataframe using .df(). This will make it easier for us to work with.</p><p>To see how to load multiple las files, check out my previous article <a href=https://towardsdatascience.com/loading-multiple-well-log-las-files-using-python-39ac35de99dd>here</a>.</p><p>When lasio converts the las file to a dataframe it assigns the depth curve as the dataframe index. This can be converted to a column as seen below. This is especially important when we are working with multiple las files and we do not wish to cause clashes with similar depth values.</p><p>We can then print the header of the dataframe to verify our data has loaded correctly.</p><p><img src=https://cdn-images-1.medium.com/max/2000/1*SCtmpqCpbCdwL6bkVwdZxA.png alt></p><h3 id=loading-formation-tops>Loading Formation Tops</h3><p>For this article, three formation tops are stored within a simple csv file. For each formation, the top and bottom depths are stored. To load this file in, we can use the code snippet below.</p><ul><li><p>Line 1, creates an empty dictionary and will hold our formations</p></li><li><p>Line 4 opens the csv file in read mode (‘r’)</p></li><li><p>Line 5 allows us to skip the header row and jump to the next line. This prevents the header row from being added to the dictionary</p></li><li><p>Line 6 allows us to loop through each row in the csv file. We can also specify the fieldnames for each column, if these are not specified then the values in the first row will be used as fieldnames</p></li><li><p>Line 7 lets us assign the formation name as the key, and to the right of the = we can create a list of the top and bottom depths. We need to convert these to floats</p></li></ul><p>When we call formations_dict we can preview what our dictionary contains.</p><pre><code>{'Hugin Fm.': [4316.5, 4340.0],
+<!DOCTYPE html>
+<html lang="en-uk">
+    
+    
+
+
+    <head>
+    <link href="https://gmpg.org/xfn/11" rel="profile">
+    
+    <link rel="canonical" href="https://andymcdgeo.github.io/blog/2021-02-28-adding-formation-data-to-a-well-log-plot/">
+    
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Enable responsiveness on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="generator" content="Hugo 0.82.1" />
+
+    
+    
+    
+
+<title>Adding Formation Data to a Well Log Plot • Andy McDonald</title>
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Adding Formation Data to a Well Log Plot"/>
+<meta name="twitter:description" content="Well log plots are a common visualization tool within geoscience and petrophysics. They allow easy visualization of data (for example, Gamma Ray, Neutron Porosity, Bulk Density, etc) that has been acquired along the length (depth) of a wellbore."/>
+
+<meta property="og:title" content="Adding Formation Data to a Well Log Plot" />
+<meta property="og:description" content="Well log plots are a common visualization tool within geoscience and petrophysics. They allow easy visualization of data (for example, Gamma Ray, Neutron Porosity, Bulk Density, etc) that has been acquired along the length (depth) of a wellbore." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://andymcdgeo.github.io/blog/2021-02-28-adding-formation-data-to-a-well-log-plot/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-02-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-02-28T00:00:00&#43;00:00" /><meta property="og:site_name" content="Andy McDonald" />
+
+
+
+    
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/scss/hyde-hyde.82099689c9e903b5394262dc5f47e29d6fe7b0f53781050489875ec22b7bf8eb.css" integrity="sha256-ggmWicnpA7U5QmLcX0finW/nsPU3gQUEiYdewit7&#43;Os=">
+
+
+<link rel="stylesheet" href="/scss/print.2f225bcc8d05373a7e32f083e5a2c3b25348d1ce7b8b79d926198a4b91aa7706.css" integrity="sha256-LyJbzI0FNzp&#43;MvCD5aLDslNI0c57i3nZJhmKS5GqdwY=" media="print">
+
+
+
+
+<link rel="stylesheet" href="/scss/tocbot.5ef07cebc3c477b54270456f149ee02922479bb7555fd344b2c69f953b0e7e5e.css" integrity="sha256-XvB868PEd7VCcEVvFJ7gKSJHm7dVX9NEssaflTsOfl4=">
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    
+</head>
+
+
+    <body class=" ">
+    
+<div class="sidebar">
+  <div class="container ">
+    <div class="sidebar-about">
+      <span class="site__title">
+        <a href="https://andymcdgeo.github.io/">
+        
+          Andy McDonald
+        
+        </a>
+      </span>
+      
+        
+        
+        
+        <div class="author-image">
+          <img src="https://andymcdgeo.github.io/img/andy.png" alt="Author Image" class="img--circle img--headshot element--center">
+        </div>
+        
+      
+      
+      <p class="site__description">
+         Petrophysicist, Geoscientist, Data Scientist 
+      </p>
+    </div>
+    <div class="collapsible-menu">
+      <input type="checkbox" id="menuToggle">
+      <label for="menuToggle">Andy McDonald</label>
+      <div class="menu-content">
+        <div>
+	<ul class="sidebar-nav">
+		 
+		 
+			 
+				<li>
+					<a href="/about/">
+						<span>About</span>
+					</a>
+				</li>
+			 
+		 
+			 
+				<li>
+					<a href="/blog/">
+						<span>Blog</span>
+					</a>
+				</li>
+			 
+		 
+			 
+				<li>
+					<a href="/projects/">
+						<span>Publications</span>
+					</a>
+				</li>
+			 
+		 
+			 
+				<li>
+					<a href="/projects/">
+						<span>Talks</span>
+					</a>
+				</li>
+			 
+		
+	</ul>
+</div>
+
+        <section class="social">
+	
+	<a href="https://twitter.com/https://twitter.com/geoandymcd" rel="me"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a>
+	
+	
+	
+	
+	<a href="https://github.com/https://github.com/andymcdgeo" rel="me"><i class="fab fa-github fa-lg" aria-hidden="true"></i></a>
+	
+	
+	
+	
+	
+	
+	
+	<a href="https://linkedin.com/in/https://www.linkedin.com/andymcdonaldgeo" rel="me"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a>
+	
+	
+	
+	
+	<a href="https://medium.com/@https://andymcdonaldgeo.medium.com" rel="me"><i class="fab fa-medium fa-lg" aria-hidden="true"></i></a>
+	
+	
+	
+	
+	
+	
+	
+	<a href="mailto:your-email@example.com" rel="me"><i class="fas fa-at fa-lg" aria-hidden="true"></i></a>
+	
+	
+	
+	
+</section>
+
+      </div>
+    </div>
+    
+<div class="copyright">
+  &copy; 2021 Andy McDonald
+  
+</div>
+
+
+
+  </div>
+</div>
+
+        <div class="content container">
+            
+    
+<article>
+  <header>
+    <h1>Adding Formation Data to a Well Log Plot</h1>
+    
+    
+    <figure>
+        <img src="/images/featured/2021-02-28_Adding-formation-data-to-a-well-log-plot.png" alt="Adding Formation Data to a Well Log Plot" class="img-fluid"/>
+    </figure>
+    
+    
+    
+<div class="post__meta">
+    
+    
+      <i class="fas fa-calendar-alt"></i> Feb 28, 2021
+    
+    
+    
+      
+      
+          in
+          
+          
+              <a class="badge badge-category" href="/categories/petrophysics">PETROPHYSICS</a>
+              •
+          
+              <a class="badge badge-category" href="/categories/python">PYTHON</a>
+              
+          
+      
+    
+    
+    
+      
+      
+          <br/>
+           <i class="fas fa-tags"></i>
+          
+          <a class="badge badge-tag" href="/tags/petrophysics">petrophysics</a>
+           
+      
+          <a class="badge badge-tag" href="/tags/python">python</a>
+           
+      
+          <a class="badge badge-tag" href="/tags/formation-data">formation data</a>
+          
+      
+    
+    
+    <br/>
+    <i class="fas fa-clock"></i> 9 min read
+</div>
+
+
+  </header>
+  
+  
+  
+    <div class="toc-wrapper">
+      <input type="checkbox" id="tocToggle">
+      <label for="tocToggle">Table of Content</label>
+      
+        <div class="toc" id="TableOfContents"></div>
+      
+    </div>
+  
+  
+  <div class="post">
+    <!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Well log plots are a common visualization tool within geoscience and petrophysics. They allow easy visualization of data (for example, Gamma Ray, Neutron Porosity, Bulk Density, etc) that has been acquired along the length (depth) of a wellbore.</p>
+<p>I have previously covered different aspects of making these plots in the following articles:</p>
+<ul>
+<li>
+<p><a href="https://towardsdatascience.com/displaying-lithology-data-using-python-and-matplotlib-58b4d251ee7a">Displaying Lithology Data on a Well Log Plot Using Python</a></p>
+</li>
+<li>
+<p><a href="https://towardsdatascience.com/displaying-logging-while-drilling-lwd-image-logs-in-python-4babb6e577ba">Displaying Logging While Drilling (LWD) Image Logs in Python</a></p>
+</li>
+<li>
+<p><a href="https://towardsdatascience.com/enhancing-visualization-of-well-logs-with-plot-fills-72d9dcd10c1b">Enhancing Visualization of Well Logs With Plot Fills</a></p>
+</li>
+<li>
+<p><a href="https://andymcdonaldgeo.medium.com/loading-and-displaying-well-log-data-b9568efd1d8">Loading and Displaying Well Log Data</a></p>
+</li>
+</ul>
+<p>In this article, I will show how to combine these different methods into a single plot function that allows you to easily reuse the code with similar data.</p>
+<p>For the examples below you can find my Jupyter Notebook and dataset on my GitHub repository at the following link.
+<a href="https://github.com/andymcdgeo/Petrophysics-Python-Series"><strong>andymcdgeo/Petrophysics-Python-Series</strong>
+*This series of Jupyter Notebooks take you through various aspects of working with Python and Petrophysical data. A…*github.com</a></p>
+<p>This article forms part of my Python &amp; Petrophysics series. Details of which can be found <a href="http://andymcdonald.scot/python-and-petrophysics">here</a>.</p>
+<p>The dataset we are using comes from the publicly available <a href="https://www.equinor.com/en/what-we-do/norwegian-continental-shelf-platforms/volve.html">Equinor Volve Field dataset</a> released in 2018. The file used in this tutorial is from well 15/9- 19SR which contains a nice set of well log data.</p>
+<h2 id="creating-a-reusable-log-plot-and-showing-formation-data">Creating a Reusable Log Plot and Showing Formation Data</h2>
+<h3 id="setting-up-the-libraries">Setting up the Libraries</h3>
+<p>For this article and notebook, we will be using a number of different libraries.</p>
+<p>We will be using five libraries: <a href="https://pandas.pydata.org/">pandas</a>, <a href="https://matplotlib.org/">matplotlib</a>, <a href="https://docs.python.org/3/library/csv.html">csv</a>, <a href="https://docs.python.org/3/library/collections.html">collecitons</a>, and <a href="https://lasio.readthedocs.io/">lasio</a>. Pandas and lasio, will be used to load and store the log data, collections allow us to use a defaultdict to load in our formation tops to a dictionary. Finally, matplotlib will let us plot out well log data.</p>
+<!-- raw HTML omitted -->
+<h3 id="loading-las-data">Loading LAS Data</h3>
+<p>The first set of data we will load will be the LAS file from the Volve dataset. To do this we call upon the las.read() function and pass in the file. Once the file has been read, we can convert it quickly to a pandas dataframe using .df(). This will make it easier for us to work with.</p>
+<p>To see how to load multiple las files, check out my previous article <a href="https://towardsdatascience.com/loading-multiple-well-log-las-files-using-python-39ac35de99dd">here</a>.</p>
+<!-- raw HTML omitted -->
+<p>When lasio converts the las file to a dataframe it assigns the depth curve as the dataframe index. This can be converted to a column as seen below. This is especially important when we are working with multiple las files and we do not wish to cause clashes with similar depth values.</p>
+<!-- raw HTML omitted -->
+<p>We can then print the header of the dataframe to verify our data has loaded correctly.</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*SCtmpqCpbCdwL6bkVwdZxA.png" alt=""></p>
+<h3 id="loading-formation-tops">Loading Formation Tops</h3>
+<p>For this article, three formation tops are stored within a simple csv file. For each formation, the top and bottom depths are stored. To load this file in, we can use the code snippet below.</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Line 1, creates an empty dictionary and will hold our formations</p>
+</li>
+<li>
+<p>Line 4 opens the csv file in read mode (‘r’)</p>
+</li>
+<li>
+<p>Line 5 allows us to skip the header row and jump to the next line. This prevents the header row from being added to the dictionary</p>
+</li>
+<li>
+<p>Line 6 allows us to loop through each row in the csv file. We can also specify the fieldnames for each column, if these are not specified then the values in the first row will be used as fieldnames</p>
+</li>
+<li>
+<p>Line 7 lets us assign the formation name as the key, and to the right of the = we can create a list of the top and bottom depths. We need to convert these to floats</p>
+</li>
+</ul>
+<p>When we call formations_dict we can preview what our dictionary contains.</p>
+<pre><code>{'Hugin Fm.': [4316.5, 4340.0],
  'Skagerrak': [4340.0, 4579.0],
  'Smith Bank Fm.': [4579.0, 4641.0]}
-</code></pre><p>In order for the tops to be plotted in the correct place on a log plot we need to calculate the midpoint between the formation top and bottom depths. As the depth values are in list form, they can be called using the index number, with 0 being the top depth and 1 being the bottom depth.</p><p>When we call the formation_midpoints list we get the following values:</p><pre><code>[4328.25, 4459.5, 4610.0]
-</code></pre><p>Finally, we can assign some colors to our formations. in this case I have selected red, blue, and green.</p><h3 id=setting-up-the-log-plot>Setting up the Log Plot</h3><p>In my previous articles, I created the plots on the fly and the code was only usable for a particular dataset. Generalizing a well log plot or petrophysics plot can be difficult due to the variety of curve mnemonics and log plot setups. In this example, I have placed my plotting section within a function.</p><p>Using functions is a great way to increase the reusability of code and reduces the amount of duplication that can occur.</p><p>Below the following code snippet, I have explained some of the key sections that make up our well log plot function.</p><p>**Lines 3–10 **sets up the log tracks. Here, I am using subplot2grid to control the number of tracks. suplot2grid((1,10), (0,0), rowspan=1, colspan=3) translates to creating a plot that is 10 columns wide, 1 row high and the first few axes spans 3 columns each. This allows us to control the width of each track.</p><p>The last track (ax5) will be used to plot our formation tops information.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>    fig, ax <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>subplots(figsize<span style=color:#f92672>=</span>(<span style=color:#ae81ff>15</span>,<span style=color:#ae81ff>10</span>))
+</code></pre>
+<p>In order for the tops to be plotted in the correct place on a log plot we need to calculate the midpoint between the formation top and bottom depths. As the depth values are in list form, they can be called using the index number, with 0 being the top depth and 1 being the bottom depth.</p>
+<!-- raw HTML omitted -->
+<p>When we call the formation_midpoints list we get the following values:</p>
+<pre><code>[4328.25, 4459.5, 4610.0]
+</code></pre>
+<p>Finally, we can assign some colors to our formations. in this case I have selected red, blue, and green.</p>
+<!-- raw HTML omitted -->
+<h3 id="setting-up-the-log-plot">Setting up the Log Plot</h3>
+<p>In my previous articles, I created the plots on the fly and the code was only usable for a particular dataset. Generalizing a well log plot or petrophysics plot can be difficult due to the variety of curve mnemonics and log plot setups. In this example, I have placed my plotting section within a function.</p>
+<p>Using functions is a great way to increase the reusability of code and reduces the amount of duplication that can occur.</p>
+<p>Below the following code snippet, I have explained some of the key sections that make up our well log plot function.</p>
+<!-- raw HTML omitted -->
+<p>**Lines 3–10 **sets up the log tracks. Here, I am using subplot2grid to control the number of tracks. suplot2grid((1,10), (0,0), rowspan=1, colspan=3) translates to creating a plot that is 10 columns wide, 1 row high and the first few axes spans 3 columns each. This allows us to control the width of each track.</p>
+<p>The last track (ax5) will be used to plot our formation tops information.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>,<span style="color:#ae81ff">10</span>))
 
-    <span style=color:#75715e>#Set up the plot axes</span>
-        ax1 <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>subplot2grid((<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>10</span>), (<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0</span>), rowspan<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>, colspan <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>)
-        ax2 <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>subplot2grid((<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>10</span>), (<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>3</span>), rowspan<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>, colspan <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>, sharey <span style=color:#f92672>=</span> ax1)
-        ax3 <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>subplot2grid((<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>10</span>), (<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>6</span>), rowspan<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>, colspan <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>, sharey <span style=color:#f92672>=</span> ax1)
-        ax4 <span style=color:#f92672>=</span> ax3<span style=color:#f92672>.</span>twiny() 
-        ax5 <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>subplot2grid((<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>10</span>), (<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>9</span>), rowspan<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>, colspan <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>, sharey <span style=color:#f92672>=</span> ax1)
-</code></pre></div><p><strong>Lines 14–19</strong> adds a second set of the axis on top of the existing one. This allows maintaining a border around each track when we come to detach the scale.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>        ax10 <span style=color:#f92672>=</span> ax1<span style=color:#f92672>.</span>twiny()
-        ax10<span style=color:#f92672>.</span>xaxis<span style=color:#f92672>.</span>set_visible(False)
-        ax11 <span style=color:#f92672>=</span> ax2<span style=color:#f92672>.</span>twiny()
-        ax11<span style=color:#f92672>.</span>xaxis<span style=color:#f92672>.</span>set_visible(False)
-        ax12 <span style=color:#f92672>=</span> ax3<span style=color:#f92672>.</span>twiny()
-        ax12<span style=color:#f92672>.</span>xaxis<span style=color:#f92672>.</span>set_visible(False)
-</code></pre></div><p>**Lines 21–49 **set up the gamma ray track. First, we use ax1.plot to set up the data, line width, and color. Next, we set up the x-axis with a label, an axis color, and a set of limits.</p><p>As ax1 is going to be the first track on the plot, we can assign the y axis label of Depth (m).</p><p>After defining the curve setup, we can add some colored fill between the curve and the right-hand side of the track. See <a href=https://towardsdatascience.com/enhancing-visualization-of-well-logs-with-plot-fills-72d9dcd10c1b>Enhancing Visualization of Well Logs with Plot Fills </a>for details on how this was setup.</p><pre><code># Gamma Ray track
+    <span style="color:#75715e">#Set up the plot axes</span>
+        ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplot2grid((<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>), (<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>), rowspan<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, colspan <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>)
+        ax2 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplot2grid((<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>), (<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">3</span>), rowspan<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, colspan <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>, sharey <span style="color:#f92672">=</span> ax1)
+        ax3 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplot2grid((<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>), (<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">6</span>), rowspan<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, colspan <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>, sharey <span style="color:#f92672">=</span> ax1)
+        ax4 <span style="color:#f92672">=</span> ax3<span style="color:#f92672">.</span>twiny() 
+        ax5 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplot2grid((<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>), (<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">9</span>), rowspan<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, colspan <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, sharey <span style="color:#f92672">=</span> ax1)
+</code></pre></div><p><strong>Lines 14–19</strong> adds a second set of the axis on top of the existing one. This allows maintaining a border around each track when we come to detach the scale.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        ax10 <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>twiny()
+        ax10<span style="color:#f92672">.</span>xaxis<span style="color:#f92672">.</span>set_visible(False)
+        ax11 <span style="color:#f92672">=</span> ax2<span style="color:#f92672">.</span>twiny()
+        ax11<span style="color:#f92672">.</span>xaxis<span style="color:#f92672">.</span>set_visible(False)
+        ax12 <span style="color:#f92672">=</span> ax3<span style="color:#f92672">.</span>twiny()
+        ax12<span style="color:#f92672">.</span>xaxis<span style="color:#f92672">.</span>set_visible(False)
+</code></pre></div><p>**Lines 21–49 **set up the gamma ray track. First, we use ax1.plot to set up the data, line width, and color. Next, we set up the x-axis with a label, an axis color, and a set of limits.</p>
+<p>As ax1 is going to be the first track on the plot, we can assign the y axis label of Depth (m).</p>
+<p>After defining the curve setup, we can add some colored fill between the curve and the right-hand side of the track. See <a href="https://towardsdatascience.com/enhancing-visualization-of-well-logs-with-plot-fills-72d9dcd10c1b">Enhancing Visualization of Well Logs with Plot Fills </a>for details on how this was setup.</p>
+<pre><code># Gamma Ray track
     
     ## Setting up the track and curve
     ax1.plot(gamma, depth, color = &quot;green&quot;, linewidth = 0.5)
@@ -60,33 +383,170 @@ in
         index_value = (index - left_col_value)/span
         color = cmap(index_value) #obtain colour for color index value
         ax1.fill_betweenx(depth, gamma , right_col_value, where = gamma &gt;= index,  color = color)
-</code></pre><p>In my previous articles with log plots, there have been gaps between each of the tracks. An example can be seen in the image above. When this gap was reduced the scale information for each track became muddled up. A better solution for this is to turn of the axis labels using ax1.set_xticklabels([]) and use a text label like below.</p><pre><code>ax1.text(0.05, 1.04, 0, color='green', 
+</code></pre>
+<p>In my previous articles with log plots, there have been gaps between each of the tracks. An example can be seen in the image above. When this gap was reduced the scale information for each track became muddled up. A better solution for this is to turn of the axis labels using ax1.set_xticklabels([]) and use a text label like below.</p>
+<pre><code>ax1.text(0.05, 1.04, 0, color='green', 
              horizontalalignment='left', transform=ax1.transAxes)
 ax1.text(0.95, 1.04, 150, color='green', 
              horizontalalignment='right', transform=ax1.transAxes)
-</code></pre><p>The ax.text function can take in a number of arguments, but the basics are ax.text(xposition, yposition, textstring). In our example, we also pass in the horizontal alignment and a transform argument.</p><p>We then repeat this for each axis, until ax5, where all we need to do is add a track header and hide the x ticks.</p><p>Note that ax4 is twinned with ax3 and sits on top of it. This allows easy plotting of the neutron porosity data.</p><p><strong>Lines 103–113</strong> contain the code for setting up the fill between the neutron porosity and density logs. See <a href=https://towardsdatascience.com/enhancing-visualization-of-well-logs-with-plot-fills-72d9dcd10c1b>Enhancing Visualization of Well Logs with Plot Fills</a> for details on this method.</p><pre><code>ax5.set_xticklabels([])
+</code></pre>
+<p>The ax.text function can take in a number of arguments, but the basics are ax.text(xposition, yposition, textstring). In our example, we also pass in the horizontal alignment and a transform argument.</p>
+<p>We then repeat this for each axis, until ax5, where all we need to do is add a track header and hide the x ticks.</p>
+<p>Note that ax4 is twinned with ax3 and sits on top of it. This allows easy plotting of the neutron porosity data.</p>
+<p><strong>Lines 103–113</strong> contain the code for setting up the fill between the neutron porosity and density logs. See <a href="https://towardsdatascience.com/enhancing-visualization-of-well-logs-with-plot-fills-72d9dcd10c1b">Enhancing Visualization of Well Logs with Plot Fills</a> for details on this method.</p>
+<pre><code>ax5.set_xticklabels([])
 ax5.text(0.5, 1.1, 'Formations', fontweight='bold',
              horizontalalignment='center', transform=ax5.transAxes)
-</code></pre><p>In <strong>Lines 118–123</strong> we can save some lines of code by bundling common functions we want to apply to each track into a single for loop and allows us to set parameters for the axes in one go.</p><p>In this loop we are:</p><ul><li><p>setting the y axis limits to the bottom and top depth we supply to the function</p></li><li><p>setting the gridline style</p></li><li><p>setting the position of the x-axis label and tick marks</p></li><li><p>offsetting the top part (spine) of the track so it floats above the track</p><p>for ax in [ax1, ax2, ax3]:
+</code></pre>
+<p>In <strong>Lines 118–123</strong> we can save some lines of code by bundling common functions we want to apply to each track into a single for loop and allows us to set parameters for the axes in one go.</p>
+<p>In this loop we are:</p>
+<ul>
+<li>
+<p>setting the y axis limits to the bottom and top depth we supply to the function</p>
+</li>
+<li>
+<p>setting the gridline style</p>
+</li>
+<li>
+<p>setting the position of the x-axis label and tick marks</p>
+</li>
+<li>
+<p>offsetting the top part (spine) of the track so it floats above the track</p>
+<p>for ax in [ax1, ax2, ax3]:
 ax.set_ylim(bottomdepth, topdepth)
 ax.grid(which=&lsquo;major&rsquo;, color=&lsquo;lightgrey&rsquo;, linestyle='-')
 ax.xaxis.set_ticks_position(&ldquo;top&rdquo;)
 ax.xaxis.set_label_position(&ldquo;top&rdquo;)
-ax.spines[&ldquo;top&rdquo;].set_position((&ldquo;axes&rdquo;, 1.02))</p></li></ul><p><strong>Lines 125–129</strong> contains the next for loop that applies to ax1, ax2, ax3, and ax5 and lets us add formation shading across all tracks. We can loop through a zipped object of our formation depth values in our formations_dict and the zone_colours list. We will use these values to create a horizontal span object using ax.axhspan. Basically, it adds a rectangle on top of our axes between two Y-values (depths).</p><pre><code>for ax in [ax1, ax2, ax3, ax5]:
+ax.spines[&ldquo;top&rdquo;].set_position((&ldquo;axes&rdquo;, 1.02))</p>
+</li>
+</ul>
+<p><strong>Lines 125–129</strong> contains the next for loop that applies to ax1, ax2, ax3, and ax5 and lets us add formation shading across all tracks. We can loop through a zipped object of our formation depth values in our formations_dict and the zone_colours list. We will use these values to create a horizontal span object using ax.axhspan. Basically, it adds a rectangle on top of our axes between two Y-values (depths).</p>
+<pre><code>for ax in [ax1, ax2, ax3, ax5]:
     # loop through the formations dictionary and zone colours
     for depth, colour in zip(formations.values(), colours):
          # use the depths and colours to shade across subplots
          ax.axhspan(depth[0], depth[1], color=colour, alpha=0.1)
-</code></pre><p><strong>Lines 132–133</strong> hide the yticklabels (depth labels) on each of the tracks (subplots).</p><pre><code>for ax in [ax2, ax3, ax4, ax5]:
+</code></pre>
+<p><strong>Lines 132–133</strong> hide the yticklabels (depth labels) on each of the tracks (subplots).</p>
+<pre><code>for ax in [ax2, ax3, ax4, ax5]:
         plt.setp(ax.get_yticklabels(), visible = False)
-</code></pre><p><strong>Lines 135–139</strong> is our final and key for loop for adding our formation labels directly onto ax5. Here we are using the ax.text function and passing in an x position (0.5 = middle of the track) and a y position, which is our calculated formation midpoint depths. We then want to align the text vertically from the center so that the center of the text string sits in the middle of the formation.</p><pre><code>for label, formation_mid in zip(formations_dict.keys(), 
+</code></pre>
+<p><strong>Lines 135–139</strong> is our final and key for loop for adding our formation labels directly onto ax5. Here we are using the ax.text function and passing in an x position (0.5 = middle of the track) and a y position, which is our calculated formation midpoint depths. We then want to align the text vertically from the center so that the center of the text string sits in the middle of the formation.</p>
+<pre><code>for label, formation_mid in zip(formations_dict.keys(), 
                                     formation_midpoints):
         ax5.text(0.5, formation_mid, label, rotation=90,
                 verticalalignment='center', fontweight='bold',
                 fontsize='large')
-</code></pre><p><img src=https://cdn-images-1.medium.com/max/2000/1*dKX-K4f7juMnSbDPwKqbRg.png alt="Plotting of formation names in the middle of the formation on ax5."></p><p><em><strong>Note that if the formations are thin, then the text will overlap the boundaries of that formation and into the next one.</strong></em></p><h3 id=creating-the-plot-with-our-data>Creating the Plot With Our Data</h3><p>Now that our function is setup the way want it, we can now pass in the columns from the well dataframe. The power of the function comes into its own when we use other wells to make plots that are set up the same.</p><p>When we run this function call, we generate the following plot</p><p><img src=https://cdn-images-1.medium.com/max/4500/1*zZ05vWeUiO11OhHb8RVOzw.png alt="Final well log plot generated using Python’s matplotlib library and contains variable fill on the gamma ray, and a neutron-density crossover fill. Image by author."></p><h2 id=summary>Summary</h2><p>In this article, we have covered how to load a las file and formation data from a csv file. This data was then plotted on our log plot. Also, we have seen how to turn our log plot code into a function, which allows us to reuse the code with other wells. This makes future plotting much simpler and quicker.</p><p><em><strong>Thanks for reading!</strong></em></p><p><em>If you have found this article useful, please feel free to check out my other articles looking at various aspects of Python and well log data. You can also find my code used in this article and others at <a href=https://github.com/andymcdgeo>**GitHub</a>.</em>**</p><p><em>If you want to get in touch you can find me on <a href=https://www.linkedin.com/in/andymcdonaldgeo/>**LinkedIn</a> <strong>or at my <a href=http://andymcdonald.scot/>**website</a></strong>.</em></p><p><em>Interested in learning more about python and well log data or petrophysics? Follow me on <a href=https://andymcdonaldgeo.medium.com/>**Medium</a>**.</em></p></div><div class="navigation navigation-single"><a href=/blog/2021-02-14-loading-multiple-well-log-las-files-using-python/ class=navigation-prev><i aria-hidden=true class="fa fa-chevron-left"></i>
-<span class=navigation-tittle>Loading Multiple Well Log LAS Files Using Python</span></a>
-<a href=/blog/2021-04-21-loading-well-log-data-from-dlis-using-python/ class=navigation-next><span class=navigation-tittle>Loading Well Log Data From DLIS using Python</span>
-<i aria-hidden=true class="fa fa-chevron-right"></i></a></div><div id=disqus_thread></div><script type=text/javascript>(function(){var a,b;if(location.hostname==="localhost"||location.hostname==="127.0.0.1"||location.hostname==="")return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='andymcdonald-scot.disqus.com',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script><noscript>Please enable JavaScript to view the
-<a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by
-<span class=logo-disqus>Disqus</span></a></article></div><script defer src=https://use.fontawesome.com/releases/v5.12.1/js/all.js integrity=sha384-ZbbbT1gw3joYkKRqh0kWyRp32UAvdqkpbLedQJSlnI8iLQcFVxaGyrOgOJiDQTTR crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js integrity=sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4 crossorigin=anonymous></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad()</script><script src=https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.js></script><script type=text/javascript>tocbot&&tocbot.init({tocSelector:'.toc',contentSelector:'.post',headingSelector:'h2, h3, h4',collapseDepth:4})</script></body></html>
+</code></pre>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*dKX-K4f7juMnSbDPwKqbRg.png" alt="Plotting of formation names in the middle of the formation on ax5."></p>
+<p><em><strong>Note that if the formations are thin, then the text will overlap the boundaries of that formation and into the next one.</strong></em></p>
+<h3 id="creating-the-plot-with-our-data">Creating the Plot With Our Data</h3>
+<p>Now that our function is setup the way want it, we can now pass in the columns from the well dataframe. The power of the function comes into its own when we use other wells to make plots that are set up the same.</p>
+<!-- raw HTML omitted -->
+<p>When we run this function call, we generate the following plot</p>
+<p><img src="https://cdn-images-1.medium.com/max/4500/1*zZ05vWeUiO11OhHb8RVOzw.png" alt="Final well log plot generated using Python’s matplotlib library and contains variable fill on the gamma ray, and a neutron-density crossover fill. Image by author."></p>
+<h2 id="summary">Summary</h2>
+<p>In this article, we have covered how to load a las file and formation data from a csv file. This data was then plotted on our log plot. Also, we have seen how to turn our log plot code into a function, which allows us to reuse the code with other wells. This makes future plotting much simpler and quicker.</p>
+<p><em><strong>Thanks for reading!</strong></em></p>
+<p><em>If you have found this article useful, please feel free to check out my other articles looking at various aspects of Python and well log data. You can also find my code used in this article and others at <a href="https://github.com/andymcdgeo">**GitHub</a>.</em>**</p>
+<p><em>If you want to get in touch you can find me on <a href="https://www.linkedin.com/in/andymcdonaldgeo/">**LinkedIn</a> <strong>or at my <a href="http://andymcdonald.scot/">**website</a></strong>.</em></p>
+<p><em>Interested in learning more about python and well log data or petrophysics? Follow me on <a href="https://andymcdonaldgeo.medium.com/">**Medium</a>**.</em></p>
+
+  </div>
+  
+
+<div class="navigation navigation-single">
+    
+    <a href="/blog/2021-02-14-loading-multiple-well-log-las-files-using-python/" class="navigation-prev">
+      <i aria-hidden="true" class="fa fa-chevron-left"></i>
+      <span class="navigation-tittle">Loading Multiple Well Log LAS Files Using Python</span>
+    </a>
+    
+    
+    <a href="/blog/2021-04-21-loading-well-log-data-from-dlis-using-python/" class="navigation-next">
+      <span class="navigation-tittle">Loading Well Log Data From DLIS using Python</span>
+      <i aria-hidden="true" class="fa fa-chevron-right"></i>
+    </a>
+    
+</div>
+
+
+  
+
+  
+    
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+
+    (function () {
+    if (location.hostname === "localhost" ||
+      location.hostname === "127.0.0.1" ||
+      location.hostname === "") {
+      return;
+    }
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    var disqus_shortname = 'andymcdonald-scot.disqus.com';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || 
+      document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<noscript>
+  Please enable JavaScript to view the
+  <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by
+  <span class="logo-disqus">Disqus</span>
+</a>
+
+    
+
+
+</article>
+
+
+        </div>
+        
+    
+
+<script defer src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" integrity="sha384-ZbbbT1gw3joYkKRqh0kWyRp32UAvdqkpbLedQJSlnI8iLQcFVxaGyrOgOJiDQTTR" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+        
+    <script type="text/javascript">
+        
+        hljs.initHighlightingOnLoad();
+    </script>
+    
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.js"></script>
+<script type="text/javascript">
+  if (tocbot) {
+    tocbot.init({
+      
+      tocSelector: '.toc',
+      
+      contentSelector: '.post',
+      
+      headingSelector: 'h2, h3, h4',
+      collapseDepth: 4
+    });
+  }
+</script>
+
+
+
+    
+
+
+
+    </body>
+</html>
