@@ -87,7 +87,10 @@ body {
     flex: 1;
     height: 100%;
     overflow: auto;
-    padding: 3rem;
+    padding-left: 10rem;
+	padding-right: 10rem;
+	padding-top: 5rem;
+	padding-bottom: 5rem;
 }
 
 @media screen and (max-width:900px) { 
@@ -103,4 +106,155 @@ body {
         position: relative;
     }
     
+}
+
+/* POST LIST */
+
+#blog-roll a {
+	text-decoration: none;
+	color: inherit;
+}
+
+:root{
+	--gradient-color: linear-gradient(to right bottom, rgba(255, 119, 48, 0.6),rgba(255, 185, 0, 0.6));
+}
+
+#blog-roll a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	box-shadow: 2px 0.8rem 1rem rgba($color: #000000, $alpha: 0.05);
+	margin-top: 2rem;
+	border: 1px solid rgba($color: #000000, $alpha: 0.1);
+	padding-bottom: 2rem;
+}
+
+.image-data {
+	height: 20rem;
+	position: relative;
+	z-index: 1;
+	overflow: hidden;
+}
+
+.image-data img {
+	object-fit: cover;
+	object-position: center;
+}
+
+.background-image {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-size: cover;
+	// z-index: -1;
+	transition: transform 5s;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.card:hover .background-image {
+	transform: scale(1.2)
+}
+
+.fa-calendar-alt, .fa-clock {
+	margin-right: 5px;
+}
+
+.details-text {
+	margin-right: 10px;
+}
+
+
+.date {
+	display: block;
+}
+
+.post-title {
+	margin-top: 0.8rem;
+	font-size: 1.5rem;
+	line-height: 1;
+	font-weight: 500;
+}
+
+.post-data {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.description {
+	position: relative;
+	font-size: 0.85rem;
+}
+
+.description::first-letter {
+	margin-left: 1rem;
+}
+
+.description::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0.5rem;
+	height: 1.5rem;
+	background: var(--gradient-color);
+	border-radius: 2rem;
+}
+
+.read-more {
+	text-align: right;
+	font-weight: bold;
+	margin-top: 1rem;
+}
+
+.read-more a {
+	background: var(--gradient-color);
+	-webkit-background-clip: text;
+	color: transparent;
+	position: relative;
+}
+
+@media screen and (min-width: 1025px) {
+	.card{
+		display: flex;
+		flex-direction: row;
+		max-width: 75rem;
+		overflow: hidden;
+	}
+
+	.background-image {
+		width: auto;
+		height: 100%;
+		background-size: cover;
+	}
+
+	.image-data {
+		flex: 1;
+		height: unset;
+		min-width: 15rem;
+		
+
+	}
+	.post-details {
+		flex: 2;
+	}
+
+	.description {
+		font-size: 1.2rem;
+	}
+	
+}
+
+/* BLOG POST */
+
+.post-content img{
+	max-width: 700px;
+	max-height: 700px;	
 }
