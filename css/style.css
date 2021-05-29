@@ -38,6 +38,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     overflow: auto;
+	flex-wrap: wrap;
 }
 
 
@@ -86,27 +87,49 @@ body {
     right: 0; */
     flex: 1;
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
     padding-left: 10rem;
 	padding-right: 10rem;
 	padding-top: 5rem;
 	padding-bottom: 5rem;
 }
 
-@media screen and (max-width:900px) { 
-    .sidebar {
-        /* flex: unset; */
-        width: 100%;
-        position: relative;
-        text-align: left;
-        padding-left: 20px;
-    }
-    .content {
-        width: 100%;
-        position: relative;
-    }
-    
-}
+	
+
+@media screen and (max-width: 700px) {
+	.wrapper {
+		display: block;
+	}
+	.sidebar {
+	  width: 100%;
+	  height: 300px;
+	  position: relative;
+	  flex: unset;
+	  
+	}
+
+	.sidebar-content {
+		padding-top: 1rem;
+	}
+
+	.sidebar-content img {
+		display:none ;
+	}
+	/* .sidebar a {float: ce;} */
+
+	.content {
+		/* position: fixed;
+		width: 80%;
+		right: 0; */
+		flex: 1;
+		height: 100%;
+		overflow-y: auto;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		padding-top: 5rem;
+		padding-bottom: 5rem;
+	}
+  }
 
 /* POST LIST */
 
