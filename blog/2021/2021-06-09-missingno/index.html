@@ -1,277 +1,34 @@
-<!doctype html><html lang=en-uk>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content>
-<meta name=author content="map[]">
-<script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/www.andymcdonald.scot\/"},"articleSection":"blog","name":"Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning","headline":"Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning","description":"Real world data is messy. Data can have erroneous values, incorrect labels and many parts of it can be missing.","inLanguage":"en-US","author":"","creator":"","publisher":"","accountablePerson":"","copyrightHolder":"","copyrightYear":"2021","datePublished":"2021-06-09 00:00:00 \u002b0000 UTC","dateModified":"2021-06-09 00:00:00 \u002b0000 UTC","url":"https:\/\/www.andymcdonald.scot\/blog\/2021\/2021-06-09-missingno\/","wordCount":"1756","keywords":["missing data","data quality","python","data visualisation","Blog"]}</script>
-<title>Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning</title>
-<link rel="shortcut icon" href=https://www.andymcdonald.scot/images/favicon-16x16.png>
-<link href=https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css rel=stylesheet>
-<script defer src=https://use.fontawesome.com/releases/v5.0.11/js/all.js integrity=sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C crossorigin=anonymous></script>
-<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
-<link rel=stylesheet href=https://www.andymcdonald.scot/assets/css/main.min.58e2952e173d2d5cfe72a0b686624ebd1841b6f5c8967ad782c76c96377c7dc4.css media=all>
-<link rel=preconnect href=https://fonts.gstatic.com>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;500&display=swap" rel=stylesheet>
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin=anonymous>
-<meta property="og:title" content="Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning">
-<meta property="og:description" content="Real world data is messy. Data can have erroneous values, incorrect labels and many parts of it can be missing.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/"><meta property="article:section" content="blog">
-<meta property="article:published_time" content="2021-06-09T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-06-09T00:00:00+00:00">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning">
-<meta name=twitter:description content="Real world data is messy. Data can have erroneous values, incorrect labels and many parts of it can be missing.">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWZLFXGHNF"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-DWZLFXGHNF')</script>
-<body class=home>
-<header id=header>
-<div id=head style=background-image:url(https://www.andymcdonald.scot/images/header_img.jpg),linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5))>
-<h1 id=logo class=text-center>
-<img class=img-circle src=https://www.andymcdonald.scot/images/andy.png alt>
+<!doctype html><html lang=en-uk><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content><meta name=author content="map[]"><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/www.andymcdonald.scot\/"},"articleSection":"blog","name":"Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning","headline":"Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning","description":"Real world data is messy. Data can have erroneous values, incorrect labels and many parts of it can be missing.","inLanguage":"en-US","author":"","creator":"","publisher":"","accountablePerson":"","copyrightHolder":"","copyrightYear":"2021","datePublished":"2021-06-09 00:00:00 \u002b0000 UTC","dateModified":"2021-06-09 00:00:00 \u002b0000 UTC","url":"https:\/\/www.andymcdonald.scot\/blog\/2021\/2021-06-09-missingno\/","wordCount":"1756","keywords":["missing data","data quality","python","data visualisation","Blog"]}</script><title>Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning</title><link rel="shortcut icon" href=https://www.andymcdonald.scot/images/favicon-16x16.png><link href=https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css rel=stylesheet><script defer src=https://use.fontawesome.com/releases/v5.0.11/js/all.js integrity=sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C crossorigin=anonymous></script>
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700"><link rel=stylesheet href=https://www.andymcdonald.scot/assets/css/main.min.58e2952e173d2d5cfe72a0b686624ebd1841b6f5c8967ad782c76c96377c7dc4.css media=all><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;500&display=swap" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin=anonymous><meta property="og:title" content="Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning"><meta property="og:description" content="Real world data is messy. Data can have erroneous values, incorrect labels and many parts of it can be missing."><meta property="og:type" content="article"><meta property="og:url" content="https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2021-06-09T00:00:00+00:00"><meta property="article:modified_time" content="2021-06-09T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning"><meta name=twitter:description content="Real world data is messy. Data can have erroneous values, incorrect labels and many parts of it can be missing."><script async src="https://www.googletagmanager.com/gtag/js?id=G-DWZLFXGHNF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-DWZLFXGHNF")</script><body class=home><header id=header><div id=head style=background-image:url(https://www.andymcdonald.scot/images/header_img.jpg),linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5))><h1 id=logo class=text-center><img class=img-circle src=https://www.andymcdonald.scot/images/andy.png alt>
 <span class=title>Andy McDonald</span>
-<span class=tagline2>Petrophysicist | Geoscientist | Data Scientist</span>
-<div class=header-underline></div>
-<div class=social-head>
-<a href=https://www.linkedin.com/in/andymcdonaldgeo/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
+<span class=tagline2>Petrophysicist | Geoscientist | Data Scientist</span><div class=header-underline></div><div class=social-head><a href=https://www.linkedin.com/in/andymcdonaldgeo/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
 <a href=https://www.researchgate.net/profile/Andrew-Mcdonald-15 target=_blank><i class="fab fa-researchgate fa-1x"></i></a>
 <a href=https://twitter.com/geoandymcd target=_blank><i class="fab fa-twitter-square fa-1x"></i></a>
 <a href=https://github.com/andymcdgeo target=_blank><i class="fab fa-github-square fa-1x"></i></a>
-<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a>
-</div>
-</h1>
-</div>
-<div class=landing>
-</div>
-<nav class="navbar navbar-default navbar-sticky">
-<div class=container-fluid>
-<div class=navbar-header>
-<button type=button class=navbar-toggle data-toggle=collapse data-target=#bs-example-navbar-collapse-1 aria-expanded=true>
+<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a></div></h1></div><div class=landing></div><nav class="navbar navbar-default navbar-sticky"><div class=container-fluid><div class=navbar-header><button type=button class=navbar-toggle data-toggle=collapse data-target=#bs-example-navbar-collapse-1 aria-expanded=true>
 <span class=sr-only>Toggle navigation</span>
 <span class=icon-bar></span>
 <span class=icon-bar></span>
-<span class=icon-bar></span>
-</button>
-</div>
-<div class="navbar-collapse collapse" id=bs-example-navbar-collapse-1>
-<ul class="nav navbar-nav">
-<li>
-<a href=https://www.andymcdonald.scot/>Home</a>
-</li>
-<li>
-<a href=https://www.andymcdonald.scot/blog/>Blog</a>
-</li>
-<li>
-<a href=https://www.andymcdonald.scot/#projects>Projects</a>
-</li>
-<li>
-<a href=https://www.andymcdonald.scot/publications/>Publications</a>
-</li>
-</ul>
-</div>
-</div>
-</nav>
-</header>
-<main id=main>
-<div class=container>
-<div class="row topspace">
-<div class="col-sm-8 col-sm-offset-2">
-<article class=post>
-<header class=entry-header>
-<h2 class=title>Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning</h2>
-<div class=featured-image style=background-image:url(/images/featured/2021-06-09%20-%20Missingno%20Python%20Library%20for%20Identifying%20Missing%20Data.jpeg)>
-</div>
-<div class=entry-meta>
-<span class=posted-on>
-<i class="far fa-calendar-alt"></i>Published on: &nbsp;June 9, 2021<i class="far fa-clock"></i> 9 min read
-<span class=post-categories>
-<i class="far fa-folder"></i>
-<ul>
-<li>
-<a href=https://www.andymcdonald.scot/categories/data-science/>data-science</a>
-</li></ul>
-</span>
-</span>
-</div>
-</header>
-<div class=row>
-<div class=col-sm-12>
-<div id=toc>
-<h3>Table of Contents</h3>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#the-missingno-library>The missingno Library</a></li>
-<li><a href=#the-dataset>The Dataset</a>
-<ul>
-<li><a href=#importing-libraries-and-loading-the-data>Importing Libraries and Loading the Data</a></li>
-</ul>
-</li>
-<li><a href=#quick-analysis-with-pandas>Quick Analysis with Pandas</a></li>
-<li><a href=#using-missingno-to-identify-missing-data>Using missingno to Identify Missing Data</a>
-<ul>
-<li><a href=#barplot>Barplot</a></li>
-<li><a href=#matrix-plot>Matrix Plot</a></li>
-<li><a href=#heatmap>Heatmap</a></li>
-<li><a href=#dendrogram>Dendrogram</a></li>
-</ul>
-</li>
-<li><a href=#summary>Summary</a></li>
-<li><a href=#references>References</a></li>
-</ul>
-</nav>
-</div>
-</div>
-</div>
-<div class=entry-content>
-<p>Data exploration and pre-processing are important steps within any data science or machine learning workflow. When working on tutorial or training datasets it can be the case that they have been engineered in a way to make it easy to work with and allow the algorithm being discussed to be run successfully. However, in the real world, data is messy! It can have erroneous values, incorrect labels and parts of it can be missing.</p>
-<p>Missing data is probably one of the most common issues when working with real datasets. Data can be missing for a multitude of reasons, including sensor failure, data vintage, improper data management, and even human error. Missing data can occur as single values, multiple values within one feature, or entire features may be missing.</p>
-<p>It is important that missing data is identified and handled appropriately prior to further data analysis or machine learning. Many machine learning algorithms can’t handle missing data and require entire rows, where a single missing value is present, to be deleted or replaced (imputed) with a new value.</p>
-<p>Depending on the source of the data missing values may be represented in different ways. The most common is NaN (Not a Number), however, other variations can include “NA”, “None”, “-999”, “0”, “ ”, “-”. If the missing data is represented by something other than NaN in your dataframe, then it should be converted to NaN using np.NaN as seen below.</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>df</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>np</span><span class=o>.</span><span class=n>NaN</span><span class=p>)</span>
-</code></pre></div><h2 id=the-missingno-library>The missingno Library</h2>
-<p><a href=https://github.com/ResidentMario/missingno>Missingno</a> is an excellent and simple to use Python library that provides a series of visualisations to understand the presence and distribution of missing data within a pandas dataframe. This can be in the form of either a barplot, matrix plot, heatmap, or a dendrogram. The original publication for the library can be found <a href=https://joss.theoj.org/papers/10.21105/joss.00547>here</a>.</p>
-<p>From these plots, we can identify where missing values occur, the extent of the missingness and whether any of the missing values are correlated with each other. Often, missing values may be seen as not contributing any information, but if analysed closely there may be an underlying story.</p>
-<p>The missingno library can be installed using the pip command:</p>
-<pre><code>pip install missingno
-</code></pre>
-<h2 id=the-dataset>The Dataset</h2>
-<p>For this tutorial, we will use a subset of the publicly available dataset from the Machine Learning competition run by <a href=https://doi.org/10.5281/zenodo.4351155>Xeek and FORCE 2020</a>. The objective of the competition was to predict lithology from existing labeled data. The dataset consists of 118 wells from the Norwegian Sea.</p>
-<p>The data contains a series of electrical measurements that have been acquired by well logging tools. The measurements are used to characterise the subsurface geology and identify suitable hydrocarbon reservoirs.</p>
-<p>The data and notebook for this article can be found on my GitHub repository at <a href=https://github.com/andymcdgeo/missingno_tutorial>https://github.com/andymcdgeo/missingno_tutorial</a></p>
-<h3 id=importing-libraries-and-loading-the-data>Importing Libraries and Loading the Data</h3>
-<p>The first step in the process is to import the libraries. For this article, we will be working with <a href=https://pandas.pydata.org/>pandas </a>for load and storing our data and <a href=https://github.com/ResidentMario/missingno>missingno</a> for visualising data completeness.</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
-<span class=kn>import</span> <span class=nn>missingno</span> <span class=k>as</span> <span class=nn>msno</span>
-
-<span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=s1>&#39;xeek_train_subset.csv&#39;</span><span class=p>)</span>
-</code></pre></div><h2 id=quick-analysis-with-pandas>Quick Analysis with Pandas</h2>
-<p>Before we use the missingno library, there are a few features within the <a href=https://pandas.pydata.org/>pandas</a> library that can give us an initial insight into how much missing data.</p>
-<p>The first is using the <code>.describe()</code> method. This returns a table containing summary statistics about the dataframe such as the mean, maximum and minimum values. At the top of the table is a row called counts. In the example below, we can see that we having varying counts for each of the features within the dataframe. This provides an initial indication that not all values are present.</p>
-<p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/pandas-describe.png alt=png></p>
-<p>We can take this one step further and use the <code>.info()</code> method. This will return back a summary of the dataframe as well as a count of the non-null values.</p>
-<p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/pandas_info.png alt=png></p>
-<p>We can see from the example above that we have a more concise summary of the state of the data and the extent of data missingness.</p>
-<p>Another quick method we can use is:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>df</span><span class=o>.</span><span class=n>isna</span><span class=p>()</span><span class=o>.</span><span class=n>sum</span><span class=p>()</span>
-</code></pre></div><p>This returns a summary of how many missing values are contained within the dataframe. The isna() part detects missing values within the dataframe and returns a Boolean value for each element in the dataframe. The sum() part sums up the number of True values.</p>
-<p>The following information is returned by this line.</p>
-<p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/pandas_isna.png alt=png></p>
-<p>From this summary, we can see that a number of columns, namely WELL, DEPTH_MD, GROUP, GR, and LITHOFACIES have no null values. All others have a large and varying degree of missing values.</p>
-<h2 id=using-missingno-to-identify-missing-data>Using missingno to Identify Missing Data</h2>
-<p>Within the missingno library, there are four types of plots for visualising data completeness: the barplot, the matrix plot, the heatmap, and the dendrogram plot. Each has its own advantages for identifying missing data.</p>
-<p>Let’s take a look at each of these in turn.</p>
-<h3 id=barplot>Barplot</h3>
-<p>The barplot provides a simple plot where each bar represents a column within the dataframe. The height of the bar indicates how complete that column is, i.e, how many non-null values are present. It can be generated by calling upon:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>msno</span><span class=o>.</span><span class=n>bar</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
-</code></pre></div><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_barchart.png alt=png></p>
-<p>On the left side of the plot, the y-axis scale ranges from 0.0 to 1.0, where 1.0 represents 100% data completeness. If the bar is less than this, it indicates that we have missing values within that column.</p>
-<p>On the right side of the plot, the scale is measured in index values. With the top right representing the maximum number of rows within the dataframe.</p>
-<p>Along the top of the plot, there are a series of numbers that represent the total count of the non-null values within that column.</p>
-<p>In this example we can see that a number of the columns (DTS, DCAL and RSHA) have a large amount of missing values. Other columns (e.g. WELL, DEPTH_MD and GR) are complete and have the maximum number of values.</p>
-<h3 id=matrix-plot>Matrix Plot</h3>
-<p>The matrix plot is a great tool if you are working with depth-related data or time-series data. It provides a colour fill for each column. When data is present, the plot is shaded in grey (or your colour of choice), and when it is absent the plot is displayed in white.</p>
-<p>The matrix plot can be generated by calling upon:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>msno</span><span class=o>.</span><span class=n>matrix</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
-</code></pre></div><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_matrix.png alt="missingno matrix plot showing data sparsity across all dataframe columns."></p>
-<p>As seen in the resultant plot, the columns DTS, DCAL, and RSHA show large portions of missing data. This was identified in the bar plot, but the added benefit is you can view how that missing data is distributed in the dataframe.</p>
-<p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_sparkline.png alt="Close-up view of the missingno sparkline. Image by the author."></p>
-<p>On the right side of the plot is a sparkline that ranges from 0 on the left to the total number of columns in the dataframe on the right. A closeup can be seen above. When a row has a value in each column, the line will be at the maximum right position. As missing values start to increase within that row the line will move towards the left.</p>
-<h3 id=heatmap>Heatmap</h3>
-<p>The heatmap is used to identify correlations of the nullity between each of the different columns. In other words, it can be used to identify if there is a relationship in the presence of null values between each of the columns.</p>
-<p>Values close to positive 1 indicate that the presence of null values in one column is correlated with the presence of null values in another column.</p>
-<p>Values close to negative 1 indicate that the presence of null values in one column is anti-correlated with the presence of null values in another column. In other words, when null values are present in one column, there are data values present in the other column, and vice versa.</p>
-<p>Values close to 0, indicate there is little to no relationship between the presence of null values in one column compared to another.</p>
-<p>There are a number of values that show as &lt;-1. This indicates that the correlation is very close to being 100% negative.</p>
-<p>The heatmap can be generated by the following code:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>msno</span><span class=o>.</span><span class=n>heatmap</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
-</code></pre></div><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_heatmap.png alt="missingno heatmap plot illustrating the correlation in nullity between data columns."></p>
-<p>Here we can see that the ROP column is slightly negatively correlated with the RHOB, NPHI and PEF columns, and slightly positively correlated with RSHA. If we take a look at DRHO, its absence is highly correlated with missing values in the RHOB, NPHI and PEF columns.</p>
-<p>The heatmap approach is more suitable for smaller datasets.</p>
-<h3 id=dendrogram>Dendrogram</h3>
-<p>The dendrogram plot provides a tree-like graph generated through hierarchical clustering and groups together columns that have strong correlations in nullity.</p>
-<p>If a number of columns are grouped together at level zero, then the presence of nulls in one of those columns is directly related to the presence or absence of nulls in the others columns. The more separated the columns in the tree, the less likely the null values can be correlated between the columns.</p>
-<p>The dendrogram can be generated by:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>msno</span><span class=o>.</span><span class=n>dendrogram</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
-</code></pre></div><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_dendrogram.png alt="mssingno dendrogram illustrating the correlation in nullity between the well log measurements."></p>
-<p>In the dendrogram plot above, we can see we have two distinct groups. The first is on the right side (DTS, RSHA, and DCAL) which all have a high degree of null values. The second is on the left, with the remainder of the columns which are more complete.</p>
-<p>LITHOFACIES, GR, GROUP, WELL, and DEPTH_MD are all grouped together at zero indicating that they are complete.</p>
-<p>RDEP, Z_LOC, X_LOC, and Y_LOC are grouped together close to zero. RMED is in the same larger branch suggesting that some of the missing values present within that column can be correlated with these four columns.</p>
-<h2 id=summary>Summary</h2>
-<p>Identifying missing prior to applying machine learning is a key component of the data quality workflow. This can be achieved using the missingno library and a series of visualisations to understand how much missing data is present, where it occurs, and how the occurrence of missing values is related between the different data columns.</p>
-<p><em><strong>Thanks for reading!</strong></em></p>
-<p><em>If you have found this article useful, please feel free to check out my other articles looking at various aspects of Python and well log data. You can also find my code used in this article and others at <a href=https://github.com/andymcdgeo>GitHub</a>.</em></p>
-<p><em>If you want to get in touch you can find me on <a href=https://www.linkedin.com/in/andymcdonaldgeo/>LinkedIn</a> or at my <a href=http://andymcdonald.scot/>website</a>.</em></p>
-<p><em>Interested in learning more about python and well log data or petrophysics? Follow me on <a href=https://medium.com/@andymcdonaldgeo>Medium</a>.</em></p>
-<p>If you have enjoyed this article or any others and want to show your appreciation you are welcome to <a href=http://buymeacoffee.com/andymcdonaldgeo>Buy Me a Coffee</a></p>
-<h2 id=references>References</h2>
-<p>Bilogur, (2018). Missingno: a missing data visualization suite. Journal of Open Source Software, 3(22), 547, <a href=https://doi.org/10.21105/joss.00547>https://doi.org/10.21105/joss.00547</a></p>
-<p>Bormann, Peter, Aursand, Peder, Dilib, Fahad, Manral, Surrender, & Dischington, Peter. (2020). FORCE 2020 Well well log and lithofacies dataset for machine learning competition [Data set]. Zenodo. <a href=http://doi.org/10.5281/zenodo.4351156>http://doi.org/10.5281/zenodo.4351156</a></p>
-</div>
-</article>
-</div>
-</div>
-<div class=row>
-<div class="col-sm-8 col-sm-offset-2">
-<div id=share>
-<style>#share-buttons{display:inline-block;vertical-align:middle}#share-buttons:after{content:"";display:block;clear:both}#share-buttons>div{position:relative;text-align:left;height:36px;width:32px;float:left;text-align:center}#share-buttons>div>svg{height:16px;fill:#d5d5d5;margin-top:10px}#share-buttons>div:hover{cursor:pointer}#share-buttons>div.facebook:hover>svg{fill:#3b5998}#share-buttons>div.twitter:hover>svg{fill:#55acee}#share-buttons>div.linkedin:hover>svg{fill:#0077b5}#share-buttons>div.pinterest:hover>svg{fill:#cb2027}#share-buttons>div.gplus:hover>svg{fill:#dd4b39}#share-buttons>div.mail:hover>svg{fill:#7d7d7d}#share-buttons>div.instagram:hover>svg{fill:#c73b92}#share-buttons>div.facebook>svg{height:18px;margin-top:9px}#share-buttons>div.twitter>svg{height:20px;margin-top:8px}#share-buttons>div.linkedin>svg{height:19px;margin-top:7px}#share-buttons>div.pinterest>svg{height:20px;margin-top:9px}#share-buttons>div.gplus>svg{height:17px;margin-top:9px;position:relative;left:1px}#share-buttons>div.mail>svg{height:14px;margin-top:11px}</style>
-<span style=color:silver>Share on: </span><div id=share-buttons>
-<div class=facebook title="Share this on Facebook" onclick="window.open('http://www.facebook.com/share.php?u=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759H734V905H479V609h255V391q0-186 104-288.5T1115 0q147 0 228 12z"/></svg></div>
-<div class=twitter title="Share this on Twitter" onclick="window.open('http://twitter.com/home?status=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5T1369.5 1125 1185 1335.5t-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5T285 1033q33 5 61 5 43 0 85-11-112-23-185.5-111.5T172 710v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5T884 653q-8-38-8-74 0-134 94.5-228.5T1199 256q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"/></svg></div>
-<div class=linkedin title="Share this on Linkedin" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/&title=&summary=&source=')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M477 625v991H147V625h330zm21-306q1 73-50.5 122T312 490h-2q-82 0-132-49t-50-122q0-74 51.5-122.5T314 148t133 48.5T498 319zm1166 729v568h-329v-530q0-105-40.5-164.5T1168 862q-63 0-105.5 34.5T999 982q-11 30-11 81v553H659q2-399 2-647t-1-296l-1-48h329v144h-2q20-32 41-56t56.5-52 87-43.5T1285 602q171 0 275 113.5t104 332.5z"/></svg></div>
-<div class=gplus title="Share this on Google Plus" onclick="window.open('https://plus.google.com/share?url=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/')"><svg viewBox="0 0 2304 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1437 913q0 208-87 370.5t-248 254-369 91.5q-149 0-285-58t-234-156-156-234T0 896t58-285 156-234 234-156 285-58q286 0 491 192l-199 191Q908 433 733 433q-123 0-227.5 62T340 663.5 279 896t61 232.5T505.5 1297t227.5 62q83 0 152.5-23t114.5-57.5 78.5-78.5 49-83 21.5-74H733V791h692q12 63 12 122zm867-122v210h-209v209h-210v-209h-209V791h209V582h210v209h209z"/></svg></div>
-<div class=mail title="Share this through Email" onclick="window.open('mailto:?&body=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/')"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1792 710v794q0 66-47 113t-113 47H160q-66 0-113-47T0 1504V710q44 49 101 87 362 246 497 345 57 42 92.5 65.5t94.5 48 110 24.5h2q51 0 110-24.5t94.5-48 92.5-65.5q170-123 498-345 57-39 1e2-87zm0-294q0 79-49 151t-122 123q-376 261-468 325-10 7-42.5 30.5t-54 38-52 32.5-57.5 27-50 9h-2q-23 0-50-9t-57.5-27-52-32.5-54-38T639 1015q-91-64-262-182.5T172 690q-62-42-117-115.5T0 438q0-78 41.5-130T160 256h1472q65 0 112.5 47t47.5 113z"/></svg></div>
-</div>
-</div>
-</div>
-</div>
-<div class=clearfix></div>
-<div class=row>
-<div class="col-sm-8 col-sm-offset-2">
-<div id=comments>
-<div id=disqus_thread></div>
-<script>(function(){var a=document,b=a.createElement('script');b.src='https:///embed.js',b.setAttribute('data-timestamp',+new Date),(a.head||a.body).appendChild(b)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-</div>
-</div>
-</div>
-<div class=clearfix></div>
-</div>
-</main>
-<footer id=underfooter>
-<div class=container>
-<div class=row>
-<div class=social-footer>
-<div class=col-md-12>
-<p class=text-center>
-<a href=https://www.linkedin.com/in/andymcdonaldgeo/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
+<span class=icon-bar></span></button></div><div class="navbar-collapse collapse" id=bs-example-navbar-collapse-1><ul class="nav navbar-nav"><li><a href=https://www.andymcdonald.scot/>Home</a></li><li><a href=https://www.andymcdonald.scot/blog/>Blog</a></li><li><a href=https://www.andymcdonald.scot/#projects>Projects</a></li><li><a href=https://www.andymcdonald.scot/publications/>Publications</a></li></ul></div></div></nav></header><main id=main><div class=container><div class="row topspace"><div class="col-sm-8 col-sm-offset-2"><article class=post><header class=entry-header><h2 class=title>Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning</h2><div class=featured-image style=background-image:url(/images/featured/2021-06-09%20-%20Missingno%20Python%20Library%20for%20Identifying%20Missing%20Data.jpeg)></div><div class=entry-meta><span class=posted-on><i class="far fa-calendar-alt"></i>Published on: &nbsp;June 9, 2021<i class="far fa-clock"></i> 9 min read
+<span class=post-categories><i class="far fa-folder"></i><ul><li><a href=https://www.andymcdonald.scot/categories/data-science/>data-science</a></li></ul></span></span></div></header><div class=row><div class=col-sm-12><div id=toc><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#the-missingno-library>The missingno Library</a></li><li><a href=#the-dataset>The Dataset</a><ul><li><a href=#importing-libraries-and-loading-the-data>Importing Libraries and Loading the Data</a></li></ul></li><li><a href=#quick-analysis-with-pandas>Quick Analysis with Pandas</a></li><li><a href=#using-missingno-to-identify-missing-data>Using missingno to Identify Missing Data</a><ul><li><a href=#barplot>Barplot</a></li><li><a href=#matrix-plot>Matrix Plot</a></li><li><a href=#heatmap>Heatmap</a></li><li><a href=#dendrogram>Dendrogram</a></li></ul></li><li><a href=#summary>Summary</a></li><li><a href=#references>References</a></li></ul></nav></div></div></div><div class=entry-content><p>Data exploration and pre-processing are important steps within any data science or machine learning workflow. When working on tutorial or training datasets it can be the case that they have been engineered in a way to make it easy to work with and allow the algorithm being discussed to be run successfully. However, in the real world, data is messy! It can have erroneous values, incorrect labels and parts of it can be missing.</p><p>Missing data is probably one of the most common issues when working with real datasets. Data can be missing for a multitude of reasons, including sensor failure, data vintage, improper data management, and even human error. Missing data can occur as single values, multiple values within one feature, or entire features may be missing.</p><p>It is important that missing data is identified and handled appropriately prior to further data analysis or machine learning. Many machine learning algorithms can’t handle missing data and require entire rows, where a single missing value is present, to be deleted or replaced (imputed) with a new value.</p><p>Depending on the source of the data missing values may be represented in different ways. The most common is NaN (Not a Number), however, other variations can include “NA”, “None”, “-999”, “0”, “ ”, “-”. If the missing data is represented by something other than NaN in your dataframe, then it should be converted to NaN using np.NaN as seen below.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>np</span><span class=o>.</span><span class=n>NaN</span><span class=p>)</span>
+</span></span></code></pre></div><h2 id=the-missingno-library>The missingno Library</h2><p><a href=https://github.com/ResidentMario/missingno>Missingno</a> is an excellent and simple to use Python library that provides a series of visualisations to understand the presence and distribution of missing data within a pandas dataframe. This can be in the form of either a barplot, matrix plot, heatmap, or a dendrogram. The original publication for the library can be found <a href=https://joss.theoj.org/papers/10.21105/joss.00547>here</a>.</p><p>From these plots, we can identify where missing values occur, the extent of the missingness and whether any of the missing values are correlated with each other. Often, missing values may be seen as not contributing any information, but if analysed closely there may be an underlying story.</p><p>The missingno library can be installed using the pip command:</p><pre><code>pip install missingno
+</code></pre><h2 id=the-dataset>The Dataset</h2><p>For this tutorial, we will use a subset of the publicly available dataset from the Machine Learning competition run by <a href=https://doi.org/10.5281/zenodo.4351155>Xeek and FORCE 2020</a>. The objective of the competition was to predict lithology from existing labeled data. The dataset consists of 118 wells from the Norwegian Sea.</p><p>The data contains a series of electrical measurements that have been acquired by well logging tools. The measurements are used to characterise the subsurface geology and identify suitable hydrocarbon reservoirs.</p><p>The data and notebook for this article can be found on my GitHub repository at <a href=https://github.com/andymcdgeo/missingno_tutorial>https://github.com/andymcdgeo/missingno_tutorial</a></p><h3 id=importing-libraries-and-loading-the-data>Importing Libraries and Loading the Data</h3><p>The first step in the process is to import the libraries. For this article, we will be working with <a href=https://pandas.pydata.org/>pandas </a>for load and storing our data and <a href=https://github.com/ResidentMario/missingno>missingno</a> for visualising data completeness.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>missingno</span> <span class=k>as</span> <span class=nn>msno</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=s1>&#39;xeek_train_subset.csv&#39;</span><span class=p>)</span>
+</span></span></code></pre></div><h2 id=quick-analysis-with-pandas>Quick Analysis with Pandas</h2><p>Before we use the missingno library, there are a few features within the <a href=https://pandas.pydata.org/>pandas</a> library that can give us an initial insight into how much missing data.</p><p>The first is using the <code>.describe()</code> method. This returns a table containing summary statistics about the dataframe such as the mean, maximum and minimum values. At the top of the table is a row called counts. In the example below, we can see that we having varying counts for each of the features within the dataframe. This provides an initial indication that not all values are present.</p><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/pandas-describe.png alt=png></p><p>We can take this one step further and use the <code>.info()</code> method. This will return back a summary of the dataframe as well as a count of the non-null values.</p><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/pandas_info.png alt=png></p><p>We can see from the example above that we have a more concise summary of the state of the data and the extent of data missingness.</p><p>Another quick method we can use is:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span><span class=o>.</span><span class=n>isna</span><span class=p>()</span><span class=o>.</span><span class=n>sum</span><span class=p>()</span>
+</span></span></code></pre></div><p>This returns a summary of how many missing values are contained within the dataframe. The isna() part detects missing values within the dataframe and returns a Boolean value for each element in the dataframe. The sum() part sums up the number of True values.</p><p>The following information is returned by this line.</p><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/pandas_isna.png alt=png></p><p>From this summary, we can see that a number of columns, namely WELL, DEPTH_MD, GROUP, GR, and LITHOFACIES have no null values. All others have a large and varying degree of missing values.</p><h2 id=using-missingno-to-identify-missing-data>Using missingno to Identify Missing Data</h2><p>Within the missingno library, there are four types of plots for visualising data completeness: the barplot, the matrix plot, the heatmap, and the dendrogram plot. Each has its own advantages for identifying missing data.</p><p>Let’s take a look at each of these in turn.</p><h3 id=barplot>Barplot</h3><p>The barplot provides a simple plot where each bar represents a column within the dataframe. The height of the bar indicates how complete that column is, i.e, how many non-null values are present. It can be generated by calling upon:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>msno</span><span class=o>.</span><span class=n>bar</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</span></span></code></pre></div><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_barchart.png alt=png></p><p>On the left side of the plot, the y-axis scale ranges from 0.0 to 1.0, where 1.0 represents 100% data completeness. If the bar is less than this, it indicates that we have missing values within that column.</p><p>On the right side of the plot, the scale is measured in index values. With the top right representing the maximum number of rows within the dataframe.</p><p>Along the top of the plot, there are a series of numbers that represent the total count of the non-null values within that column.</p><p>In this example we can see that a number of the columns (DTS, DCAL and RSHA) have a large amount of missing values. Other columns (e.g. WELL, DEPTH_MD and GR) are complete and have the maximum number of values.</p><h3 id=matrix-plot>Matrix Plot</h3><p>The matrix plot is a great tool if you are working with depth-related data or time-series data. It provides a colour fill for each column. When data is present, the plot is shaded in grey (or your colour of choice), and when it is absent the plot is displayed in white.</p><p>The matrix plot can be generated by calling upon:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>msno</span><span class=o>.</span><span class=n>matrix</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</span></span></code></pre></div><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_matrix.png alt="missingno matrix plot showing data sparsity across all dataframe columns."></p><p>As seen in the resultant plot, the columns DTS, DCAL, and RSHA show large portions of missing data. This was identified in the bar plot, but the added benefit is you can view how that missing data is distributed in the dataframe.</p><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_sparkline.png alt="Close-up view of the missingno sparkline. Image by the author."></p><p>On the right side of the plot is a sparkline that ranges from 0 on the left to the total number of columns in the dataframe on the right. A closeup can be seen above. When a row has a value in each column, the line will be at the maximum right position. As missing values start to increase within that row the line will move towards the left.</p><h3 id=heatmap>Heatmap</h3><p>The heatmap is used to identify correlations of the nullity between each of the different columns. In other words, it can be used to identify if there is a relationship in the presence of null values between each of the columns.</p><p>Values close to positive 1 indicate that the presence of null values in one column is correlated with the presence of null values in another column.</p><p>Values close to negative 1 indicate that the presence of null values in one column is anti-correlated with the presence of null values in another column. In other words, when null values are present in one column, there are data values present in the other column, and vice versa.</p><p>Values close to 0, indicate there is little to no relationship between the presence of null values in one column compared to another.</p><p>There are a number of values that show as &lt;-1. This indicates that the correlation is very close to being 100% negative.</p><p>The heatmap can be generated by the following code:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>msno</span><span class=o>.</span><span class=n>heatmap</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</span></span></code></pre></div><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_heatmap.png alt="missingno heatmap plot illustrating the correlation in nullity between data columns."></p><p>Here we can see that the ROP column is slightly negatively correlated with the RHOB, NPHI and PEF columns, and slightly positively correlated with RSHA. If we take a look at DRHO, its absence is highly correlated with missing values in the RHOB, NPHI and PEF columns.</p><p>The heatmap approach is more suitable for smaller datasets.</p><h3 id=dendrogram>Dendrogram</h3><p>The dendrogram plot provides a tree-like graph generated through hierarchical clustering and groups together columns that have strong correlations in nullity.</p><p>If a number of columns are grouped together at level zero, then the presence of nulls in one of those columns is directly related to the presence or absence of nulls in the others columns. The more separated the columns in the tree, the less likely the null values can be correlated between the columns.</p><p>The dendrogram can be generated by:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>msno</span><span class=o>.</span><span class=n>dendrogram</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</span></span></code></pre></div><p><img src=https://www.andymcdonald.scot/images/blog/2021/06/Missingno/msno_dendrogram.png alt="mssingno dendrogram illustrating the correlation in nullity between the well log measurements."></p><p>In the dendrogram plot above, we can see we have two distinct groups. The first is on the right side (DTS, RSHA, and DCAL) which all have a high degree of null values. The second is on the left, with the remainder of the columns which are more complete.</p><p>LITHOFACIES, GR, GROUP, WELL, and DEPTH_MD are all grouped together at zero indicating that they are complete.</p><p>RDEP, Z_LOC, X_LOC, and Y_LOC are grouped together close to zero. RMED is in the same larger branch suggesting that some of the missing values present within that column can be correlated with these four columns.</p><h2 id=summary>Summary</h2><p>Identifying missing prior to applying machine learning is a key component of the data quality workflow. This can be achieved using the missingno library and a series of visualisations to understand how much missing data is present, where it occurs, and how the occurrence of missing values is related between the different data columns.</p><p><em><strong>Thanks for reading!</strong></em></p><p><em>If you have found this article useful, please feel free to check out my other articles looking at various aspects of Python and well log data. You can also find my code used in this article and others at <a href=https://github.com/andymcdgeo>GitHub</a>.</em></p><p><em>If you want to get in touch you can find me on <a href=https://www.linkedin.com/in/andymcdonaldgeo/>LinkedIn</a> or at my <a href=http://andymcdonald.scot/>website</a>.</em></p><p><em>Interested in learning more about python and well log data or petrophysics? Follow me on <a href=https://medium.com/@andymcdonaldgeo>Medium</a>.</em></p><p>If you have enjoyed this article or any others and want to show your appreciation you are welcome to <a href=http://buymeacoffee.com/andymcdonaldgeo>Buy Me a Coffee</a></p><h2 id=references>References</h2><p>Bilogur, (2018). Missingno: a missing data visualization suite. Journal of Open Source Software, 3(22), 547, <a href=https://doi.org/10.21105/joss.00547>https://doi.org/10.21105/joss.00547</a></p><p>Bormann, Peter, Aursand, Peder, Dilib, Fahad, Manral, Surrender, & Dischington, Peter. (2020). FORCE 2020 Well well log and lithofacies dataset for machine learning competition [Data set]. Zenodo. <a href=http://doi.org/10.5281/zenodo.4351156>http://doi.org/10.5281/zenodo.4351156</a></p></div></article></div></div><div class=row><div class="col-sm-8 col-sm-offset-2"><div id=share><style>#share-buttons{display:inline-block;vertical-align:middle}#share-buttons:after{content:"";display:block;clear:both}#share-buttons>div{position:relative;text-align:left;height:36px;width:32px;float:left;text-align:center}#share-buttons>div>svg{height:16px;fill:#d5d5d5;margin-top:10px}#share-buttons>div:hover{cursor:pointer}#share-buttons>div.facebook:hover>svg{fill:#3b5998}#share-buttons>div.twitter:hover>svg{fill:#55acee}#share-buttons>div.linkedin:hover>svg{fill:#0077b5}#share-buttons>div.pinterest:hover>svg{fill:#cb2027}#share-buttons>div.gplus:hover>svg{fill:#dd4b39}#share-buttons>div.mail:hover>svg{fill:#7d7d7d}#share-buttons>div.instagram:hover>svg{fill:#c73b92}#share-buttons>div.facebook>svg{height:18px;margin-top:9px}#share-buttons>div.twitter>svg{height:20px;margin-top:8px}#share-buttons>div.linkedin>svg{height:19px;margin-top:7px}#share-buttons>div.pinterest>svg{height:20px;margin-top:9px}#share-buttons>div.gplus>svg{height:17px;margin-top:9px;position:relative;left:1px}#share-buttons>div.mail>svg{height:14px;margin-top:11px}</style><span style=color:silver>Share on:</span><div id=share-buttons><div class=facebook title="Share this on Facebook" onclick='window.open("http://www.facebook.com/share.php?u=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/")'><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759H734V905H479V609h255V391q0-186 104-288.5T1115 0q147 0 228 12z"/></svg></div><div class=twitter title="Share this on Twitter" onclick='window.open("http://twitter.com/home?status=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/")'><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5T1369.5 1125 1185 1335.5t-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5T285 1033q33 5 61 5 43 0 85-11-112-23-185.5-111.5T172 710v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5T884 653q-8-38-8-74 0-134 94.5-228.5T1199 256q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"/></svg></div><div class=linkedin title="Share this on Linkedin" onclick='window.open("https://www.linkedin.com/shareArticle?mini=true&url=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/&title=&summary=&source=")'><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M477 625v991H147V625h330zm21-306q1 73-50.5 122T312 490h-2q-82 0-132-49t-50-122q0-74 51.5-122.5T314 148t133 48.5T498 319zm1166 729v568h-329v-530q0-105-40.5-164.5T1168 862q-63 0-105.5 34.5T999 982q-11 30-11 81v553H659q2-399 2-647t-1-296l-1-48h329v144h-2q20-32 41-56t56.5-52 87-43.5T1285 602q171 0 275 113.5t104 332.5z"/></svg></div><div class=gplus title="Share this on Google Plus" onclick='window.open("https://plus.google.com/share?url=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/")'><svg viewBox="0 0 2304 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1437 913q0 208-87 370.5t-248 254-369 91.5q-149 0-285-58t-234-156-156-234T0 896t58-285 156-234 234-156 285-58q286 0 491 192l-199 191Q908 433 733 433q-123 0-227.5 62T340 663.5 279 896t61 232.5T505.5 1297t227.5 62q83 0 152.5-23t114.5-57.5 78.5-78.5 49-83 21.5-74H733V791h692q12 63 12 122zm867-122v210h-209v209h-210v-209h-209V791h209V582h210v209h209z"/></svg></div><div class=mail title="Share this through Email" onclick='window.open("mailto:?&body=https://www.andymcdonald.scot/blog/2021/2021-06-09-missingno/")'><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1792 710v794q0 66-47 113t-113 47H160q-66 0-113-47T0 1504V710q44 49 101 87 362 246 497 345 57 42 92.5 65.5t94.5 48 110 24.5h2q51 0 110-24.5t94.5-48 92.5-65.5q170-123 498-345 57-39 1e2-87zm0-294q0 79-49 151t-122 123q-376 261-468 325-10 7-42.5 30.5t-54 38-52 32.5-57.5 27-50 9h-2q-23 0-50-9t-57.5-27-52-32.5-54-38T639 1015q-91-64-262-182.5T172 690q-62-42-117-115.5T0 438q0-78 41.5-130T160 256h1472q65 0 112.5 47t47.5 113z"/></svg></div></div></div></div></div><div class=clearfix></div><div class=row><div class="col-sm-8 col-sm-offset-2"><div id=comments><div id=disqus_thread></div><script>(function(){var e=document,t=e.createElement("script");t.src="https:///embed.js",t.setAttribute("data-timestamp",+new Date),(e.head||e.body).appendChild(t)})()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></div></div></div><div class=clearfix></div></div></main><footer id=underfooter><div class=container><div class=row><div class=social-footer><div class=col-md-12><p class=text-center><a href=https://www.linkedin.com/in/andymcdonaldgeo/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
 <a href=https://www.researchgate.net/profile/Andrew-Mcdonald-15 target=_blank><i class="fab fa-researchgate fa-1x"></i></a>
 <a href=https://twitter.com/geoandymcd target=_blank><i class="fab fa-twitter-square fa-1x"></i></a>
 <a href=https://github.com/andymcdgeo target=_blank><i class="fab fa-github-square fa-1x"></i></a>
-<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a>
-</p>
-</div>
-</div>
-</div>
-<div class=row>
-<div class=col-md-12>
-<div class=widget-body>
-<p class=text-center>
-Copyright &copy; 2021, Andy McDonald<br>
-Powered by: <a href=https://gohugo.io/ rel=poweredby>Hugo</a>
-</p>
-</div>
-</div>
-</div>
-</div>
-</footer>
-<script src=https://code.jquery.com/jquery-1.12.4.min.js></script>
+<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a></p></div></div></div><div class=row><div class=col-md-12><div class=widget-body><p class=text-center>Copyright &copy; 2021, Andy McDonald<br>Powered by: <a href=https://gohugo.io/ rel=poweredby>Hugo</a></p></div></div></div></div></footer><script src=https://code.jquery.com/jquery-1.12.4.min.js></script>
 <script src=https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js></script>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js></script>
-<script src=https://www.andymcdonald.scot/js/bundle.min.00e4b79049366199ff1b6ac7cbd8302877370d1bf4ff0db6be4c4190e2e43f9143709df60bd35ed5c6f6495ad18afc509d468b7be1665c90f32b62afa4c7114c.js></script>
+<script src=https://www.andymcdonald.scot/js/bundle.min.2b113b905cb0e486799edf39da7b79082425d49b0c542911e1894507e25eda917f8d5cd623360914932791f64d57f09d711be37a669e96ea92e3ca8f95842ebd.js></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWZLFXGHNF"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-DWZLFXGHNF')</script>
-</body>
-</html>
-</body>
-</html>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-DWZLFXGHNF")</script></body></html></body></html>

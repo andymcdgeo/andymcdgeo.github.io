@@ -1,147 +1,22 @@
-<!doctype html><html lang=en-uk>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content>
-<meta name=author content="map[]">
-<script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/www.andymcdonald.scot\/"},"articleSection":"publications","name":"Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative","headline":"Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative","description":"Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model.","inLanguage":"en-US","author":"","creator":"","publisher":"","accountablePerson":"","copyrightHolder":"","copyrightYear":"2020","datePublished":"2020-04-23 10:00:02 -0400 -0400","dateModified":"2020-04-23 10:00:02 -0400 -0400","url":"https:\/\/www.andymcdonald.scot\/publications\/2020_arkalgud_etal\/","wordCount":"441","keywords":["Blog"]}</script>
-<title>Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative</title>
-<link rel="shortcut icon" href=https://www.andymcdonald.scot/images/favicon-16x16.png>
-<link href=https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css rel=stylesheet>
-<script defer src=https://use.fontawesome.com/releases/v5.0.11/js/all.js integrity=sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C crossorigin=anonymous></script>
-<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
-<link rel=stylesheet href=https://www.andymcdonald.scot/assets/css/main.min.58e2952e173d2d5cfe72a0b686624ebd1841b6f5c8967ad782c76c96377c7dc4.css media=all>
-<link rel=preconnect href=https://fonts.gstatic.com>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;500&display=swap" rel=stylesheet>
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin=anonymous>
-<meta property="og:title" content="Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative">
-<meta property="og:description" content="Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://www.andymcdonald.scot/publications/2020_arkalgud_etal/"><meta property="article:section" content="publications">
-<meta property="article:published_time" content="2020-04-23T10:00:02-04:00">
-<meta property="article:modified_time" content="2020-04-23T10:00:02-04:00">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative">
-<meta name=twitter:description content="Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model.">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWZLFXGHNF"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-DWZLFXGHNF')</script>
-<body class=home>
-<header id=header>
-<div id=head style=background-image:url(https://www.andymcdonald.scot/images/header_img.jpg),linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5))>
-<h1 id=logo class=text-center>
-<img class=img-circle src=https://www.andymcdonald.scot/images/andy.png alt>
+<!doctype html><html lang=en-uk><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content><meta name=author content="map[]"><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/www.andymcdonald.scot\/"},"articleSection":"publications","name":"Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative","headline":"Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative","description":"Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model.","inLanguage":"en-US","author":"","creator":"","publisher":"","accountablePerson":"","copyrightHolder":"","copyrightYear":"2020","datePublished":"2020-04-23 10:00:02 -0400 -0400","dateModified":"2020-04-23 10:00:02 -0400 -0400","url":"https:\/\/www.andymcdonald.scot\/publications\/2020_arkalgud_etal\/","wordCount":"441","keywords":["Blog"]}</script><title>Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative</title><link rel="shortcut icon" href=https://www.andymcdonald.scot/images/favicon-16x16.png><link href=https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css rel=stylesheet><script defer src=https://use.fontawesome.com/releases/v5.0.11/js/all.js integrity=sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C crossorigin=anonymous></script>
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700"><link rel=stylesheet href=https://www.andymcdonald.scot/assets/css/main.min.58e2952e173d2d5cfe72a0b686624ebd1841b6f5c8967ad782c76c96377c7dc4.css media=all><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;500&display=swap" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin=anonymous><meta property="og:title" content="Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative"><meta property="og:description" content="Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model."><meta property="og:type" content="article"><meta property="og:url" content="https://www.andymcdonald.scot/publications/2020_arkalgud_etal/"><meta property="article:section" content="publications"><meta property="article:published_time" content="2020-04-23T10:00:02-04:00"><meta property="article:modified_time" content="2020-04-23T10:00:02-04:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative"><meta name=twitter:description content="Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model."><script async src="https://www.googletagmanager.com/gtag/js?id=G-DWZLFXGHNF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-DWZLFXGHNF")</script><body class=home><header id=header><div id=head style=background-image:url(https://www.andymcdonald.scot/images/header_img.jpg),linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5))><h1 id=logo class=text-center><img class=img-circle src=https://www.andymcdonald.scot/images/andy.png alt>
 <span class=title>Andy McDonald</span>
-<span class=tagline2>Petrophysicist | Geoscientist | Data Scientist</span>
-<div class=header-underline></div>
-<div class=social-head>
-<a href=https://www.linkedin.com/in/andymcdonaldgeo/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
+<span class=tagline2>Petrophysicist | Geoscientist | Data Scientist</span><div class=header-underline></div><div class=social-head><a href=https://www.linkedin.com/in/andymcdonaldgeo/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
 <a href=https://www.researchgate.net/profile/Andrew-Mcdonald-15 target=_blank><i class="fab fa-researchgate fa-1x"></i></a>
 <a href=https://twitter.com/geoandymcd target=_blank><i class="fab fa-twitter-square fa-1x"></i></a>
 <a href=https://github.com/andymcdgeo target=_blank><i class="fab fa-github-square fa-1x"></i></a>
-<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a>
-</div>
-</h1>
-</div>
-<div class=landing>
-</div>
-<nav class="navbar navbar-default navbar-sticky">
-<div class=container-fluid>
-<div class=navbar-header>
-<button type=button class=navbar-toggle data-toggle=collapse data-target=#bs-example-navbar-collapse-1 aria-expanded=true>
+<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a></div></h1></div><div class=landing></div><nav class="navbar navbar-default navbar-sticky"><div class=container-fluid><div class=navbar-header><button type=button class=navbar-toggle data-toggle=collapse data-target=#bs-example-navbar-collapse-1 aria-expanded=true>
 <span class=sr-only>Toggle navigation</span>
 <span class=icon-bar></span>
 <span class=icon-bar></span>
-<span class=icon-bar></span>
-</button>
-</div>
-<div class="navbar-collapse collapse" id=bs-example-navbar-collapse-1>
-<ul class="nav navbar-nav">
-<li>
-<a href=https://www.andymcdonald.scot/>Home</a>
-</li>
-<li>
-<a href=https://www.andymcdonald.scot/blog/>Blog</a>
-</li>
-<li>
-<a href=https://www.andymcdonald.scot/#projects>Projects</a>
-</li>
-<li>
-<a href=https://www.andymcdonald.scot/publications/>Publications</a>
-</li>
-</ul>
-</div>
-</div>
-</nav>
-</header>
-<main id=main>
-<div class=container>
-<div class="row topspace">
-<div class="col-sm-8 col-sm-offset-2">
-<article class=post>
-<header class=entry-header>
-<div class=entry-meta>
-</div>
-<h1 class=entry-title><a href=https://www.andymcdonald.scot/publications/2020_arkalgud_etal/ rel=bookmark>Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative</a></h1>
-</header>
-<div class=entry-content>
-<p>Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model. Experienced Eye, the new methodology proposed aims to identify the optimum input variables for modelling by identifying the relevant inputs and removing those that are irrelevant.</p>
-<p>To enable the ranking of input variables with varied ranges of spectral distributions a new methodology Experienced Eye is adopted based on Domain Transfer Analysis (DTA) techniques, novel transfer functions and advanced optimisation techniques. Once the dataset has been transformed into parametric space, Cholesky&rsquo;s method is adopted to resolve the matrix. During the solution process, inter-relationships between the input variables and the target variable are developed, to solve for the target variable. The comparison between variables can be adopted to rate and rank them, which will form the basic criteria, for selection in the automation cycle.</p>
-<p>The element of ranking random variables has been a challenging area of research and has been attempted for ages. The various statistical measures were developed to compare different variables such as mean, median and standard deviation. In the current scenario, we have a novel DTA derivative Experienced Eye, which ranks variables based on characteristics and attributes instead of traditional averages and data pooling methods. Traditional methods and procedures are applied for case studies with varied configurations. To demonstrate the method a case study was carried out using cased hole pulsed neutron data. Experienced Eye ranks variables based on physical characteristics and attributes rather than arithmetic averages which are discordant with physics of the system. Conclusions based on these numerical experiments have shown that Experienced Eye has provided satisfactory results in comparison to any other statistical or non-statistical method in market. Results are tabulated and compared with novel DTA derivative Experienced Eye. Application of this new method successfully identified the optimum input variables for the selected target variable. Once irrelevant inputs were removed, model accuracy and precision increased considerably due to the reduction of noise.</p>
-<p>Unique to DTA is &ldquo;Trust Region Approach (TRA)&rdquo;, which has been developed and incorporated into the solution technique of predictability. A trust region is defined for each input variable and the target variable, in varied increments. In any given trust region, a unique solution is evolved. The solution produced is based upon the most appropriate conditionality defined by the system variables and is bound to satisfy the imposed constraints as well. This technique enables the DTA method to produce more relevant solutions than other prediction techniques.</p>
-</div>
-</article>
-</div>
-</div>
-<div class=row>
-<div class="col-sm-8 col-sm-offset-2">
-<div id=share>
-</div>
-</div>
-</div>
-<div class=clearfix></div>
-<div class=row>
-<div class="col-sm-8 col-sm-offset-2">
-<div id=comments>
-</div>
-</div>
-</div>
-<div class=clearfix></div>
-</div>
-</main>
-<footer id=underfooter>
-<div class=container>
-<div class=row>
-<div class=social-footer>
-<div class=col-md-12>
-<p class=text-center>
-<a href=https://www.linkedin.com/in/andymcdonaldgeo/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
+<span class=icon-bar></span></button></div><div class="navbar-collapse collapse" id=bs-example-navbar-collapse-1><ul class="nav navbar-nav"><li><a href=https://www.andymcdonald.scot/>Home</a></li><li><a href=https://www.andymcdonald.scot/blog/>Blog</a></li><li><a href=https://www.andymcdonald.scot/#projects>Projects</a></li><li><a href=https://www.andymcdonald.scot/publications/>Publications</a></li></ul></div></div></nav></header><main id=main><div class=container><div class="row topspace"><div class="col-sm-8 col-sm-offset-2"><article class=post><header class=entry-header><div class=entry-meta></div><h1 class=entry-title><a href=https://www.andymcdonald.scot/publications/2020_arkalgud_etal/ rel=bookmark>Automated Selection of Inputs for Log Prediction Models Using Domain Transfer Analysis DTA Derivative</a></h1></header><div class=entry-content><p>Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model. Experienced Eye, the new methodology proposed aims to identify the optimum input variables for modelling by identifying the relevant inputs and removing those that are irrelevant.</p><p>To enable the ranking of input variables with varied ranges of spectral distributions a new methodology Experienced Eye is adopted based on Domain Transfer Analysis (DTA) techniques, novel transfer functions and advanced optimisation techniques. Once the dataset has been transformed into parametric space, Cholesky&rsquo;s method is adopted to resolve the matrix. During the solution process, inter-relationships between the input variables and the target variable are developed, to solve for the target variable. The comparison between variables can be adopted to rate and rank them, which will form the basic criteria, for selection in the automation cycle.</p><p>The element of ranking random variables has been a challenging area of research and has been attempted for ages. The various statistical measures were developed to compare different variables such as mean, median and standard deviation. In the current scenario, we have a novel DTA derivative Experienced Eye, which ranks variables based on characteristics and attributes instead of traditional averages and data pooling methods. Traditional methods and procedures are applied for case studies with varied configurations. To demonstrate the method a case study was carried out using cased hole pulsed neutron data. Experienced Eye ranks variables based on physical characteristics and attributes rather than arithmetic averages which are discordant with physics of the system. Conclusions based on these numerical experiments have shown that Experienced Eye has provided satisfactory results in comparison to any other statistical or non-statistical method in market. Results are tabulated and compared with novel DTA derivative Experienced Eye. Application of this new method successfully identified the optimum input variables for the selected target variable. Once irrelevant inputs were removed, model accuracy and precision increased considerably due to the reduction of noise.</p><p>Unique to DTA is &ldquo;Trust Region Approach (TRA)&rdquo;, which has been developed and incorporated into the solution technique of predictability. A trust region is defined for each input variable and the target variable, in varied increments. In any given trust region, a unique solution is evolved. The solution produced is based upon the most appropriate conditionality defined by the system variables and is bound to satisfy the imposed constraints as well. This technique enables the DTA method to produce more relevant solutions than other prediction techniques.</p></div></article></div></div><div class=row><div class="col-sm-8 col-sm-offset-2"><div id=share></div></div></div><div class=clearfix></div><div class=row><div class="col-sm-8 col-sm-offset-2"><div id=comments></div></div></div><div class=clearfix></div></div></main><footer id=underfooter><div class=container><div class=row><div class=social-footer><div class=col-md-12><p class=text-center><a href=https://www.linkedin.com/in/andymcdonaldgeo/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a>
 <a href=https://www.researchgate.net/profile/Andrew-Mcdonald-15 target=_blank><i class="fab fa-researchgate fa-1x"></i></a>
 <a href=https://twitter.com/geoandymcd target=_blank><i class="fab fa-twitter-square fa-1x"></i></a>
 <a href=https://github.com/andymcdgeo target=_blank><i class="fab fa-github-square fa-1x"></i></a>
-<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a>
-</p>
-</div>
-</div>
-</div>
-<div class=row>
-<div class=col-md-12>
-<div class=widget-body>
-<p class=text-center>
-Copyright &copy; 2021, Andy McDonald<br>
-Powered by: <a href=https://gohugo.io/ rel=poweredby>Hugo</a>
-</p>
-</div>
-</div>
-</div>
-</div>
-</footer>
-<script src=https://code.jquery.com/jquery-1.12.4.min.js></script>
+<a href=https://andymcdonaldgeo.medium.com target=_blank><i class="fab fa-medium fa-1x"></i></a></p></div></div></div><div class=row><div class=col-md-12><div class=widget-body><p class=text-center>Copyright &copy; 2021, Andy McDonald<br>Powered by: <a href=https://gohugo.io/ rel=poweredby>Hugo</a></p></div></div></div></div></footer><script src=https://code.jquery.com/jquery-1.12.4.min.js></script>
 <script src=https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js></script>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js></script>
-<script src=https://www.andymcdonald.scot/js/bundle.min.00e4b79049366199ff1b6ac7cbd8302877370d1bf4ff0db6be4c4190e2e43f9143709df60bd35ed5c6f6495ad18afc509d468b7be1665c90f32b62afa4c7114c.js></script>
+<script src=https://www.andymcdonald.scot/js/bundle.min.2b113b905cb0e486799edf39da7b79082425d49b0c542911e1894507e25eda917f8d5cd623360914932791f64d57f09d711be37a669e96ea92e3ca8f95842ebd.js></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWZLFXGHNF"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-DWZLFXGHNF')</script>
-</body>
-</html>
-</body>
-</html>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-DWZLFXGHNF")</script></body></html></body></html>
