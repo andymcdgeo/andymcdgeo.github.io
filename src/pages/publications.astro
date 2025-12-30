@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import { getCollection } from "astro:content";
+import { slugifyTag } from "../utils/slugifyTag";
+
+const publications = await getCollection("publications");
+const sorted = publications.sort((a, b) => {
+  if (b.data.year !== a.data.year) return b.data.year - a.data.year;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const grouped = sorted.reduce((acc, pub) => {
+  const year = String(pub.data.year);
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(pub);
+  return acc;
+}, {});
+
+const years = Object.keys(grouped).sort((a, b) => Number(b) - Number(a));
+
+const primaryLinkFor = (pub) =>
+  pub.data.url ? pub.data.url : pub.data.doi ? `https://doi.org/${pub.data.doi}` : "";
+const labelForUrl = (url) =>
+  url && url.toLowerCase().includes("researchgate.net") ? "ResearchGate" : "Publisher";
+const splitParagraphs = (text) =>
+  text
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+---
+
+<BaseLayout title="Publications - Andy McDonald">
+  <Navbar slot="nav" />
+
+  <section class="section">
+    <h1>Publications</h1>
+    <p class="section-lede section-lede--full">You can find a list of my Journal and conference papers, with links to DOI or PDFs (via Researchgate) when available.</p>
+
+    <div class="pub-years">
+      {years.map((year) => (
+        <section class="pub-year">
+          <h2>{year}</h2>
+          <ol class="pub-list">
+            {grouped[year].map((pub) => {
+              const primaryLink = primaryLinkFor(pub);
+              return (
+                <li class="pub-item">
+                <div class="pub-title-row">
+                  <h3 class="pub-title">
+                    {primaryLink ? (
+                      <a href={primaryLink} target="_blank" rel="noreferrer">
+                        {pub.data.title}
+                      </a>
+                    ) : (
+                      pub.data.title
+                    )}
+                  </h3>
+                  <span
+                    class:list={[
+                      "pub-type",
+                      pub.data.type === "journal" && "pub-type--journal",
+                      pub.data.type === "conference" && "pub-type--conference",
+                    ]}
+                  >
+                    {pub.data.type === "journal" ? "Journal" : "Conference"}
+                  </span>
+                </div>
+                {pub.data.tags && (
+                  <div class="pub-tags">
+                    {pub.data.tags.map((tag) => (
+                      <span class="tag" data-tag={slugifyTag(tag)}>{tag}</span>
+                    ))}
+                  </div>
+                )}
+                  <p class="pub-authors">{pub.data.authors}</p>
+                  <p class="pub-venue">{pub.data.venue}</p>
+                  {pub.data.abstract && (
+                    <details class="pub-abstract">
+                      <summary>Abstract</summary>
+                      <div>
+                        {splitParagraphs(pub.data.abstract).map((paragraph) => (
+                          <p>{paragraph}</p>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+                  <div class="pub-links pub-links--right">
+                    {pub.data.doi && (
+                      <a class="pub-link" href={`https://doi.org/${pub.data.doi}`} target="_blank" rel="noreferrer">
+                        DOI
+                      </a>
+                    )}
+                    {pub.data.url && (
+                      <a class="pub-link" href={pub.data.url} target="_blank" rel="noreferrer">
+                        {labelForUrl(pub.data.url)}
+                      </a>
+                    )}
+                    {pub.data.pdf && (
+                      <a class="pub-link" href={pub.data.pdf} target="_blank" rel="noreferrer">
+                        PDF
+                      </a>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

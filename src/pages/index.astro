@@ -1,11 +1,135 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import { getCollection } from "astro:content";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const posts = await getCollection("blog");
+const sortedPosts = [...posts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featuredPosts = sortedPosts.filter((post) => post.data.featured === true);
+const selectedPosts = [...featuredPosts];
+
+for (const post of sortedPosts) {
+  if (selectedPosts.length >= 3) break;
+  if (!selectedPosts.some((selected) => selected.id === post.id)) {
+    selectedPosts.push(post);
+  }
+}
+
+const displayedPosts = selectedPosts.slice(0, 3);
+
+const formatDate = (date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  }).format(date);
+
+const stripMarkdown = (text) =>
+  text
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/`[^`]*`/g, "")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/[#>*_~\-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const excerptFor = (post, wordCount = 28) => {
+  const manualExcerpt = post.data.excerpt?.trim();
+  if (manualExcerpt) return manualExcerpt;
+  const description = post.data.description?.trim();
+  if (description) return description;
+  const cleaned = stripMarkdown(post.body || "");
+  if (!cleaned) return "";
+  const words = cleaned.split(" ");
+  const excerpt = words.slice(0, wordCount).join(" ");
+  return words.length > wordCount ? `${excerpt}...` : excerpt;
+};
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Andy McDonald">
+  <Navbar slot="nav" />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="eyebrow">PETROPHYSICS / PYTHON / AI & MACHINE LEARNING</div>
+      <h1>Subsurface data, made usable.</h1>
+      <p>
+        Hi, I'm Andy McDonald and welcome to my corner of the internet.
+        
+      </p>
+	  <p>
+		I’m a petrophysicist and product manager who uses AI to solve real subsurface problems, with a focus on data quality first. Clean data is a luxury, so I spend my time turning messy logs into something usable, trusted, and ready for models and people alike.
+		A lot of the data I work with is noisy or incomplete, so my job is to make sense of it before the machine learning ever gets a look in.
+		I write and share ideas on Python, AI, and working with real data, especially in the subsurface world.
+	  </p>
+
+
+      <div class="hero-links">
+        <a href="https://andymcdonaldgeo.substack.com/">Read Subsurface Syntax -></a>
+        <!-- <a href="#">Python for Well Log Analysis -></a> -->
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="/images/hero-me.png" alt="Andy McDonald portrait" width="1024" height="1536" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Selected writing</h2>
+      <a class="section-action" href="/blog">View all writing</a>
+    </div>
+    <p class="section-lede">A few selected articles that you may find useful.</p>
+    <div class="card-grid">
+      {displayedPosts.map((post) => (
+        <article class="writing-card">
+          <div class="card-meta">{formatDate(post.data.date)}</div>
+          <h3><a href={`/blog/${post.slug}`}>{post.data.title}</a></h3>
+          <p>{excerptFor(post)}</p>
+          <div class="card-footer">
+            <div class="card-tags">
+              {post.data.tags.slice(0, 2).map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            <a class="card-link" href={`/blog/${post.slug}`}>Read -&gt;</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+<!-- 
+  <div class="section-divider" aria-hidden="true"></div>
+
+  
+  <section class="section">
+    <h2>Book spotlight</h2>
+    <div class="book-spotlight">
+      <div class="book-cover" aria-hidden="true">
+        <span>Python for Well Log Analysis</span>
+      </div>
+      <div class="book-meta">
+        <h3 class="book-title">Python for Well Log Analysis and Visualisation</h3>
+        <p class="book-subtitle">Notebook-first workflows for real subsurface data, from loading to interpretation.</p>
+        <ul class="book-list">
+          <li>Data cleanup patterns that survive messy logs</li>
+          <li>Crossplots, facies flags, and quick-look diagnostics</li>
+          <li>Reusable templates for petrophysics and ML pipelines</li>
+        </ul>
+        <div class="book-status">
+          <div class="book-progress">
+            <div class="book-progress-bar" style="width: 45%"></div>
+          </div>
+          <span class="book-progress-label">In progress: drafting Chapter 5</span>
+        </div>
+        <div class="book-actions">
+          <a class="card-link" href="#">Read a sample -></a>
+          <a class="section-link" href="#">Get updates -></a>
+        </div>
+      </div>
+    </div>
+  </section> -->
+</BaseLayout>

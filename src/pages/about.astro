@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+---
+
+<BaseLayout title="About - Andy McDonald">
+  <Navbar slot="nav" />
+
+  <div class="about-page">
+    <section class="section">
+      <div class="about-hero">
+        <div class="about-hero-copy">
+          <h1>About</h1>
+          <p>
+            I work across geoscience, software, and machine learning, building practical tools for subsurface data,
+            interpretation and decision making.
+          </p>
+          <p>
+            Most of my time is spent dealing with real data that is noisy, incomplete, and occasionally uncooperative.
+            My focus is on making that data reliable enough to support analysis, models, and people making decisions
+            with it.
+          </p>
+        </div>
+        <!-- <div class="about-hero-image">
+          <img src="/images/hero-me.png" alt="Andy McDonald portrait" />
+        </div> -->
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>What I work on</h2>
+      <p>
+        Much of my work centres on turning messy subsurface data into something usable and trustworthy:
+      </p>
+      <ul class="orientation-list">
+        <li>Designing and maintaining workflows for well log and petrophysical data</li>
+        <li>Using machine learning where it genuinely adds value, and leaving it out where it does not</li>
+        <li>Building tools and interfaces that help people understand complex results</li>
+        <li>Connecting exploratory analysis with software that can be used in production</li>
+      </ul>
+      <p>
+        The common thread is pragmatism. I care about data limits, method assumptions, and the context in which results
+        will actually be used.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Experience</h2>
+      <p>
+        I have nearly 20 years of experience working with subsurface data in the oil and gas industry, across technical,
+        software, and product-facing roles.
+      </p>
+      <p>
+        My work has included building and maintaining industry software modules, developing applied machine learning
+        workflows for geoscience problems, and creating technical training material for geoscientists.
+      </p>
+      <p>
+        I have delivered conference workshops, written long-form technical articles, and published open notebooks
+        focused on Python and subsurface data analysis.
+      </p>
+      <p>
+        That mix of hands-on technical work and software development shapes how I approach problems. I care about what
+        works in practice, how tools are actually used, and where theory meets operational reality.
+      </p>
+      <p>
+        Alongside this, I write and publish independently through Subsurface Syntax, where I explore practical ways of
+        working with geological data using Python. The focus is on clarity, data quality, visualisation, and
+        interpretation rather than novelty for its own sake.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>How I think about the work</h2>
+      <p>
+        I am cautious about hype and optimistic about tools. Machine learning is most useful when it is grounded in
+        domain understanding and supports existing interpretation workflows rather than replacing them.
+      </p>
+      <p>
+        Good software design, clear visualisation, and transparent assumptions matter just as much as model metrics. A
+        result that cannot be explained or trusted is rarely useful, no matter how clever it looks.
+      </p>
+      <p>
+        I am especially interested in the step between experimentation and production. How ideas move from notebooks
+        into tools other people can rely on, and how to do that without losing rigour or context along the way.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Selected work</h2>
+      <ul class="orientation-list">
+        <li>Python and Petrophysics notebooks</li>
+        <li>SPWLA Machine Learning Workshop</li>
+        <li>Subsurface Syntax, writing on Python and geoscience</li>
+      </ul>
+    </section>
+
+  </div>
+</BaseLayout>

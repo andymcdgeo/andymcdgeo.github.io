@@ -1,0 +1,111 @@
+---
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Andy McDonald</title>
+    <link rel="icon" href="/images/favicon-andymcdonaldscot.png" type="image/png" />
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <main class="not-found-page">
+      <section class="not-found" aria-labelledby="not-found-title">
+        <div class="not-found-inner">
+          <h1 class="not-found-code">404</h1>
+          <p class="not-found-title" id="not-found-title">You’ve wandered off the grid.</p>
+          <p class="not-found-copy">The data’s fine — this page just isn’t here.</p>
+          <a class="not-found-link" href="/">→ Return to home</a>
+        </div>
+      </section>
+    </main>
+
+    <style>
+      .not-found-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 1.5rem;
+      }
+
+      .not-found {
+        width: min(900px, 100%);
+        padding: 4rem 2.5rem;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background-color: var(--bg-soft);
+        background-image:
+          linear-gradient(
+            to right,
+            color-mix(in srgb, var(--border) 20%, transparent) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--border) 20%, transparent) 1px,
+            transparent 1px
+          );
+        background-size: 80px 80px;
+        background-position: center;
+        display: flex;
+        align-items: center;
+      }
+
+      .not-found-inner {
+        max-width: 56ch;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+
+      .not-found-code {
+        margin: 0;
+        font-size: clamp(3.25rem, 6vw, 5.5rem);
+        letter-spacing: 0.06em;
+        color: var(--accent);
+      }
+
+      .not-found-title {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .not-found-copy {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .not-found-link {
+        margin-top: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.55rem 1.2rem;
+        border-radius: 999px;
+        border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+        background: color-mix(in srgb, var(--bg) 65%, transparent);
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      }
+
+      .not-found-link:hover {
+        transform: translateX(2px);
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      @media (max-width: 700px) {
+        .not-found {
+          padding: 3.25rem 1.75rem;
+        }
+      }
+    </style>
+  </body>
+</html>

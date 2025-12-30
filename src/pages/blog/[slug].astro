@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import { slugifyTag } from "../../utils/slugifyTag";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formatDate = (date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  }).format(date);
+---
+
+<BaseLayout title={`${post.data.title} - Andy McDonald`}>
+  <Navbar slot="nav" />
+
+  <article class="section post">
+    <div class="post-card">
+      <header class="post-header">
+        <p class="post-date">{formatDate(post.data.date)}</p>
+        <h1>{post.data.title}</h1>
+        <div class="post-tags">
+          {post.data.tags.map((tag) => (
+            <span class="tag" data-tag={slugifyTag(tag)}>{tag}</span>
+          ))}
+        </div>
+        <Image class="post-hero" src={post.data.heroImage} alt={post.data.heroImageAlt} />
+      </header>
+      <div class="post-content">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

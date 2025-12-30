@@ -1,0 +1,121 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import { getCollection } from "astro:content";
+import { slugifyTag } from "../../utils/slugifyTag";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths({ paginate }) {
+  const pageSize = 6;
+  const posts = await getCollection("blog");
+  const sortedPosts = [...posts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return paginate(sortedPosts, { pageSize });
+}
+
+const { page } = Astro.props;
+const posts = page.data;
+const pageTitle =
+  page.currentPage > 1
+    ? `Blog - Page ${page.currentPage} - Andy McDonald`
+    : "Blog - Andy McDonald";
+
+const allPosts = await getCollection("blog");
+const allTags = Array.from(new Set(allPosts.flatMap((post) => post.data.tags))).sort((a, b) =>
+  a.localeCompare(b)
+);
+const tagLinks = allTags.map((tag) => ({ label: tag, slug: slugifyTag(tag) }));
+
+const formatDate = (date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  }).format(date);
+
+const stripMarkdown = (text) =>
+  text
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/`[^`]*`/g, "")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/[#>*_~\-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const excerptFor = (post, wordCount = 28) => {
+  const description = post.data.description?.trim();
+  if (description) return description;
+  const cleaned = stripMarkdown(post.body || "");
+  if (!cleaned) return "";
+  const words = cleaned.split(" ");
+  const excerpt = words.slice(0, wordCount).join(" ");
+  return words.length > wordCount ? `${excerpt}...` : excerpt;
+};
+---
+
+<BaseLayout title={pageTitle}>
+  <Navbar slot="nav" />
+
+  <section class="section">
+    <h1>Writing</h1>
+    <p class="section-lede">Notes on subsurface data, petrophysics, and ML workflows.</p>
+
+    <div class="tag-filters" role="list">
+      <a href="/blog" class:list={["tag", "tag-link", "is-active"]}>All</a>
+      {tagLinks.map((tag) => (
+        <a href={`/blog/tag/${tag.slug}`} class:list={["tag", "tag-link"]} data-tag={tag.slug}>
+          {tag.label}
+        </a>
+      ))}
+    </div>
+
+    <div class="blog-grid">
+      {posts.map((post) => (
+        <article class="blog-card">
+          <a class="blog-image" href={`/blog/${post.slug}`}>
+            <Image
+              src={post.data.heroImage}
+              alt={post.data.heroImageAlt}
+              width={post.data.heroImage.width}
+              height={post.data.heroImage.height}
+              loading="lazy"
+            />
+          </a>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span class="blog-date">{formatDate(post.data.date)}</span>
+              <div class="blog-tags">
+                {post.data.tags.map((tag) => (
+                  <span class="tag" data-tag={slugifyTag(tag)}>{tag}</span>
+                ))}
+              </div>
+            </div>
+            <h2 class="blog-title">
+              <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+            </h2>
+            <p class="blog-excerpt">{excerptFor(post)}</p>
+            <a class="card-link" href={`/blog/${post.slug}`}>Read more -&gt;</a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {page.lastPage > 1 && (
+      <nav class="pagination" aria-label="Blog pages">
+        {page.url.prev ? (
+          <a class="pagination-link" href={page.url.prev}>Previous</a>
+        ) : (
+          <span class="pagination-link is-disabled" aria-disabled="true">Previous</span>
+        )}
+        <span class="pagination-status">
+          Page {page.currentPage} of {page.lastPage}
+        </span>
+        {page.url.next ? (
+          <a class="pagination-link" href={page.url.next}>Next</a>
+        ) : (
+          <span class="pagination-link is-disabled" aria-disabled="true">Next</span>
+        )}
+      </nav>
+    )}
+  </section>
+</BaseLayout>

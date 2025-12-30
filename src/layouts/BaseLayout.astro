@@ -1,0 +1,35 @@
+---
+import SocialLinks from "../components/SocialLinks.astro";
+const { title = "Andy McDonald" } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="icon" href="/images/favicon-andymcdonaldscot.png" type="image/png" />
+    <link rel="stylesheet" href="/styles/global.css" />
+</head>
+  <body>
+    <header>
+      <slot name="nav" />
+    </header>
+    <main class="page">
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        <p>
+          Petrophysicist / Python developer / Writer<br />
+          &copy; {year} Andy McDonald
+        </p>
+        <SocialLinks />
+      </div>
+    </footer>
+    <script type="module" src="/src/scripts/theme-toggle.js"></script>
+  </body>
+</html>
+

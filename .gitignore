@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local scratch pages
+src/pages/test.astro
+src/pages/index-legacy.astro
