@@ -8,7 +8,11 @@ const isAbout = pathname === "/about" || pathname.startsWith("/about/");
 <header class="nav">
   <div class="nav-inner">
     <a class="nav-left nav-home" href="/">Andy McDonald</a>
-    <nav class="nav-right">
+    <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="nav-toggle-icon" aria-hidden="true"></span>
+      <span class="nav-toggle-text">Menu</span>
+    </button>
+    <nav id="site-nav" class="nav-right">
       <a href="/blog" aria-current={isBlog ? "page" : undefined}>Blog</a>
       <a href="/publications" aria-current={isPublications ? "page" : undefined}>Publications</a>
       <a href="/about" aria-current={isAbout ? "page" : undefined}>Who Am I?</a>
