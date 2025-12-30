@@ -108,7 +108,7 @@ The remaining parameters can then be tweaked to illustrate the impacts over a fu
 
 On the top most subplot (track) we have the water saturation as calculated using the default parameters to give us a baseline. This is plotted alongside the result calculated using the interactive parameters.
 
-![Interactive widgets to illustrate the impact of how key parameters impact the Archie water saturation equation. Image by the author.](./images/1_ousiE50m2vaWq5ME7RykYwl.gif "Interactive widgets to illustrate the impact of how key parameters impact the Archie water saturation equation. Image by the author.")<br/>*Interactive widgets to illustrate the impact of how key parameters impact the Archie water saturation equation. Image by the author.*
+
 
 To generate the above plot, you can use the following code.
 
