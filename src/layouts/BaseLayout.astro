@@ -1,5 +1,7 @@
 ---
 import SocialLinks from "../components/SocialLinks.astro";
+import themeToggle from "../scripts/theme-toggle.js?url";
+import navToggle from "../scripts/nav-toggle.js?url";
 const { title = "Andy McDonald" } = Astro.props;
 const year = new Date().getFullYear();
 ---
@@ -30,8 +32,8 @@ const year = new Date().getFullYear();
         <SocialLinks />
       </div>
     </footer>
-    <script type="module" src="/src/scripts/theme-toggle.js"></script>
-    <script type="module" src="/src/scripts/nav-toggle.js"></script>
+    <script type="module" src={themeToggle}></script>
+    <script type="module" src={navToggle}></script>
   </body>
 </html>
 
