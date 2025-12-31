@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import { XMLParser } from "fast-xml-parser";
+
+const channelId = "UCn1O_4_ApzbYwrsUdRoMmOg";
+const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+
+let videos = [];
+let fetchFailed = false;
+
+try {
+  const response = await fetch(feedUrl);
+  if (!response.ok) throw new Error(`RSS fetch failed: ${response.status}`);
+  const xml = await response.text();
+  const parser = new XMLParser({ ignoreAttributes: false });
+  const feed = parser.parse(xml);
+  const entries = feed?.feed?.entry
+    ? Array.isArray(feed.feed.entry)
+      ? feed.feed.entry
+      : [feed.feed.entry]
+    : [];
+
+  videos = entries.slice(0, 6).map((entry) => {
+    const title =
+      typeof entry.title === "string" ? entry.title : entry.title?.["#text"] ?? "";
+    const link = entry.link?.["@_href"] ?? entry.link ?? "";
+    const published = entry.published ?? "";
+    const videoId = entry["yt:videoId"] ?? "";
+    return {
+      title,
+      link,
+      published,
+      videoId,
+      thumbnail: videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : "",
+    };
+  }).filter((video) => video.title && video.link && video.thumbnail);
+} catch (error) {
+  fetchFailed = true;
+}
+
+const formatDate = (value) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  }).format(date);
+};
+---
+
+<BaseLayout title="Videos - Andy McDonald">
+  <Navbar slot="nav" />
+
+  <section class="section">
+    <div class="section-header">
+      <h1>Latest videos</h1>
+      <a class="section-action section-action--primary" href="https://www.youtube.com/@AndyMcDonald42" target="_blank" rel="noopener noreferrer">
+        View more
+      </a>
+    </div>
+    <p class="section-lede">Short, practical walkthroughs on petrophysics, Python, and applied ML.</p>
+  </section>
+
+  <section class="section">
+    {fetchFailed || videos.length === 0 ? (
+      <p class="section-lede">Videos unavailable right now.</p>
+    ) : (
+      <div class="video-grid">
+        {videos.map((video) => (
+          <article class="video-card">
+            <a class="video-thumb-link" href={video.link} target="_blank" rel="noopener noreferrer">
+              <img
+                class="video-thumb"
+                src={video.thumbnail}
+                alt={`${video.title} thumbnail`}
+                width="480"
+                height="270"
+                loading="lazy"
+              />
+            </a>
+            <div class="video-body">
+              <h2 class="video-title">
+                <a href={video.link} target="_blank" rel="noopener noreferrer">{video.title}</a>
+              </h2>
+              <div class="video-meta">{formatDate(video.published)}</div>
+              <a class="video-cta" href={video.link} target="_blank" rel="noopener noreferrer">
+                Watch on YouTube →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>

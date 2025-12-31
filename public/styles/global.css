@@ -268,7 +268,7 @@ h2 {
 .template-media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -328,6 +328,19 @@ h2 {
   text-decoration: underline;
   text-decoration-color: rgba(201, 162, 77, 0.6);
   text-underline-offset: 3px;
+}
+
+.section-action--primary {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 162, 77, 0.6);
+  background: rgba(201, 162, 77, 0.12);
+}
+
+.section-action--primary:hover {
+  text-decoration: none;
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* Divider inspired by the hero eyebrow */
@@ -602,6 +615,73 @@ h2 {
 .pagination-status {
   font-size: 0.9rem;
   color: var(--muted);
+}
+
+/* =========================
+   Videos
+   ========================= */
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.video-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  display: flex;
+  flex-direction: column;
+}
+
+.video-thumb-link {
+  display: block;
+}
+
+.video-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.video-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.video-title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.video-title a {
+  color: inherit;
+}
+
+.video-title a:hover {
+  color: var(--accent);
+}
+
+.video-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.video-cta {
+  margin-top: auto;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.video-cta:hover {
+  color: var(--accent);
 }
 
 /* =========================
@@ -1117,6 +1197,10 @@ h2 {
   }
 
   .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-grid {
     grid-template-columns: 1fr;
   }
 }
