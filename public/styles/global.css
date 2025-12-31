@@ -207,6 +207,97 @@ h2 {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 }
 
+.notion-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: start;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.notion-hero-copy p {
+  max-width: var(--max-width);
+}
+
+.notion-hero-image {
+  display: flex;
+  justify-content: center;
+}
+
+.notion-hero-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: block;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.notion-templates {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.template-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.75rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+.template-media {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.template-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.template-content h2 {
+  margin: 0 0 0.75rem;
+}
+
+.template-content p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+
+.template-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  background: rgba(15, 20, 25, 0.4);
+}
+
+.template-link:hover {
+  color: var(--accent);
+  border-color: rgba(201, 162, 77, 0.6);
+}
+
 /* =========================
    Sections
    ========================= */
@@ -714,6 +805,10 @@ h2 {
   margin: 0;
 }
 
+.about-social-links {
+  justify-content: center;
+}
+
 .orientation-list {
   margin: 0.5rem 0 1rem;
   padding-left: 1.2rem;
@@ -978,6 +1073,35 @@ h2 {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+  }
+
+  .notion-hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .notion-hero-image {
+    order: -1;
+    margin: 0 auto;
+    max-width: 320px;
+  }
+
+  .notion-hero-image img {
+    width: 100%;
+  }
+
+  .notion-templates {
+    margin-top: 2rem;
+  }
+
+  .template-card {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+
+  .template-media {
+    max-width: 240px;
+    margin: 0 auto;
   }
 
   .card-grid {

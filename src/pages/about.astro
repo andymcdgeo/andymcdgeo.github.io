@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
+import SocialLinks from "../components/SocialLinks.astro";
 ---
 
 <BaseLayout title="About - Andy McDonald">
@@ -25,10 +26,15 @@ import Navbar from "../components/Navbar.astro";
           <img src="/images/hero-me.png" alt="Andy McDonald portrait" />
         </div> -->
       </div>
-    </section>
+  </section>
 
-    <section class="section">
-      <h2>What I work on</h2>
+  <section class="section">
+    <p class="about-social-intro">You can follow me or reach out to me on:</p>
+    <SocialLinks class="about-social-links" />
+  </section>
+
+  <section class="section">
+    <h2>What I work on</h2>
       <p>
         Much of my work centres on turning messy subsurface data into something usable and trustworthy:
       </p>

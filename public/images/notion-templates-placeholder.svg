@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Notion template preview placeholder">
+  <rect width="1200" height="800" fill="#141b22" />
+  <rect x="60" y="60" width="1080" height="680" rx="18" fill="#0f1419" stroke="#243040" stroke-width="2" />
+  <rect x="90" y="100" width="360" height="28" rx="6" fill="#243040" />
+  <rect x="90" y="150" width="1020" height="14" rx="7" fill="#1f2a36" />
+  <rect x="90" y="190" width="980" height="14" rx="7" fill="#1f2a36" />
+  <rect x="90" y="230" width="920" height="14" rx="7" fill="#1f2a36" />
+  <rect x="90" y="280" width="300" height="360" rx="12" fill="#141b22" stroke="#243040" stroke-width="2" />
+  <rect x="420" y="280" width="690" height="360" rx="12" fill="#141b22" stroke="#243040" stroke-width="2" />
+  <rect x="450" y="310" width="200" height="120" rx="8" fill="#1f2a36" />
+  <rect x="680" y="310" width="200" height="120" rx="8" fill="#1f2a36" />
+  <rect x="910" y="310" width="170" height="120" rx="8" fill="#1f2a36" />
+  <rect x="450" y="460" width="630" height="14" rx="7" fill="#1f2a36" />
+  <rect x="450" y="500" width="580" height="14" rx="7" fill="#1f2a36" />
+  <rect x="450" y="540" width="520" height="14" rx="7" fill="#1f2a36" />
+  <rect x="450" y="580" width="300" height="14" rx="7" fill="#1f2a36" />
+  <circle cx="118" cy="114" r="8" fill="#c9a24d" />
+  <text x="150" y="118" font-size="16" fill="#e6e9ee" font-family="system-ui, -apple-system, Segoe UI, sans-serif">Notion template preview</text>
+</svg>
