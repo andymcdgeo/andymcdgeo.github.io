@@ -2,8 +2,13 @@
 import SocialLinks from "../components/SocialLinks.astro";
 import themeToggle from "../scripts/theme-toggle.js?url";
 import navToggle from "../scripts/nav-toggle.js?url";
-const { title = "Andy McDonald" } = Astro.props;
+const {
+  title = "Andy McDonald",
+  description = "Petrophysics, Python, and applied machine learning for subsurface data and geoscience workflows.",
+} = Astro.props;
 const year = new Date().getFullYear();
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
+const ogImage = Astro.site ? new URL("/images/hero-me.png", Astro.site) : "/images/hero-me.png";
 ---
 
 <!doctype html>
@@ -12,6 +17,17 @@ const year = new Date().getFullYear();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/images/favicon-andymcdonaldscot.png" type="image/png" />
     <link rel="stylesheet" href="/styles/global.css" />
     <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
