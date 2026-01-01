@@ -63,7 +63,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
@@ -730,6 +730,77 @@ h2 {
   margin-top: 2rem;
 }
 
+.post-nav {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.post-nav-link {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  background: var(--bg-soft);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.post-nav-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.post-nav-title {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.post-nav-link:hover {
+  border-color: rgba(201, 162, 77, 0.6);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+}
+
+.post-related {
+  margin-top: 2.5rem;
+}
+
+.post-related-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.post-related-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-related-link {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.post-related-link:hover {
+  color: var(--accent);
+}
+
+.post-related-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 /* =========================
    Publications
    ========================= */
@@ -1201,6 +1272,10 @@ h2 {
   }
 
   .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-nav {
     grid-template-columns: 1fr;
   }
 }

@@ -6,6 +6,9 @@ heroImage: "./python-for-geoscience.jpg"
 heroImageAlt: "Python in Geoscience"
 description: "How Python can help your daily subsurface geoscience workflows"
 featured: true
+relatedPosts:
+  - using-python-to-explore-and-understand-equations-in-petrophysics
+  - data-quality-considerations-for-machine-learning-models
 slug: "python-for-geoscience"
 ---
 

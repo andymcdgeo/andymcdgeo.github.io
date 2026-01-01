@@ -3,9 +3,12 @@ title: "Data Quality Considerations for Machine Learning Models"
 date: 2022-10-12
 tags: ["well logs", "data quality", "machine learning"]
 heroImage: "./data-quality-image.jpg"
-heroImageAlt: 6 common characteristics of Data Quality"
+heroImageAlt: "6 common characteristics of Data Quality"
 description: "Reducing the Impacts of Garbage In Garbage Out on Machine Learning Models"
 featured: true
+relatedPosts:
+  - python-for-geoscience
+  - using-python-to-explore-and-understand-equations-in-petrophysics
 slug: "data-quality-considerations-for-machine-learning-models"
 ---
 

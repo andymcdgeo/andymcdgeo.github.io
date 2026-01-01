@@ -4,6 +4,8 @@ import Navbar from "../../components/Navbar.astro";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import { slugifyTag } from "../../utils/slugifyTag";
+import BlogPostNavPrevNext from "../../components/BlogPostNavPrevNext.astro";
+import BlogPostRelatedPosts from "../../components/BlogPostRelatedPosts.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -14,6 +16,11 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const posts = await getCollection("blog");
+const sorted = [...posts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const index = sorted.findIndex((item) => item.slug === Astro.params.slug);
+const previousPost = index + 1 < sorted.length ? sorted[index + 1] : undefined;
+const nextPost = index > 0 ? sorted[index - 1] : undefined;
 const { Content } = await post.render();
 
 const formatDate = (date) =>
@@ -42,6 +49,8 @@ const formatDate = (date) =>
       <div class="post-content">
         <Content />
       </div>
+      <BlogPostRelatedPosts relatedPosts={post.data.relatedPosts} />
     </div>
+    <BlogPostNavPrevNext previousPost={previousPost} nextPost={nextPost} />
   </article>
 </BaseLayout>

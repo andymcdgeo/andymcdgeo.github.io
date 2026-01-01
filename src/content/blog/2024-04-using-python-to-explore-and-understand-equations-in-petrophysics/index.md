@@ -6,6 +6,9 @@ heroImage: "./1_D2PhB38KK906cEaTzI6z2A.png"
 heroImageAlt: "Using Python to Explore and Understand Equations in Petrophysics"
 description: "A simple way to understand parameters to the Archie Water Saturation equation using Python"
 featured: true
+relatedPosts:
+  - python-for-geoscience
+  - data-quality-considerations-for-machine-learning-models
 slug: "using-python-to-explore-and-understand-equations-in-petrophysics"
 ---
 

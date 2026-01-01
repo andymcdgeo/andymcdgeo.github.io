@@ -1,0 +1,20 @@
+---
+const { previousPost, nextPost } = Astro.props;
+---
+
+{(previousPost || nextPost) && (
+  <nav class="post-nav" aria-label="Post navigation">
+    {previousPost && (
+      <a class="post-nav-link post-nav-prev" href={`/blog/${previousPost.slug}`}>
+        <span class="post-nav-label">Previous</span>
+        <span class="post-nav-title">{previousPost.data.title}</span>
+      </a>
+    )}
+    {nextPost && (
+      <a class="post-nav-link post-nav-next" href={`/blog/${nextPost.slug}`}>
+        <span class="post-nav-label">Next</span>
+        <span class="post-nav-title">{nextPost.data.title}</span>
+      </a>
+    )}
+  </nav>
+)}

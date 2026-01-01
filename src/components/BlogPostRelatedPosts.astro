@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+
+const { relatedPosts } = Astro.props;
+
+const posts = (await getCollection("blog"))
+  .filter((post) => post.slug !== Astro.params.slug)
+  .filter((post) => relatedPosts?.includes(post.slug))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+{posts.length > 0 && (
+  <section class="post-related">
+    <h2>Related posts</h2>
+    <ul class="post-related-list">
+      {posts.map((post) => (
+        <li class="post-related-item">
+          <a class="post-related-link" href={`/blog/${post.slug}`}>{post.data.title}</a>
+          <span class="post-related-meta">{post.data.date.toLocaleDateString("en-GB")}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
