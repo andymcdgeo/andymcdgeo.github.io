@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+
+const lightMediaSlugs = new Set([
+  "reservoir-rock-typing-unsupervised-methods",
+  "building-consistent-sand-metrics",
+]);
+
+const projects = (await getCollection("projects"))
+  .filter((project) => project.data.featured === true)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
+---
+
+<section class="section projects-section">
+  <!-- <div class="eyebrow">PROJECTS</div> -->
+  <h2>Projects</h2>
+  <p class="section-lede section-lede--full">
+    A small selection of python, petrophysics and machine learning projects that I have worked on over the years.
+  </p>
+
+  <div class="projects-list">
+    {projects.map((project, index) => (
+      <article class={`project-row ${index % 2 === 1 ? "project-row--reverse" : ""}`}>
+        {project.data.image ? (
+          <div class={`project-media ${lightMediaSlugs.has(project.slug) ? "project-media--light" : ""}`}>
+            <img src={project.data.image} alt={`${project.data.title} project image`} loading="lazy" />
+          </div>
+        ) : (
+          <div
+            class={`project-media ${lightMediaSlugs.has(project.slug) ? "project-media--light" : ""}`}
+            role="img"
+            aria-label={`${project.data.title} project placeholder`}
+          ></div>
+        )}
+        <div class="project-body">
+          <h3>{project.data.title}</h3>
+          <div class="project-meta">{project.data.region} | {project.data.scale}</div>
+          <p>{project.data.description}</p>
+          <ul class="project-bullets">
+            {project.data.keyWork.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+          {project.data.tags && (
+            <div class="project-tags">
+              {project.data.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )}
+          {project.data.link && (
+            <a class="project-link" href={project.data.link} target="_blank" rel="noopener noreferrer">
+              GitHub -&gt;
+            </a>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

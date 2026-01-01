@@ -1,6 +1,7 @@
 ﻿---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
+import ProjectsSection from "../components/ProjectsSection.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
@@ -103,6 +104,8 @@ const excerptFor = (post, wordCount = 28) => {
       ))}
     </div>
   </section>
+
+  <ProjectsSection />
 <!-- 
   <div class="section-divider" aria-hidden="true"></div>
 

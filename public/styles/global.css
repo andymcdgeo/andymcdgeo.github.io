@@ -299,6 +299,124 @@ h2 {
 }
 
 /* =========================
+   Projects
+   ========================= */
+
+.projects-section h2 {
+  margin-top: 0.6rem;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.project-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 2rem;
+  align-items: center;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-soft);
+}
+
+.project-row--reverse .project-media {
+  order: 2;
+}
+
+.project-row--reverse .project-body {
+  order: 1;
+}
+
+.project-row--reverse {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+}
+
+.project-media {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(135deg, rgba(201, 162, 77, 0.08), rgba(20, 27, 34, 0.92)),
+    linear-gradient(transparent 95%, rgba(36, 48, 64, 0.35) 95%),
+    linear-gradient(90deg, transparent 95%, rgba(36, 48, 64, 0.35) 95%);
+  background-size: cover, 24px 24px, 24px 24px;
+  background-position: center;
+}
+
+.project-media--light {
+  background: #ffffff;
+}
+
+.project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+}
+
+.project-body h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.project-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+
+.project-body p {
+  margin: 0 0 1.1rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.project-bullets {
+  margin: 0 0 1.1rem;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.project-bullets li {
+  list-style: disc;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.9rem;
+}
+
+.project-tags .tag {
+  font-size: 0.7rem;
+  color: rgba(154, 164, 178, 0.6);
+  border-color: rgba(154, 164, 178, 0.22);
+  background: rgba(154, 164, 178, 0.06);
+}
+
+.project-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.project-link:hover {
+  color: var(--accent);
+}
+
+/* =========================
    Sections
    ========================= */
 
@@ -1250,9 +1368,23 @@ h2 {
     padding: 1.5rem;
   }
 
-  .template-media {
-    max-width: 240px;
-    margin: 0 auto;
+.template-media {
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+  .project-row,
+  .project-row--reverse {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+  }
+
+  .project-media {
+    order: 1;
+  }
+
+  .project-body {
+    order: 2;
   }
 
   .card-grid {
