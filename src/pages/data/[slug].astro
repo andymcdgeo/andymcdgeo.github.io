@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/Navbar.astro";
 import { getCollection } from "astro:content";
@@ -22,7 +22,6 @@ const formatDate = (date) =>
 
 const emptyLabel = "—";
 const summary = source.data.summary?.trim();
-const providerType = source.data.providerType?.trim();
 const accessLabel = source.data.access.charAt(0).toUpperCase() + source.data.access.slice(1);
 const registrationLabel = source.data.registrationRequired
   ? "Registration required"
@@ -314,3 +313,5 @@ const { Content } = await source.render();
     }
   </style>
 </BaseLayout>
+
+

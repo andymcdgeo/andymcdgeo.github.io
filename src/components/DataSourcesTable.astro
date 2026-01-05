@@ -2,6 +2,135 @@
 const { sources, regions, providers, dataTypes } = Astro.props;
 ---
 
+<style>
+  .data-filters {
+    margin: 2rem 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1rem;
+    align-items: end;
+  }
+
+  .filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .filter-field input,
+  .filter-field select {
+    padding: 0.5rem 0.65rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+
+  .filter-clear {
+    padding: 0.55rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.9rem;
+    height: fit-content;
+  }
+
+  .filter-actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .filter-clear:hover {
+    color: var(--accent);
+    border-color: rgba(201, 162, 77, 0.6);
+  }
+
+  .data-table-wrap {
+    overflow-x: auto;
+  }
+
+  .data-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    border-radius: 12px;
+  }
+
+  .data-table th,
+  .data-table td {
+    text-align: left;
+    padding: 0.75rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    font-size: 0.9rem;
+  }
+
+  .data-col-action {
+    width: 140px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .data-table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    background: rgba(15, 20, 25, 0.4);
+  }
+
+  .data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-type-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .data-pill {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(154, 164, 178, 0.35);
+    color: var(--muted);
+    background: rgba(154, 164, 178, 0.12);
+    white-space: nowrap;
+  }
+
+  .data-external {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(15, 20, 25, 0.4);
+    color: var(--text);
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .data-external:hover {
+    color: var(--accent);
+    border-color: rgba(201, 162, 77, 0.6);
+  }
+
+  @media (max-width: 900px) {
+    .data-table {
+      min-width: 720px;
+    }
+  }
+</style>
+
 <div class="data-filters" data-filters aria-label="Filter data sources">
   <label class="filter-field" for="filter-search">
     <span class="filter-label">Search</span>
@@ -143,132 +272,3 @@ const { sources, regions, providers, dataTypes } = Astro.props;
     applyFilters();
   });
 </script>
-
-<style>
-  .data-filters {
-    margin: 2rem 0 1.5rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 1rem;
-    align-items: end;
-  }
-
-  .filter-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-
-  .filter-field input,
-  .filter-field select {
-    padding: 0.5rem 0.65rem;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--bg-soft);
-    color: var(--text);
-    font-size: 0.9rem;
-  }
-
-  .filter-clear {
-    padding: 0.55rem 0.8rem;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--bg-soft);
-    color: var(--text);
-    cursor: pointer;
-    font-size: 0.9rem;
-    height: fit-content;
-  }
-
-  .filter-actions {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-  }
-
-  .filter-clear:hover {
-    color: var(--accent);
-    border-color: rgba(201, 162, 77, 0.6);
-  }
-
-  .data-table-wrap {
-    overflow-x: auto;
-  }
-
-  .data-table {
-    width: 100%;
-    min-width: 900px;
-    border-collapse: collapse;
-    border: 1px solid var(--border);
-    background: var(--bg-soft);
-    border-radius: 12px;
-  }
-
-  .data-table th,
-  .data-table td {
-    text-align: left;
-    padding: 0.75rem 0.8rem;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-    font-size: 0.9rem;
-  }
-
-  .data-col-action {
-    width: 140px;
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .data-table th {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    background: rgba(15, 20, 25, 0.4);
-  }
-
-  .data-table tbody tr:last-child td {
-    border-bottom: none;
-  }
-
-  .data-type-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .data-pill {
-    font-size: 0.7rem;
-    padding: 0.1rem 0.5rem;
-    border-radius: 999px;
-    border: 1px solid rgba(154, 164, 178, 0.35);
-    color: var(--muted);
-    background: rgba(154, 164, 178, 0.12);
-    white-space: nowrap;
-  }
-
-  .data-external {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: rgba(15, 20, 25, 0.4);
-    color: var(--text);
-    font-size: 0.85rem;
-    text-decoration: none;
-  }
-
-  .data-external:hover {
-    color: var(--accent);
-    border-color: rgba(201, 162, 77, 0.6);
-  }
-
-  @media (max-width: 900px) {
-    .data-table {
-      min-width: 720px;
-    }
-  }
-</style>
