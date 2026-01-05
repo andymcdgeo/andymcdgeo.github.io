@@ -1,0 +1,274 @@
+---
+const { sources, regions, providers, dataTypes } = Astro.props;
+---
+
+<div class="data-filters" data-filters aria-label="Filter data sources">
+  <label class="filter-field" for="filter-search">
+    <span class="filter-label">Search</span>
+    <input id="filter-search" type="search" placeholder="Search title or tags" />
+  </label>
+
+  <label class="filter-field" for="filter-region">
+    <span class="filter-label">Region</span>
+    <select id="filter-region">
+      <option value="">All regions</option>
+      {regions.map((region) => (
+        <option value={region}>{region}</option>
+      ))}
+    </select>
+  </label>
+
+  <label class="filter-field" for="filter-provider">
+    <span class="filter-label">Provider</span>
+    <select id="filter-provider">
+      <option value="">All providers</option>
+      {providers.map((provider) => (
+        <option value={provider}>{provider}</option>
+      ))}
+    </select>
+  </label>
+
+  <label class="filter-field" for="filter-type">
+    <span class="filter-label">Data type</span>
+    <select id="filter-type">
+      <option value="">All types</option>
+      {dataTypes.map((type) => (
+        <option value={type}>{type}</option>
+      ))}
+    </select>
+  </label>
+
+  <div class="filter-actions">
+    <button class="filter-clear" type="button" id="filter-clear">
+      Clear filters
+    </button>
+  </div>
+</div>
+
+<div class="data-table-wrap">
+  <table class="data-table" data-table>
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Region</th>
+            <th>Provider</th>
+            <th>Data types</th>
+            <th>Last checked</th>
+            <th class="data-col-action">More info</th>
+          </tr>
+        </thead>
+    <tbody>
+      {sources.map((source) => {
+        const tags = source.data.tags ?? [];
+        const dataTypeList = source.data.dataTypes ?? [];
+        const searchText = [source.data.title, ...tags].join(" ").toLowerCase();
+        const licence = source.data.licence?.trim();
+        const emptyLabel = "--";
+        const licenceLabel = licence && licence.length > 0 ? licence : emptyLabel;
+        return (
+          <tr
+            data-search={searchText}
+            data-region={source.data.region.toLowerCase()}
+            data-provider={source.data.provider.toLowerCase()}
+            data-types={dataTypeList.map((type) => type.toLowerCase()).join("|")}
+            data-registration={source.data.registrationRequired ? "yes" : "no"}
+          >
+            <td>
+              <a href={`/data/${source.slug}`}>{source.data.title}</a>
+            </td>
+            <td>{source.data.region || emptyLabel}</td>
+            <td>{source.data.provider || emptyLabel}</td>
+            <td>
+              <div class="data-type-list">
+                {dataTypeList.length > 0
+                  ? dataTypeList.map((type) => <span class="data-pill">{type}</span>)
+                  : emptyLabel}
+              </div>
+            </td>
+            <td>{source.data.lastChecked.toLocaleDateString("en-GB")}</td>
+            <td class="data-col-action">
+              <a class="data-external" href={`/data/${source.slug}`}>
+                More Info
+              </a>
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>
+
+<script type="module">
+  const searchInput = document.getElementById("filter-search");
+  const regionSelect = document.getElementById("filter-region");
+  const providerSelect = document.getElementById("filter-provider");
+  const typeSelect = document.getElementById("filter-type");
+  const clearButton = document.getElementById("filter-clear");
+  const table = document.querySelector("[data-table]");
+  const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+  const toLower = (value) => (value || "").toString().toLowerCase();
+
+  const applyFilters = () => {
+    const searchValue = toLower(searchInput.value.trim());
+    const regionValue = toLower(regionSelect.value);
+    const providerValue = toLower(providerSelect.value);
+    const typeValue = toLower(typeSelect.value);
+    rows.forEach((row) => {
+      const matchesSearch = !searchValue || row.dataset.search.includes(searchValue);
+      const matchesRegion = !regionValue || row.dataset.region === regionValue;
+      const matchesProvider = !providerValue || row.dataset.provider === providerValue;
+      const typeValues = row.dataset.types ? row.dataset.types.split("|") : [];
+      const matchesType = !typeValue || typeValues.includes(typeValue);
+
+      row.hidden = !(
+        matchesSearch &&
+        matchesRegion &&
+        matchesProvider &&
+        matchesType
+      );
+    });
+  };
+
+  [searchInput, regionSelect, providerSelect, typeSelect].forEach((control) => {
+    control.addEventListener("input", applyFilters);
+    control.addEventListener("change", applyFilters);
+  });
+
+  clearButton.addEventListener("click", () => {
+    searchInput.value = "";
+    regionSelect.value = "";
+    providerSelect.value = "";
+    typeSelect.value = "";
+    applyFilters();
+  });
+</script>
+
+<style>
+  .data-filters {
+    margin: 2rem 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1rem;
+    align-items: end;
+  }
+
+  .filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .filter-field input,
+  .filter-field select {
+    padding: 0.5rem 0.65rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+
+  .filter-clear {
+    padding: 0.55rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.9rem;
+    height: fit-content;
+  }
+
+  .filter-actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .filter-clear:hover {
+    color: var(--accent);
+    border-color: rgba(201, 162, 77, 0.6);
+  }
+
+  .data-table-wrap {
+    overflow-x: auto;
+  }
+
+  .data-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    border-radius: 12px;
+  }
+
+  .data-table th,
+  .data-table td {
+    text-align: left;
+    padding: 0.75rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    font-size: 0.9rem;
+  }
+
+  .data-col-action {
+    width: 140px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .data-table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    background: rgba(15, 20, 25, 0.4);
+  }
+
+  .data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-type-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .data-pill {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(154, 164, 178, 0.35);
+    color: var(--muted);
+    background: rgba(154, 164, 178, 0.12);
+    white-space: nowrap;
+  }
+
+  .data-external {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(15, 20, 25, 0.4);
+    color: var(--text);
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .data-external:hover {
+    color: var(--accent);
+    border-color: rgba(201, 162, 77, 0.6);
+  }
+
+  @media (max-width: 900px) {
+    .data-table {
+      min-width: 720px;
+    }
+  }
+</style>

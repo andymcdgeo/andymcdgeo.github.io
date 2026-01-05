@@ -2,6 +2,7 @@
 const { pathname } = Astro.url;
 const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
 const isVideos = pathname === "/videos" || pathname.startsWith("/videos/");
+const isData = pathname === "/data" || pathname.startsWith("/data/");
 const isNotionTemplates = pathname === "/notion-templates" || pathname.startsWith("/notion-templates/");
 const isPublications = pathname === "/publications" || pathname.startsWith("/publications/");
 const isAbout = pathname === "/about" || pathname.startsWith("/about/");
@@ -17,6 +18,7 @@ const isAbout = pathname === "/about" || pathname.startsWith("/about/");
     <nav id="site-nav" class="nav-right">
       <a href="/blog" aria-current={isBlog ? "page" : undefined}>Blog</a>
       <a href="/videos" aria-current={isVideos ? "page" : undefined}>Videos</a>
+      <a href="/data" aria-current={isData ? "page" : undefined}>Open Datasets</a>
       <a href="/publications" aria-current={isPublications ? "page" : undefined}>Publications</a>
       <a href="/notion-templates" aria-current={isNotionTemplates ? "page" : undefined}>Notion Templates</a>
       <a href="/about" aria-current={isAbout ? "page" : undefined}>Who Am I?</a>

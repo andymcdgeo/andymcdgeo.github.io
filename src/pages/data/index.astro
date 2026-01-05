@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import { getCollection } from "astro:content";
+import DataSourcesTable from "../../components/DataSourcesTable.astro";
+import { getDataSourceFilters } from "../../utils/dataSources";
+
+const sources = (await getCollection("data-sources")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+
+const { regions, providers, dataTypes } = getDataSourceFilters(sources);
+---
+
+<BaseLayout title="Open Well Data Sources - Andy McDonald">
+  <Navbar slot="nav" />
+
+  <section class="section data-page">
+    <h1>Open Well Data Sources</h1>
+    <p class="section-lede section-lede--full">
+      A directory of public well data sources, with access notes and data types.
+    </p>
+
+    <DataSourcesTable
+      sources={sources}
+      regions={regions}
+      providers={providers}
+      dataTypes={dataTypes}
+    />
+  </section>
+
+  <style>
+    .data-page h1 {
+      margin-top: 0;
+    }
+  </style>
+</BaseLayout>

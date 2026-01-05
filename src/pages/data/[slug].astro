@@ -1,0 +1,316 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const sources = await getCollection("data-sources");
+  return sources.map((source) => ({
+    params: { slug: source.slug },
+    props: { source },
+  }));
+}
+
+const { source } = Astro.props;
+
+const formatDate = (date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  }).format(date);
+
+const emptyLabel = "—";
+const summary = source.data.summary?.trim();
+const providerType = source.data.providerType?.trim();
+const accessLabel = source.data.access.charAt(0).toUpperCase() + source.data.access.slice(1);
+const registrationLabel = source.data.registrationRequired
+  ? "Registration required"
+  : "No registration";
+const licence = source.data.licence?.trim();
+const licenceLabel = licence && licence.length > 0 ? licence : emptyLabel;
+const dataTypesText = source.data.dataTypes?.length
+  ? source.data.dataTypes.join(", ")
+  : emptyLabel;
+const coverageText = source.data.coverage?.trim() || emptyLabel;
+const formatsText = source.data.formats?.trim() || emptyLabel;
+const lastChecked = source.data.lastChecked ? formatDate(source.data.lastChecked) : emptyLabel;
+
+const { Content } = await source.render();
+---
+
+<BaseLayout title={`${source.data.title} - Open Well Data Sources`}>
+  <Navbar slot="nav" />
+
+  <section class="section data-detail">
+    <a class="data-back" href="/data">&larr; Back to directory</a>
+
+    <div class="data-record">
+      <header class="data-header">
+        <div class="data-title-row">
+          <h1>{source.data.title}</h1>
+          <a
+            class="data-access-button"
+            href={source.data.primaryUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Access here
+          </a>
+        </div>
+        {summary && <p class="data-summary">{summary}</p>}
+        <!-- <div class="data-url-row">
+          <span class="data-url-label">URL</span>
+          <a class="data-url" href={source.data.primaryUrl} target="_blank" rel="noopener noreferrer">
+            {source.data.primaryUrl}
+          </a>
+        </div> -->
+        <!-- <p class="data-meta">
+          ID: {source.slug} ? Provider: {source.data.provider} ? Last checked: {lastChecked}
+        </p> -->
+      </header>
+
+
+      <section class="data-section">
+        <h2>Key facts</h2>
+        <table class="data-facts-table">
+          <tbody>
+            <tr>
+              <th scope="row">Region</th>
+              <td>{source.data.region || emptyLabel}</td>
+            </tr>
+            <tr>
+              <th scope="row">Provider</th>
+              <td>{source.data.provider || emptyLabel}</td>
+            </tr>
+            <tr>
+              <th scope="row">Access</th>
+              <td>{accessLabel}</td>
+            </tr>
+            <tr>
+              <th scope="row">URL</th>
+              <td>
+                <a
+                  class="data-url"
+                  href={source.data.primaryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {source.data.primaryUrl}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Registration</th>
+              <td>{registrationLabel}</td>
+            </tr>
+            <tr>
+              <th scope="row">Licence</th>
+              <td>
+                {source.data.licenceUrl ? (
+                  <a href={source.data.licenceUrl} target="_blank" rel="noopener noreferrer">
+                    {licenceLabel}
+                  </a>
+                ) : (
+                  licenceLabel
+                )}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Data types</th>
+              <td>{dataTypesText}</td>
+            </tr>
+            <tr>
+              <th scope="row">Coverage</th>
+              <td>{coverageText}</td>
+            </tr>
+            <tr>
+              <th scope="row">Formats</th>
+              <td>{formatsText}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="data-section data-notes">
+        <h2>Notes</h2>
+        <Content />
+      </section>
+
+      <footer class="data-footer">
+        <!-- Maintainer: {source.data.provider || emptyLabel} ? -->
+         Last reviewed: {lastChecked}
+      </footer>
+    </div>
+  </section>
+
+  <style>
+    .data-detail h1 {
+      margin: 0;
+    }
+
+    .data-back {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-soft);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    .data-back:hover {
+      color: var(--accent);
+      border-color: rgba(201, 162, 77, 0.6);
+    }
+
+    .data-record {
+      max-width: 980px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--bg-soft);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .data-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .data-summary {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .data-access-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201, 162, 77, 0.6);
+      background: rgba(201, 162, 77, 0.12);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .data-access-button:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .data-url-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .data-url-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .data-url {
+      color: var(--text);
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    .data-url:hover {
+      color: var(--accent);
+    }
+
+    .data-meta {
+      margin: 0.2rem 0 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .data-classifications {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-classifier {
+      font-size: 0.7rem;
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(154, 164, 178, 0.25);
+      color: rgba(154, 164, 178, 0.85);
+      background: rgba(154, 164, 178, 0.08);
+    }
+
+    .data-section {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-section:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .data-section h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1rem;
+    }
+
+    .data-facts-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-facts-table th,
+    .data-facts-table td {
+      text-align: left;
+      padding: 0.45rem 0;
+      vertical-align: top;
+    }
+
+    .data-facts-table th {
+      width: 160px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    .data-facts-table td {
+      color: var(--text);
+    }
+
+    .data-notes :global(h2) {
+      margin-top: 1rem;
+    }
+
+    .data-footer {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</BaseLayout>
