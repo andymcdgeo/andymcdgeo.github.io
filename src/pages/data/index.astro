@@ -15,70 +15,17 @@ const { regions, providers, dataTypes } = getDataSourceFilters(sources);
 <BaseLayout title="Open Well Data Sources - Andy McDonald">
   <Navbar slot="nav" />
 
-  <style>
-    .data-page h1 {
-      margin-top: 0;
-    }
-
-    .data-disclaimer {
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .data-disclaimer h2 {
-      margin: 0 0 0.6rem;
-      font-size: 0.95rem;
-      color: var(--text);
-    }
-
-    .data-disclaimer p {
-      margin: 0 0 0.75rem;
-    }
-
-    .data-disclaimer p:last-child {
-      margin-bottom: 0;
-    }
-
-    .data-disclaimer-actions {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 0.75rem;
-    }
-
-    .data-issue-link {
-      display: inline-flex;
-      align-items: center;
-      font-size: 0.85rem;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .data-issue-link:hover {
-      color: var(--accent);
-    }
-  </style>
-
   <section class="section data-page">
     <h1>Open Well Data Sources</h1>
     <p class="section-lede section-lede--full">
       A directory of public well data sources, with access notes and data types.
     </p>
 
-    <div class="data-disclaimer">
-      <h2>Disclaimer</h2>
-      <p>
-        This site provides references and links to third-party datasets for informational purposes only. All data
-        are hosted, maintained, and licensed by the original data providers. Availability, content, and quality
-        may change without notice.
-      </p>
-      <p>
-        Users access and download external data at their own risk and are responsible for verifying suitability,
-        integrity, and compliance with the relevant licence and usage terms. This site makes no warranties regarding
-        the accuracy, completeness, or fitness for purpose of any external datasets.
+    <div class="data-disclaimer-summary">
+      <p class="data-disclaimer-text">
+        This directory links to third-party datasets maintained by their original providers. Availability and
+        licensing may vary.
+        <a class="data-disclaimer-link" href="#full-disclaimer">Click here for full disclaimer</a>
       </p>
       <div class="data-disclaimer-actions">
         <a
@@ -98,5 +45,19 @@ const { regions, providers, dataTypes } = getDataSourceFilters(sources);
       providers={providers}
       dataTypes={dataTypes}
     />
+
+    <div class="data-disclaimer" id="full-disclaimer">
+      <h2>Disclaimer</h2>
+      <p>
+        This site provides references and links to third-party datasets for informational purposes only. All data
+        are hosted, maintained, and licensed by the original data providers. Availability, content, and quality
+        may change without notice.
+      </p>
+      <p>
+        Users access and download external data at their own risk and are responsible for verifying suitability,
+        integrity, and compliance with the relevant licence and usage terms. This site makes no warranties regarding
+        the accuracy, completeness, or fitness for purpose of any external datasets.
+      </p>
+    </div>
   </section>
 </BaseLayout>
