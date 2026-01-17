@@ -178,11 +178,54 @@ h2 {
   background: linear-gradient(90deg, rgba(201, 162, 77, 0.18), rgba(201, 162, 77, 0.06));
 }
 
+.hero-links {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+}
+
 .hero-links a {
-  display: inline-block;
-  margin-right: 1.5rem;
-  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-size: 0.95rem;
+}
+
+.hero-cta {
+  padding: 0.85rem 1.6rem;
+  margin: 0.45rem 0;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 162, 77, 0.6);
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.hero-cta:hover {
+  color: var(--bg);
+  border-color: rgba(201, 162, 77, 0.9);
+}
+
+.hero-substack {
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: none;
+}
+
+.hero-substack p {
+  margin: 0;
+  max-width: none;
+}
+
+.hero-substack-count {
+  color: var(--text);
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
 }
 
 /* Reduce portrait dominance: cap the column and image size */
@@ -1367,14 +1410,16 @@ h2 {
   height: 300px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: linear-gradient(160deg, rgba(201, 162, 77, 0.15), rgba(20, 27, 34, 1));
-  display: flex;
-  align-items: flex-end;
-  padding: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.75rem;
+  background: var(--bg);
+  overflow: hidden;
+  display: block;
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .book-title {
