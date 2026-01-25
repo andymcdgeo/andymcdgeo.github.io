@@ -13,7 +13,6 @@ lastChecked: 2026-01-25
 dataTypes:
   - "Well / Borehole Metadata"
   - "Well Log Data"
-  - "Core Data"
   - "Reports & Documents"
   - "Production Data"
 tags:
