@@ -2,6 +2,8 @@
 title: "AI That Suggests vs AI That Acts"
 date: 2026-02-16
 tags: ["AI", "petrophysics", "machine learning"]
+heroImage: "./hero.png"
+heroImageAlt: "AI That Suggests vs AI That Acts cover image"
 description: "Distinguishing between AI systems that suggest versus those that act autonomously is more critical than accuracy metrics alone."
 slug: "ai-that-suggests-vs-ai-that-acts"
 ---

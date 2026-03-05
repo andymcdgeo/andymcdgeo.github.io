@@ -2,6 +2,8 @@
 title: "AI in Petrophysics: When Did Everything Become Artificial Intelligence?"
 date: 2026-01-21
 tags: ["AI", "petrophysics", "machine learning"]
+heroImage: "./hero.png"
+heroImageAlt: "AI in Petrophysics cover image"
 description: "I've been thinking a lot about how casually we use the word AI at the moment."
 slug: "ai-in-petrophysics-when-did-everything"
 ---

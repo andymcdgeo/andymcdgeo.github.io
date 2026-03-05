@@ -2,6 +2,8 @@
 title: "The Jagged Frontier: Why AI Amazes and Frustrates in Equal Measure"
 date: 2026-02-12
 tags: ["AI", "generative AI", "machine learning"]
+heroImage: "./hero.png"
+heroImageAlt: "The Jagged Frontier cover image"
 description: "Understanding where AI excels and where it falls apart is the skill that actually matters"
 slug: "the-jagged-frontier-why-ai-amazes"
 ---
