@@ -21,7 +21,17 @@ const isAbout = pathname === "/about" || pathname.startsWith("/about/");
       <a href="/data" aria-current={isData ? "page" : undefined}>Open Datasets</a>
       <a href="/publications" aria-current={isPublications ? "page" : undefined}>Publications</a>
       <a href="/notion-templates" aria-current={isNotionTemplates ? "page" : undefined}>Notion Templates</a>
-      <a href="/labs/pore-lab/">Pore Lab</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-controls="labs-menu">
+          Labs <span class="nav-caret" aria-hidden="true"></span>
+        </button>
+        <div class="nav-dropdown-menu" id="labs-menu">
+          <a href="/labs/pore-lab/">
+            <span class="nav-dropdown-title">Pore Lab</span>
+            <span class="nav-dropdown-desc">Porosity, saturation and permeability in 3D</span>
+          </a>
+        </div>
+      </div>
       <a href="/about" aria-current={isAbout ? "page" : undefined}>About Me</a>
     </nav>
   </div>

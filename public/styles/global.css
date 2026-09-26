@@ -132,6 +132,89 @@ h2 {
   border-bottom: 1px solid var(--accent);
 }
 
+/* Labs dropdown */
+.nav-dropdown {
+  position: relative;
+  margin-left: 1.5rem;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.nav-dropdown-toggle:hover,
+.nav-dropdown-toggle[aria-expanded="true"] {
+  color: var(--text);
+}
+
+.nav-dropdown-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.nav-caret {
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown-toggle[aria-expanded="true"] .nav-caret {
+  transform: translateY(1px) rotate(-135deg);
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  z-index: 50;
+  min-width: 250px;
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: block;
+}
+
+.nav-right .nav-dropdown-menu a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+  border-radius: 7px;
+  color: var(--text);
+}
+
+.nav-right .nav-dropdown-menu a:hover {
+  background: rgba(201, 162, 77, 0.1);
+}
+
+.nav-dropdown-title {
+  font-weight: 500;
+}
+
+.nav-dropdown-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
 /* =========================
    Page
    ========================= */
@@ -1571,6 +1654,25 @@ h2 {
 
   .nav-right a {
     margin-left: 0;
+  }
+
+  .nav-dropdown {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-dropdown-menu {
+    position: static;
+    min-width: 0;
+    margin-top: 0.5rem;
+    box-shadow: none;
+    text-align: center;
+  }
+
+  .nav-right .nav-dropdown-menu a {
+    align-items: center;
   }
 
   .hero {
