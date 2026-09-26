@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="A sandstone, opened up: porosity, water saturation and permeability you can see and change." />
+    <meta name="theme-color" content="#0b0d12" />
+    <title>Pore Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0d12'/%3E%3Ccircle cx='11' cy='12' r='6' fill='%23d6bb8a'/%3E%3Ccircle cx='22' cy='11' r='5' fill='%23d6bb8a'/%3E%3Ccircle cx='16' cy='22' r='6.5' fill='%23d6bb8a'/%3E%3Ccircle cx='17.5' cy='15' r='2' fill='%2374d0ff'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="./assets/main-DD4yVHb6.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-P2Xu9kJm.js">
+    <link rel="stylesheet" crossorigin href="./assets/main-gIT1lx6L.css">
+  </head>
+  <body>
+    <canvas id="scene" aria-label="A magnified cube of sandstone. Drag to orbit, pinch or scroll to zoom."></canvas>
+    <div class="pins" id="pins" aria-hidden="true"></div>
+    <div class="overlay" id="hud"></div>
+    <pre class="debug" id="debug" hidden></pre>
+
+    <aside class="drawer" id="drawer" aria-label="Details" aria-hidden="true">
+      <div class="drawer-head">
+        <div class="tablist" role="tablist">
+          <button type="button" role="tab" id="tab-controls" aria-controls="panel-controls" data-tab="controls">Controls</button>
+          <button type="button" role="tab" id="tab-logs" aria-controls="panel-logs" data-tab="logs">Logs</button>
+          <button type="button" role="tab" id="tab-pickett" aria-controls="panel-pickett" data-tab="pickett">Pickett</button>
+          <button type="button" role="tab" id="tab-results" aria-controls="panel-results" data-tab="results">Equations</button>
+        </div>
+        <button type="button" class="close-btn" id="drawer-close" aria-label="Close details">×</button>
+      </div>
+      <div class="tabpanel controls-panel" role="tabpanel" id="panel-controls" aria-labelledby="tab-controls">
+        <div class="quality" id="quality"></div>
+        <div id="controls-body"></div>
+      </div>
+      <div class="tabpanel logs-panel" role="tabpanel" id="panel-logs" aria-labelledby="tab-logs"></div>
+      <div class="tabpanel" role="tabpanel" id="panel-pickett" aria-labelledby="tab-pickett"></div>
+      <div class="tabpanel results-panel" role="tabpanel" id="panel-results" aria-labelledby="tab-results"></div>
+    </aside>
+
+    <dialog class="intro" id="intro" aria-labelledby="intro-title">
+      <p class="intro-kicker">A sandstone, opened up</p>
+      <h2 id="intro-title">Pore <b>Lab</b></h2>
+      <p>This cube is a few grains of reservoir rock, magnified. Three questions run through it:</p>
+      <ol>
+        <li><strong>How much space?</strong> Porosity is the room between the grains.</li>
+        <li><strong>How much of it is hydrocarbon?</strong> Water clings to the grains; oil or gas sits in the pore centres.</li>
+        <li><strong>How easily does it flow?</strong> Watch the streaks. Narrow pore throats slow them far more than lost porosity does.</li>
+      </ol>
+      <p>Try <em>Grain size</em>: fine and coarse rock can hold the same amount of oil, but it flows at very different rates. Then open <em>Slice</em> and drag the glowing plane through the rock.</p>
+      <form method="dialog"><button class="primary-btn" type="submit">Open the rock</button></form>
+    </dialog>
+
+  </body>
+</html>
