@@ -634,16 +634,17 @@ h2 {
   gap: 1.5rem;
 }
 
-/* Labs */
+/* Labs: alternating rows, text | image then image | text */
 .lab-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
 .lab-card {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
@@ -659,9 +660,9 @@ h2 {
 
 .lab-image {
   display: block;
+  min-height: 100%;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border-bottom: 1px solid var(--border);
 }
 
 .lab-image img {
@@ -671,17 +672,21 @@ h2 {
   display: block;
 }
 
+.lab-card--text-first .lab-image {
+  order: 2;
+}
+
 .lab-body {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: 1.25rem;
-  flex: 1;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
 }
 
 .lab-body h3 {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
 }
 
 .lab-body h3 a {
@@ -695,7 +700,10 @@ h2 {
 .lab-body p {
   margin: 0;
   color: var(--muted);
-  flex: 1;
+}
+
+.lab-body .card-link {
+  margin-top: 0.25rem;
 }
 
 .writing-card {
@@ -1720,8 +1728,16 @@ h2 {
     margin-left: 0;
   }
 
-  .lab-grid {
+  .lab-card {
     grid-template-columns: 1fr;
+  }
+
+  .lab-card--text-first .lab-image {
+    order: 0;
+  }
+
+  .lab-body {
+    padding: 1.25rem;
   }
 
   .nav-dropdown {
