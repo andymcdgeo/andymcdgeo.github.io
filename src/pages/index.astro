@@ -1,4 +1,4 @@
-﻿---
+---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
@@ -73,7 +73,7 @@ const excerptFor = (post, wordCount = 28) => {
         <div class="hero-substack">
           <p>Substack focused on sharing AI, ML, and Python for the subsurface.</p>
                   <a class="hero-cta" href="https://andymcdonaldgeo.substack.com/">Read Subsurface Syntax -&gt;</a>
-          <p class="hero-substack-count">Join 100+ other subscribers today.</p>
+          <p class="hero-substack-count">Join 200+ other subscribers today.</p>
         </div>
         <!-- <a href="#">Python for Well Log Analysis -></a> -->
       </div>
@@ -84,6 +84,42 @@ const excerptFor = (post, wordCount = 28) => {
     </div>
   </section>
 
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Labs</h2>
+    </div>
+    <p class="section-lede">Interactive 3D explainers for subsurface concepts. Change the rock, drill the well, and see what happens.</p>
+    <div class="lab-grid">
+      <article class="lab-card">
+        <a class="lab-image" href="/labs/pore-lab/">
+          <img src="/images/labs/pore-lab.jpg" alt="Pore Lab: a magnified cube of sandstone grains with water and oil in the pore space" width="1200" height="750" loading="lazy" />
+        </a>
+        <div class="lab-body">
+          <h3><a href="/labs/pore-lab/">Pore Lab</a></h3>
+          <p>
+            A magnified cube of reservoir sandstone. Change the porosity, grain size, clay and water saturation and watch
+            the grains, water films and oil or gas rebuild in front of you, then slice through it or pull it apart into its
+            bulk volumes.
+          </p>
+          <a class="card-link" href="/labs/pore-lab/">Open Pore Lab -&gt;</a>
+        </div>
+      </article>
+      <article class="lab-card">
+        <a class="lab-image" href="/labs/bore-lab/">
+          <img src="/images/labs/bore-lab.jpg" alt="Bore Lab: a 3D earth section with the well drilling through an oil sand beside logs filling in as it drills" width="1200" height="750" loading="lazy" />
+        </a>
+        <div class="lab-body">
+          <h3><a href="/labs/bore-lab/">Bore Lab</a></h3>
+          <p>
+            Drill a well and watch its logs being made. Sensors trail the bit, gas and cuttings take time to reach surface,
+            and mud filtrate creeps into the rock as you drill, so you can see why a log depends on when it was run.
+          </p>
+          <a class="card-link" href="/labs/bore-lab/">Open Bore Lab -&gt;</a>
+        </div>
+      </article>
+    </div>
+  </section>
 
   <section class="section">
     <div class="section-header">

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Drill a well and watch its logs being made: sensor offsets, mud lag and invasion, in 3D." />
+    <meta name="theme-color" content="#0b0d12" />
+    <title>Bore Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0d12'/%3E%3Crect x='4' y='6' width='24' height='6' fill='%236f7a73'/%3E%3Crect x='4' y='12' width='24' height='8' fill='%23d9b56a'/%3E%3Crect x='4' y='20' width='24' height='6' fill='%236f7a73'/%3E%3Crect x='14.5' y='3' width='3' height='18' fill='%23d4a24c'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="./assets/main-9qaKxlk6.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-P2Xu9kJm.js">
+    <link rel="stylesheet" crossorigin href="./assets/main-BrYjGiwq.css">
+  </head>
+  <body>
+    <div class="app">
+      <section class="earth-pane" aria-label="Earth section">
+        <canvas id="earth" aria-label="3D earth section with the well being drilled. Drag to orbit, scroll to zoom."></canvas>
+        <div class="pins" id="pins" aria-hidden="true"></div>
+        <div class="overlay" id="hud"></div>
+        <div class="earth-actions"><button type="button" class="glass-btn" id="intro-open">About</button><a class="glass-btn" href="./creator.html">Creator</a></div>
+      </section>
+      <section class="log-pane" id="logs" aria-label="Logs"></section>
+    </div>
+
+    <dialog class="intro" id="intro" aria-labelledby="intro-title">
+      <p class="intro-kicker">Logs, as they are made</p>
+      <h2 id="intro-title">Bore <b>Lab</b></h2>
+      <p>You are drilling the next section of a well. As the bit goes down, watch how the logs appear:</p>
+      <ol>
+        <li><strong>Sensors trail the bit.</strong> Gamma ray, resistivity and density each sit metres behind it, so they see the rock later, and some never reach the bottom.</li>
+        <li><strong>The mud log lags.</strong> Gas and cuttings travel up the annulus and reach surface tens of minutes after the rock was drilled.</li>
+        <li><strong>The rock changes as you watch.</strong> Mud filtrate invades permeable sands and shales wash out, so a log depends on when it was run.</li>
+      </ol>
+      <p>Pick a scenario and a well location, then press <em>Drill</em>. Try <em>Next top</em> to jump ahead.</p>
+      <p class="intro-note">In the earth section the borehole, washouts and invasion are drawn many times wider than true scale.</p>
+      <form method="dialog"><button class="primary-btn" type="submit">Start</button></form>
+    </dialog>
+
+  </body>
+</html>
