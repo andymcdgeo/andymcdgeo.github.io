@@ -31,6 +31,7 @@ const formatDate = (date: Date) =>
   new Intl.DateTimeFormat("en-GB", { month: "short", day: "2-digit" }).format(date);
 const linkProps = (item) => (item.external ? { target: "_blank", rel: "noopener noreferrer" } : {});
 const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
+const searchText = (item) => [item.title, item.excerpt, ...item.tags].join(" ").toLowerCase();
 ---
 
 <BaseLayout title="Blog - Andy McDonald">
@@ -65,6 +66,19 @@ const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
         open on <a class="section-link" href="https://andymcdonaldgeo.substack.com/">Subsurface Syntax</a>.
       </p>
 
+      <div class="wr-search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+        <input
+          type="search"
+          id="wr-search"
+          placeholder="Search articles"
+          aria-label="Search articles"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <kbd aria-hidden="true">/</kbd>
+      </div>
+
       <div class="tag-filters" role="list">
         <a href="/blog" class="tag tag-link is-active" data-filter="">All</a>
         {tagLinks.map((tag) => (
@@ -93,7 +107,7 @@ const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
         {year === currentYear ? (
           <div class="blog-grid">
             {items.map((item) => (
-              <div class="wr-item" data-tags={tagSlugs(item)}>
+              <div class="wr-item" data-tags={tagSlugs(item)} data-search={searchText(item)}>
                 <WritingCard item={item} />
               </div>
             ))}
@@ -101,7 +115,7 @@ const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
         ) : (
           <ol class="wr-rows">
             {items.map((item) => (
-              <li class="wr-item" data-tags={tagSlugs(item)}>
+              <li class="wr-item" data-tags={tagSlugs(item)} data-search={searchText(item)}>
                 <a class="wr-row" href={item.href} {...linkProps(item)}>
                   <span class="wr-thumb">
                     {item.image ? <WritingImage item={item} width={200} /> : <span class="wr-thumb-empty"></span>}
@@ -188,11 +202,27 @@ const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
     const filters = [...document.querySelectorAll(".tag-filters [data-filter]")];
     const items = [...document.querySelectorAll(".wr-item")];
     const status = document.querySelector(".wr-filter-status");
+    const search = document.getElementById("wr-search");
+    const params = new URLSearchParams(location.search);
+    let tagFilter = params.get("tag") ?? "";
+    let query = params.get("q") ?? "";
+    search.value = query;
 
-    const applyFilter = (slug) => {
+    // Keep ?tag= and ?q= in the address so a filtered view can be shared
+    const syncUrl = () => {
+      const url = new URL(location.href);
+      tagFilter ? url.searchParams.set("tag", tagFilter) : url.searchParams.delete("tag");
+      query.trim() ? url.searchParams.set("q", query.trim()) : url.searchParams.delete("q");
+      history.replaceState(null, "", url);
+    };
+
+    const applyFilter = () => {
+      const slug = tagFilter;
+      const words = query.toLowerCase().split(/\s+/).filter(Boolean);
       let shown = 0;
       items.forEach((item) => {
-        const match = !slug || item.dataset.tags.split(" ").includes(slug);
+        const tagMatch = !slug || item.dataset.tags.split(" ").includes(slug);
+        const match = tagMatch && words.every((word) => item.dataset.search.includes(word));
         item.hidden = !match;
         if (match) shown += 1;
       });
@@ -204,7 +234,12 @@ const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
       });
       filters.forEach((f) => f.classList.toggle("is-active", f.dataset.filter === slug));
       const label = filters.find((f) => f.dataset.filter === slug)?.textContent.trim();
-      status.textContent = slug ? `${shown} articles tagged ${label}` : "";
+      const parts = [];
+      if (words.length) parts.push(`matching "${query.trim()}"`);
+      if (slug) parts.push(`tagged ${label}`);
+      status.textContent = parts.length
+        ? `${shown} ${shown === 1 ? "article" : "articles"} ${parts.join(" and ")}`
+        : "";
       activeYear = "";
       placeTops();
       update();
@@ -213,16 +248,35 @@ const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
     filters.forEach((filter) =>
       filter.addEventListener("click", (event) => {
         event.preventDefault();
-        const slug = filter.dataset.filter === new URLSearchParams(location.search).get("tag") ? "" : filter.dataset.filter;
-        const url = new URL(location.href);
-        if (slug) url.searchParams.set("tag", slug);
-        else url.searchParams.delete("tag");
-        history.replaceState(null, "", url);
-        applyFilter(slug);
+        tagFilter = filter.dataset.filter === tagFilter ? "" : filter.dataset.filter;
+        syncUrl();
+        applyFilter();
       })
     );
 
-    applyFilter(new URLSearchParams(location.search).get("tag") ?? "");
+    let typing;
+    search.addEventListener("input", () => {
+      query = search.value;
+      applyFilter();
+      clearTimeout(typing);
+      typing = setTimeout(syncUrl, 300);
+    });
+
+    // "/" jumps to search, Escape clears it
+    document.addEventListener("keydown", (event) => {
+      const inField = event.target instanceof HTMLElement && event.target.closest("input, textarea, select");
+      if (event.key === "/" && !inField) {
+        event.preventDefault();
+        search.focus();
+      } else if (event.key === "Escape" && event.target === search && search.value) {
+        search.value = "";
+        query = "";
+        applyFilter();
+        syncUrl();
+      }
+    });
+
+    applyFilter();
   </script>
 
   <style is:global>
@@ -250,6 +304,65 @@ const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
 
     .wr-top.is-active span {
       color: var(--accent);
+    }
+
+    .wr-search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      max-width: 520px;
+      margin: 1.25rem 0 0.25rem;
+    }
+
+    .wr-search svg {
+      position: absolute;
+      left: 0.9rem;
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: var(--muted);
+      stroke-width: 2;
+      stroke-linecap: round;
+      pointer-events: none;
+    }
+
+    .wr-search input {
+      width: 100%;
+      padding: 0.7rem 2.6rem 0.7rem 2.6rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg-soft);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.98rem;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .wr-search input::placeholder {
+      color: var(--muted);
+    }
+
+    .wr-search input:focus {
+      outline: none;
+      border-color: rgba(212, 162, 76, 0.6);
+      background: var(--surface-2);
+    }
+
+    .wr-search kbd {
+      position: absolute;
+      right: 0.8rem;
+      padding: 0.05rem 0.45rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .wr-search input:focus + kbd,
+    .wr-search input:not(:placeholder-shown) + kbd {
+      display: none;
     }
 
     .wr-filter-status {
