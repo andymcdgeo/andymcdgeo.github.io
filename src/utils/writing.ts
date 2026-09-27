@@ -2,6 +2,7 @@ import { getCollection } from "astro:content";
 import type { ImageMetadata } from "astro";
 import { XMLParser } from "fast-xml-parser";
 import { slugifyTag } from "./slugifyTag";
+import snapshot from "../data/substack-posts.json";
 
 // One list of writing: posts hosted on this site plus Substack posts that only live there.
 // Site posts win when the same article exists in both places.
@@ -46,8 +47,14 @@ const cardImage = (url?: string) =>
 
 const stripHtml = (html = "") => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 
+// Substack rejects bare scripted requests; ask the way a browser would
+const REQUEST_HEADERS = {
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36",
+  Accept: "application/json, application/rss+xml, text/xml;q=0.9, */*;q=0.8",
+};
+
 async function fetchJson(url: string) {
-  const response = await fetch(url, { headers: { "User-Agent": "andymcdonald.scot site build" } });
+  const response = await fetch(url, { headers: REQUEST_HEADERS });
   if (!response.ok) throw new Error(`${url} returned ${response.status}`);
   return response.json();
 }
@@ -76,7 +83,7 @@ async function fromArchive(): Promise<SubstackPost[]> {
 
 // Fallback: the RSS feed only carries the latest 20 posts and no tags
 async function fromRss(): Promise<SubstackPost[]> {
-  const response = await fetch(`${SUBSTACK}/feed`);
+  const response = await fetch(`${SUBSTACK}/feed`, { headers: REQUEST_HEADERS });
   if (!response.ok) throw new Error(`RSS returned ${response.status}`);
   const feed = new XMLParser({ ignoreAttributes: false }).parse(await response.text());
   const items = feed?.rss?.channel?.item ?? [];
@@ -91,20 +98,41 @@ async function fromRss(): Promise<SubstackPost[]> {
   }));
 }
 
+// Snapshot saved by `npm run sync:substack`. Substack blocks GitHub's build servers,
+// so this is what the live site falls back on when the fetch below is refused.
+const fromSnapshot = (): SubstackPost[] =>
+  (snapshot as Array<Omit<SubstackPost, "date" | "image"> & { date: string; image: string | null }>).map((post) => ({
+    ...post,
+    date: new Date(post.date),
+    image: post.image ?? undefined,
+  }));
+
+async function fromLive(): Promise<SubstackPost[]> {
+  try {
+    return await fromArchive();
+  } catch (error) {
+    console.warn(`[writing] Substack archive unavailable, trying RSS: ${(error as Error).message}`);
+  }
+  try {
+    return await fromRss();
+  } catch (error) {
+    console.warn(`[writing] Substack RSS unavailable, using the saved snapshot: ${(error as Error).message}`);
+    return [];
+  }
+}
+
 let substackPromise: Promise<SubstackPost[]> | undefined;
 
-// Fetched once per build; a Substack outage means site posts only, never a failed build
+// Fetched once per build. Live posts win; the snapshot fills in anything the live fetch
+// could not reach (all of it when blocked, or the older posts when only RSS works).
 export function getSubstackPosts(): Promise<SubstackPost[]> {
-  substackPromise ??= fromArchive()
-    .catch((error) => {
-      console.warn(`[writing] Substack archive unavailable, trying RSS: ${error.message}`);
-      return fromRss();
-    })
-    .then((posts) => posts.filter((post) => post.title && post.url && !Number.isNaN(post.date.valueOf())))
-    .catch((error) => {
-      console.warn(`[writing] Substack unavailable, listing site posts only: ${error.message}`);
-      return [];
-    });
+  substackPromise ??= fromLive().then((live) => {
+    const byUrl = new Map(fromSnapshot().map((post) => [post.url, post]));
+    for (const post of live) byUrl.set(post.url, { ...byUrl.get(post.url), ...post, tags: post.tags.length ? post.tags : byUrl.get(post.url)?.tags ?? [] });
+    const posts = [...byUrl.values()].filter((post) => post.title && post.url && !Number.isNaN(post.date.valueOf()));
+    console.log(`[writing] ${posts.length} Substack posts (${live.length} fetched live)`);
+    return posts;
+  });
   return substackPromise;
 }
 

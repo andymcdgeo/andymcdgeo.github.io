@@ -1,0 +1,1522 @@
+[
+  {
+    "title": "Pore Lab: Seeing Inside Reservoir Sandstone",
+    "subtitle": "From an X Post to a 3D Pore-Scale Simulator in an Hour",
+    "date": "2026-09-26T20:06:17.132Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/pore-lab-seeing-inside-reservoir",
+    "image": "https://substackcdn.com/image/fetch/$s_!Kkcc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5e3147ff-3fd3-4bcb-8955-0ca0a2979d57_1440x900.png",
+    "tags": [
+      "ai"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Adding a Geological Facies Display to a Well Log Plot in Matplotlib and Plotly",
+    "subtitle": "Adding a column of colour to a well log plot using Python",
+    "date": "2026-09-13T17:19:50.858Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/adding-a-geological-facies-display",
+    "image": "https://substackcdn.com/image/fetch/$s_!rAZu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff2e6e0c5-81af-4511-b597-95ded287a5c3_720x449.png",
+    "tags": [
+      "data visualization",
+      "data analysis",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "6 Ways to Customise Your Raincloud Plot",
+    "subtitle": "Splitting, highlighting, connecting means, tuning the cloud, styling the rain, and knowing when to go vertical",
+    "date": "2026-09-12T13:48:46.142Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/6-ways-to-customise-your-raincloud",
+    "image": "https://substackcdn.com/image/fetch/$s_!yC4v!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F635b5341-93cd-4756-880c-f37be4beec59_630x355.png",
+    "tags": [
+      "data visualization",
+      "data analysis",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "PetroPlots - A New Python Plotting Library for Well Log Data",
+    "subtitle": "",
+    "date": "2026-09-06T13:19:16.624Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/petroplots-a-new-python-plotting",
+    "image": "https://substackcdn.com/image/fetch/$s_!IJuf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F10872dde-eadc-417a-9a53-db0d475e738f_3264x1778.png",
+    "tags": [
+      "data visualisation",
+      "matplotlib",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "When a Line Chart Becomes Spaghetti",
+    "subtitle": "Past a handful of series, a line chart stops letting you follow any of them. Here is what breaks and what to plot instead",
+    "date": "2026-08-08T12:25:44.564Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/when-a-line-chart-becomes-spaghetti",
+    "image": "https://substackcdn.com/image/fetch/$s_!WmX0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc5efb35d-722f-4302-a6c4-3471ba417a4e_700x342.png",
+    "tags": [
+      "data analysis",
+      "data visualisation",
+      "data science",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Why a Histogram Can Show You the Wrong Shape",
+    "subtitle": "How the number and position of bins can change what you think the distribution is telling you",
+    "date": "2026-08-01T11:49:52.721Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/why-a-histogram-can-show-you-the",
+    "image": "https://substackcdn.com/image/fetch/$s_!uoER!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdb678ecd-71e8-463c-acc5-46930176512e_630x354.png",
+    "tags": [
+      "data visualization",
+      "data analysis",
+      "data science"
+    ],
+    "paid": false
+  },
+  {
+    "title": "9 Scientific Data Plots and When They Fail ",
+    "subtitle": "Every chart has a blind spot. Learn where common scientific visualisations start to hide the patterns that matter.",
+    "date": "2026-07-29T20:16:47.985Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/9-scientific-data-plots-and-when",
+    "image": "https://substackcdn.com/image/fetch/$s_!CxlK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F79ea862d-d302-429f-ba31-647d9cd1f9c7_630x420.png",
+    "tags": [
+      "data visualization",
+      "python",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "What Your Scatter Plot Stops Showing You Once It Gets Crowded",
+    "subtitle": "Overplotting is easy to miss and easy to fix, once you stop asking your chart to show every point.",
+    "date": "2026-07-21T20:50:42.496Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/what-your-scatter-plot-stops-showing",
+    "image": "https://substackcdn.com/image/fetch/$s_!gHjl!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1cfd4b62-7523-4fc0-8e94-57feb3039fc7_630x358.png",
+    "tags": [
+      "data visualization",
+      "data science",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Handling Categorical Geological Data in Machine Learning Models",
+    "subtitle": "What label, ordinal, and one hot encoding each tell a model about your rocks",
+    "date": "2026-07-19T09:43:30.113Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/handling-categorical-geological-data",
+    "image": "https://substackcdn.com/image/fetch/$s_!One6!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff526d346-63cb-46d7-89b3-1029d66ea5d2_938x527.png",
+    "tags": [
+      "data analysis",
+      "python",
+      "machine learning"
+    ],
+    "paid": false
+  },
+  {
+    "title": "From Default to Publication-Ready: The Raincloud Plot",
+    "subtitle": "Six steps between the chart ptitprince gives you and one you would want to put in a report",
+    "date": "2026-07-15T20:25:31.612Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/from-default-to-publication-ready-a41",
+    "image": "https://substackcdn.com/image/fetch/$s_!Ocdd!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F58bb678d-dc74-49c3-8725-fdeec3cb9e1d_630x355.png",
+    "tags": [
+      "data visualization",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Raincloud Plots with PtitPrince: See What Your Data Is Really Doing",
+    "subtitle": "Three views of your data distribution in one function call",
+    "date": "2026-07-04T10:07:11.025Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/raincloud-plots-with-ptitprince-see",
+    "image": "https://substackcdn.com/image/fetch/$s_!-k8-!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F40f391fb-b918-41db-b914-d4bf5c53ff01_567x318.jpeg",
+    "tags": [
+      "data visualisation",
+      "data science"
+    ],
+    "paid": false
+  },
+  {
+    "title": "From Boxplot to Raincloud: Building a Better Distribution Plot in Python",
+    "subtitle": "Constructing a raincloud plot one layer at a time",
+    "date": "2026-06-14T09:16:32.547Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/from-boxplot-to-raincloud-building",
+    "image": "https://substackcdn.com/image/fetch/$s_!nIbq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faab5591a-1f41-43ce-98d7-bf5c08f8e9eb_630x353.png",
+    "tags": [
+      "data analysis",
+      "data visualisation",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "How to Visualise Missing Data with an Interactive Plotly Heatmap",
+    "subtitle": "Explore well log data completeness with interactive heatmaps",
+    "date": "2026-06-13T15:29:27.578Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-visualise-missing-data-with",
+    "image": "https://substackcdn.com/image/fetch/$s_!LyUj!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcb56f54e-7247-4bc8-bd60-ab36a640295f_630x420.jpeg",
+    "tags": [
+      "data visualisation"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Why Your Jupyter Notebooks Are Harder to Read Than They Should Be",
+    "subtitle": "Working code is only half the job. The reasoning needs to be readable too.",
+    "date": "2026-05-17T10:43:29.174Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/why-your-jupyter-notebooks-are-harder",
+    "image": "https://substackcdn.com/image/fetch/$s_!NXPf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc415ef32-5eb0-4dc5-be1e-2002b0a81ecd_630x350.png",
+    "tags": [
+      "python",
+      "jupyter"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Six Matplotlib Changes That Improve Your Figures for Reporting and Publication",
+    "subtitle": "Small adjustments. Large visual difference.",
+    "date": "2026-05-16T15:14:10.357Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/six-matplotlib-changes-that-improve",
+    "image": "https://substackcdn.com/image/fetch/$s_!_V_J!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa6469f2d-38be-4038-b477-82238fda85ca_630x408.png",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "AI Verification Depends on the Stakes",
+    "subtitle": "",
+    "date": "2026-05-10T10:18:44.134Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/you-dont-need-to-verify-everything",
+    "image": "https://substackcdn.com/image/fetch/$s_!Eee3!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3a763b92-dfb3-4e6a-8cd0-0e58d74051ce_1442x810.png",
+    "tags": [
+      "ai",
+      "LLMs",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "3 Jupyter Notebook Habits That Hold Up When Someone Else Opens Them",
+    "subtitle": "Small habits that make notebooks easier to rerun and share",
+    "date": "2026-04-07T07:16:20.696Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/3-jupyter-notebook-habits-that-hold",
+    "image": "https://substackcdn.com/image/fetch/$s_!QYuY!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4e3c2b34-68ee-46b3-9897-eb2e4611ea37_630x404.png",
+    "tags": [
+      "python",
+      "jupyter",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Boxplots Are Hiding Your Data. Here’s a Simple Fix",
+    "subtitle": "How overlaying raw data points reveals what your summary statistics quietly discard",
+    "date": "2026-03-28T14:32:33.462Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/boxplots-are-hiding-your-data-heres",
+    "image": "https://substackcdn.com/image/fetch/$s_!OcfO!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bc713c5-e474-4033-9dd4-87c06e39532c_630x410.png",
+    "tags": [
+      "petrophysics",
+      "data analysis",
+      "data visualisation",
+      "python",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "How to Organise Jupyter Notebooks So Older Work Stays Usable",
+    "subtitle": "A lightweight workflow for keeping notebook-heavy projects searchable, readable, and easy to return to",
+    "date": "2026-03-21T11:37:18.099Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-organise-jupyter-notebooks",
+    "image": "https://substackcdn.com/image/fetch/$s_!BfDG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa2a41641-999f-40a8-bb2d-383735d35d9f_630x345.png",
+    "tags": [
+      "data science",
+      "python",
+      "jupyter"
+    ],
+    "paid": false
+  },
+  {
+    "title": "From Default to Publication-Ready: Transforming Matplotlib Histograms",
+    "subtitle": "Seven Steps From a Default Chart to Something Worth Publishing",
+    "date": "2026-03-18T07:50:11.998Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/from-default-to-publication-ready-c22",
+    "image": "https://substackcdn.com/image/fetch/$s_!rYMC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F69a66ada-0f0a-4f8c-ac70-22e180eb8728_700x415.png",
+    "tags": [
+      "petrophysics",
+      "data analysis",
+      "data visualisation",
+      "python",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "When a Jupyter Notebook Is the Wrong Tool: Moving Logic Into Modules and Scripts",
+    "subtitle": "Notebooks are great for thinking. They are not always the right place to keep the machinery",
+    "date": "2026-03-15T08:30:21.771Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/when-a-jupyter-notebook-is-the-wrong",
+    "image": "https://substackcdn.com/image/fetch/$s_!Phjv!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F689817b3-ef01-4e2d-a551-124ece5f20f5_560x378.png",
+    "tags": [
+      "data analysis",
+      "data science",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Ridgeline Plots in Matplotlib: An Underused Way to Compare Distributions",
+    "subtitle": "Build stacked KDE plots from scratch and with joypy to show shape, skew, and spread across multiple groups",
+    "date": "2026-03-11T07:54:08.427Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/ridgeline-plots-in-matplotlib-an",
+    "image": "https://substackcdn.com/image/fetch/$s_!67Ng!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0e84711a-be49-4de1-9902-faede5b652d7_700x411.png",
+    "tags": [
+      "petrophysics",
+      "data visualization",
+      "data analysis",
+      "data science",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "The Project Structure That Makes Good Jupyter Notebook Habits Automatic",
+    "subtitle": "Set it up once. Use it on every project.",
+    "date": "2026-03-08T10:20:55.215Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/the-project-structure-that-makes",
+    "image": "https://substackcdn.com/image/fetch/$s_!L-bb!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F559a13a3-c574-4f3d-a315-baf4cc1b6d84_700x475.png",
+    "tags": [
+      "data analysis",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "6 Jupyter Notebook Habits That Make Your Work Easy to Return To",
+    "subtitle": "From messy exploration to a record that still makes sense months later",
+    "date": "2026-03-07T08:49:51.222Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/6-jupyter-notebook-habits-that-make",
+    "image": "https://substackcdn.com/image/fetch/$s_!zPo7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2339a2e2-490c-4a0d-aea9-eb1cf44dab42_988x533.png",
+    "tags": [
+      "petrophysics",
+      "data analysis",
+      "data science",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Why Whole-Well Completeness Numbers Can Hide Critical Data Gaps",
+    "subtitle": "Visualising Well Log Data Availability by Formation Across Multiple Wells",
+    "date": "2026-03-04T20:09:19.064Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/why-whole-well-completeness-numbers",
+    "image": "https://substackcdn.com/image/fetch/$s_!MBYK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd30f69dd-ffe3-49b7-97ec-78fd0240a5d2_700x446.png",
+    "tags": [
+      "petrophysics",
+      "data visualisation",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Before You Let AI Write Code, Define the Rules",
+    "subtitle": "Why missing specifications can result in behavioural drift in technical workflows",
+    "date": "2026-02-25T19:08:43.740Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/before-you-let-ai-write-code-define",
+    "image": "https://substackcdn.com/image/fetch/$s_!osYv!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F87f7ac5c-d57c-46cd-bbb0-4e96c81efb79_700x418.png",
+    "tags": [
+      "ai",
+      "LLMs",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "3 Python Charts You’re Probably Not Using (But Should Be)",
+    "subtitle": "Three underused chart types and when to reach for them when working with well log data",
+    "date": "2026-02-21T15:10:55.476Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/3-python-charts-youre-probably-not",
+    "image": "https://substackcdn.com/image/fetch/$s_!APGb!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbf51cb0d-eee7-4944-97e1-2b59740233b5_700x465.png",
+    "tags": [
+      "data visualisation",
+      "python",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "From Default to Publication-Ready: Transforming Matplotlib Heatmaps in 8 Steps",
+    "subtitle": "Take a Basic Well Log Data Availability Heatmap and Make It Something Worth Putting in a Report",
+    "date": "2026-02-19T19:37:41.798Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/from-default-to-publication-ready",
+    "image": "https://substackcdn.com/image/fetch/$s_!vLCt!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F50888028-6b2c-47d9-9818-60bf908b692e_700x467.png",
+    "tags": [
+      "petrophysics",
+      "data visualisation",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "AI That Suggests vs AI That Acts",
+    "subtitle": "Why this distinction matters more than accuracy",
+    "date": "2026-02-16T20:58:44.914Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/ai-that-suggests-vs-ai-that-acts",
+    "image": "https://substackcdn.com/image/fetch/$s_!rifU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F35b5beb7-f661-44de-9138-81ea65b74a65_1000x538.png",
+    "tags": [
+      "petrophysics",
+      "ai",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Visualising Well Log Data Availability in the Terminal with Python",
+    "subtitle": "Building a coverage heatmap for LAS files using rich and lasio",
+    "date": "2026-02-14T19:01:01.866Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/visualising-well-log-data-availability",
+    "image": "https://substackcdn.com/image/fetch/$s_!AXS6!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F055d9500-703d-4358-809a-c72573460462_800x533.png",
+    "tags": [
+      "petrophysics",
+      "python",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "The Jagged Frontier: Why AI Amazes and Frustrates in Equal Measure",
+    "subtitle": "Understanding where AI excels and where it falls apart is the skill that actually matters",
+    "date": "2026-02-12T06:28:21.847Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/the-jagged-frontier-why-ai-amazes",
+    "image": "https://substackcdn.com/image/fetch/$s_!rFRY!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fca3686ab-18c7-40b2-ba59-ac16e15d84d9_1536x1024.png",
+    "tags": [
+      "ai",
+      "LLMs",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Inspecting LAS Files in the Terminal with rich and lasio",
+    "subtitle": "A practical approach to inspecting LAS files in Python without jumping straight to plots",
+    "date": "2026-02-08T15:48:38.202Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/inspecting-las-files-in-the-terminal",
+    "image": "https://substackcdn.com/image/fetch/$s_!Cueu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19afdc12-b68d-4fc9-90b7-15633a79ebdb_700x464.png",
+    "tags": [
+      "petrophysics",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Working With LAS Files in Python",
+    "subtitle": "A practical look at the LAS format, its structure, and how to work with it using lasio for subsurface well data",
+    "date": "2026-02-03T18:02:24.337Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/working-with-las-files-in-python",
+    "image": "https://substackcdn.com/image/fetch/$s_!tdyy!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5d6592a8-a320-43ee-9582-2e1efa86033c_700x457.png",
+    "tags": [
+      "petrophysics",
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Working With Agentic LLMs: Why Structured Workflows Matter More Than Clever Prompts",
+    "subtitle": "A geoscientist’s approach to controlled AI-assisted coding",
+    "date": "2026-01-27T19:30:53.382Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/working-with-agentic-llms-why-structured",
+    "image": "https://substackcdn.com/image/fetch/$s_!N7dJ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3e97af19-5ea8-412e-9a08-b396be9d56e1_700x472.png",
+    "tags": [
+      "petrophysics",
+      "ai"
+    ],
+    "paid": false
+  },
+  {
+    "title": "AI in Petrophysics: when did everything become artificial intelligence?",
+    "subtitle": "",
+    "date": "2026-01-21T19:30:47.301Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/ai-in-petrophysics-when-did-everything",
+    "image": "https://substackcdn.com/image/fetch/$s_!Sav-!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fadfc0a8d-abd3-4bf9-96dc-92953e81f0bc_1315x869.png",
+    "tags": [
+      "petrophysics",
+      "ai"
+    ],
+    "paid": false
+  },
+  {
+    "title": "How to Open DLIS Files in Python with DLISIO",
+    "subtitle": "Introduction to Exploring DLIS Files With Python",
+    "date": "2025-09-28T10:33:52.678Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-open-dlis-files-in-python",
+    "image": "https://substackcdn.com/image/fetch/$s_!BSmq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd695d5cb-4370-4827-a12e-fd4578e984e5_1536x1024.png",
+    "tags": [
+      "petrophysics",
+      "dlis",
+      "python",
+      "geoscience"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Tables, Pretty Prints, and Sanity: Python Output for Geoscience Data",
+    "subtitle": "Three simple libraries to make console output readable, useful and even stylish",
+    "date": "2025-09-13T16:33:45.473Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/tables-pretty-prints-and-sanity-python",
+    "image": "https://substackcdn.com/image/fetch/$s_!vCBH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7924be7f-8d30-4125-9917-8ba5ef9f5a14_697x535.png",
+    "tags": [
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Less Print, More Clarity: Debugging Python with Icecream and Snoop",
+    "subtitle": "Two lightweight tools that help you see what your code is doing without the clutter or confusion of print statements",
+    "date": "2025-08-10T10:02:26.985Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/less-print-more-clarity-debugging",
+    "image": "https://substackcdn.com/image/fetch/$s_!BihG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F304bf78a-2381-4104-a364-0cd874670ee2_700x467.jpeg",
+    "tags": [
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Bring Your Python Terminal to Life With Colour and Clarity",
+    "subtitle": "4 Ways to Enhance Your Python Terminal Output",
+    "date": "2025-07-08T13:58:25.093Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/bring-your-python-terminal-to-life",
+    "image": "https://substackcdn.com/image/fetch/$s_!0tbR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F26b131d6-b7f9-440f-a904-7e25159761a9_700x467.png",
+    "tags": [
+      "python"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Add a Navigation Sidebar to Your Multi-Page Plotly Dash App (With Collapsible Menus)",
+    "subtitle": "A quick guide to building a flexible, collapsible navigation sidebar using Dash Bootstrap Components.",
+    "date": "2025-07-08T07:10:56.417Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/add-a-navigation-sidebar-to-your",
+    "image": "https://substackcdn.com/image/fetch/$s_!2-1J!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F122d9805-4e50-4673-afff-9a17041754c7_700x467.png",
+    "tags": [
+      "python",
+      "plotly"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Adding Gradient Backgrounds to Plotly Charts",
+    "subtitle": "Using Plotly rectangle shapes to improve data visualisation",
+    "date": "2025-04-19T06:00:00.000Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/adding-gradient-backgrounds-to-plotly-charts-1dec85dd3227",
+    "image": "https://cdn-images-1.medium.com/max/800/1*BrX7mYyavwXHbw6FTXsoSQ.png",
+    "tags": [
+      "data visualization",
+      "python",
+      "plotly"
+    ],
+    "paid": false
+  },
+  {
+    "title": "Sphinx-Autosummary: Creating Cleaner API Navigation Menus",
+    "subtitle": "Removing package and module names from Sphinx Autosummary navigation menus",
+    "date": "2024-04-23T18:15:59.610Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/sphinx-autosummary-creating-cleaner-api-navigation-menus-af3841d09635",
+    "image": "https://cdn-images-1.medium.com/max/800/1*AbCiJJJkVXDjeW4wp5yyyg.png",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "Using Python to Explore and Understand Equations in Petrophysics",
+    "subtitle": "A simple way to understand parameters to the Archie Water Saturation equation using Python",
+    "date": "2024-04-11T15:56:24.065Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/using-python-to-interactively-explore-and-understand-equations-in-petrophysics-705b3db8b2ab",
+    "image": "https://cdn-images-1.medium.com/max/800/1*D2PhB38KK906cEaTzI6z2A.png",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "Python in Geoscience: An Essential Skill",
+    "subtitle": "How Python can help your daily subsurface geoscience workflows",
+    "date": "2024-04-08T10:27:08.428Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/python-in-geoscience-an-essential-skill-df2e8fafab03",
+    "image": "https://cdn-images-1.medium.com/max/800/0*Gj7bxYFRKU5JmgUx",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "How to Structure and Organise a Streamlit App",
+    "subtitle": "Bringing Order to a Python Streamlit App Through an Organised Project Folder Structure",
+    "date": "2024-02-10T15:54:01.700Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-structure-and-organise-a-streamlit-app-e66b65ece369",
+    "image": "https://cdn-images-1.medium.com/max/800/0*PWOSQYW83vqbv4c-",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "Getting Started With Python as a Geoscientist? Here Are 5 Ways You Can Improve Your Code!",
+    "subtitle": "5 Tips to Help You Get Off to a Better Start When Writing Python Code",
+    "date": "2024-01-27T11:10:46.670Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/getting-started-with-python-as-a-geoscientist-here-are-5-ways-you-can-improve-your-code-82b42c21462b",
+    "image": "https://cdn-images-1.medium.com/max/800/0*Jr-EHGSObvo2IhXW",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "Unlocking Data from Graphs: How to Digitise Plots and Figures with WebPlotDigitizer",
+    "subtitle": "Unlocking Digital Potential from Static Image Data",
+    "date": "2024-01-14T10:59:48.189Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/unlocking-data-from-graphs-how-to-digitise-plots-and-figures-with-webplotdigitizer-2dad17e6e073",
+    "image": "https://cdn-images-1.medium.com/max/800/0*MOo3HH9YEQJrpIME",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "Adding Inset Axes to Matplotlib Figures",
+    "subtitle": "A how-to on adding inset axes to a Matplotlib figure to improve your data visualisation",
+    "date": "2023-11-03T16:04:23.745Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/adding-inset-axes-to-matplotlib-figures-811a9482c43c",
+    "image": "https://cdn-images-1.medium.com/max/800/0*1hYP7h4xI6NIiDQO",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "Well Log Measurement Prediction Using Neural Networks with Keras",
+    "subtitle": "An example of predicting bulk density (RHOB) with Keras and illustrating impacts of normalisation on prediction results",
+    "date": "2023-10-26T13:58:11.382Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/well-log-measurement-prediction-using-neural-networks-with-keras-ef7dfed94077",
+    "image": "https://cdn-images-1.medium.com/max/800/0*6a8U-VDcJGyBtlbh",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "ChatGPT Advanced Data Analytics For Custom Matplotlib Well Log Plots",
+    "subtitle": "Using OpenAI’s Code Interpreter to Create Well Log Plots for Petrophysics and Geoscience Interpretations",
+    "date": "2023-09-18T09:45:36.520Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/chatgpt-advanced-data-analytics-for-custom-matplotlib-well-log-plots-b857c68fa42",
+    "image": "https://cdn-images-1.medium.com/max/800/0*OHjn6qHW_eRUZhxL",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "4 Essential Resources to Help Improve Your Data Visualisations",
+    "subtitle": "Tools to Help You Create Effective and Compelling Data Visualisations",
+    "date": "2023-08-12T11:46:02.811Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/4-essential-resources-to-help-improve-your-data-visualisations-8151e63ce8f0",
+    "image": "https://cdn-images-1.medium.com/max/800/0*AZCjXjXVEI96Yrih",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Using Plotly Express Sunburst Charts to Explore Geological Data",
+    "subtitle": "An Easy and Quick Way to Understand Your Geological Hierarchical Data with Python",
+    "date": "2023-07-27T07:49:30.420Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/using-plotly-express-sunburst-charts-to-explore-geological-data-841f179d08c8",
+    "image": "https://cdn-images-1.medium.com/max/800/1*mcxAuYDLcFXwcHEZ4YjFXA.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Converting Well Logging Data From DLIS Files to LAS File Format",
+    "subtitle": "Working With Geoscience and Petrophysical Data File Formats",
+    "date": "2023-07-25T15:46:58.617Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/converting-well-logging-data-from-dlis-files-to-las-file-format-ccc1e7eee9b0",
+    "image": "https://cdn-images-1.medium.com/max/800/0*ewYddZrk17Z9IMWE",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "4 Easy Ways to Instantly Improve Your Data Visualisations",
+    "subtitle": "Examples of Improving Charts Created With Matplotlib",
+    "date": "2023-07-21T14:24:47.394Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/4-easy-ways-to-instantly-improve-your-data-visualisations-2a5fc3a22182",
+    "image": "https://cdn-images-1.medium.com/max/800/1*R4BpoXwjYEWAoBc0UYyxrA.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating Scientific Plots the Easy Way With scienceplots and matplotlib",
+    "subtitle": "Instantly Transform Your Matplotlib Figures With a Few Lines of Python Code",
+    "date": "2023-07-17T07:27:06.988Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/creating-scientific-plots-the-easy-way-with-scienceplots-and-matplotlib-d86a62e2ab46",
+    "image": "https://cdn-images-1.medium.com/max/800/0*bF2ribuL9a8RirM-",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Exploring the Contents of DLIS Files with Python",
+    "subtitle": "Working with Pandas and dlisio to Explore Well Log Data",
+    "date": "2023-07-14T15:20:44.881Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/exploring-the-contents-of-dlis-files-with-python-38585157dbac",
+    "image": "https://cdn-images-1.medium.com/max/800/0*ioK6L1cZz-MO_GES",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating an Infographic With Matplotlib",
+    "subtitle": "Geological Lithology Variations Within The Zechstein Group of the Norwegian Continental Shelf",
+    "date": "2023-07-03T09:12:55.411Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/creating-an-infographic-with-matplotlib-3c5ece11bedc",
+    "image": "https://cdn-images-1.medium.com/max/800/1*uYJ6q1luotqJaHJBMFBOEw.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Data Aggregation in Python with Pandas: Analysing Geological Lithology Data",
+    "subtitle": "Exploring lithology variations within the Zechstein Group of the Norwegian Continental Shelf",
+    "date": "2023-06-29T07:16:44.740Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/data-aggregation-in-python-with-pandas-analysing-geological-lithology-data-94192f5631c0",
+    "image": "https://cdn-images-1.medium.com/max/800/0*YjObygQbrGW9PgRU.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "How To Create Cyberpunk-Styled Seaborn Violin Plots with Minimal Python Code",
+    "subtitle": "A simple tutorial on how to enhance your Seaborn violin plots with ease",
+    "date": "2023-06-26T09:10:56.358Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-create-cyberpunk-styled-seaborn-violin-plots-with-minimal-python-code-45897b82ed4c",
+    "image": "https://cdn-images-1.medium.com/max/800/1*mgSIuvvfk-5Z1_2_NrXArw.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Using Plotly 3D Surface Plots to Visualise Geological Surfaces",
+    "subtitle": "Visualising the Subsurface using Python Data Visualisation Libraries",
+    "date": "2023-06-21T17:42:29.457Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/using-plotly-3d-surface-plots-to-visualise-geological-surfaces-8829c06a5c9a",
+    "image": "https://cdn-images-1.medium.com/max/800/1*vokL23aaqkvSubmwv2FQ1Q.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Plotly and Python: Creating Interactive Heatmaps for Petrophysical & Geological Data",
+    "subtitle": "Visualising Geospatial Variations in Well Log Measurements Within the Subsurface",
+    "date": "2023-06-16T08:06:26.766Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/plotly-and-python-creating-interactive-heatmaps-for-petrophysical-geological-data-701c22b32e4",
+    "image": "https://cdn-images-1.medium.com/max/800/1*kpksgzDd6qKP2h6GM7OVCA.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Utilising pykrige and matplotlib for Spatial Visualisation of Geological Variations",
+    "subtitle": "Exploring Spatial Geological Variation from Well Log Measurements",
+    "date": "2023-06-13T16:01:47.518Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/utilising-pykrige-and-matplotlib-for-spatial-visualisation-of-geological-variations-a288b186bfd6",
+    "image": "https://cdn-images-1.medium.com/max/800/1*-EvfsK443C7nEU7zBbCuMA.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Visualising Well Paths on 3D Line Plots with Plotly Express",
+    "subtitle": "Working With Plotly Express 3D Line Plots",
+    "date": "2023-06-04T16:07:03.572Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/visualising-well-paths-on-3d-line-plots-with-plotly-express-de73ca73dea3",
+    "image": "https://cdn-images-1.medium.com/max/800/1*iIX2QZiZTNy0AeForjtLcg.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Cyberpunking Your Matplotlib Figures",
+    "subtitle": "Taking Your Matplotlib Figures from Boring to Interesting with a Few Lines of Code",
+    "date": "2023-05-21T10:30:57.304Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/cyberpunking-your-matplotlib-figures-96f4d473185d",
+    "image": "https://cdn-images-1.medium.com/max/800/1*tPIAiDV3kYtgS0RsW-3BgA.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Enhance Your Polar Bar Charts With Matplotlib",
+    "subtitle": "Improve Your Polar Bar Chart Data Visualisations With a Few Simple Tweaks",
+    "date": "2023-04-24T08:43:51.259Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/enhance-your-polar-bar-charts-with-matplotlib-c08e332ec01c",
+    "image": "https://cdn-images-1.medium.com/max/800/1*2KWxmNRnsQrKCjgFTLow2w.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Create Stunning Radar Plots with Matplotlib",
+    "subtitle": "Visualising geological data using Python’s most popular data visualisation library",
+    "date": "2023-04-19T16:01:01.353Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/create-stunning-radar-plots-with-matplotlib-6a8e05054ff9",
+    "image": "https://cdn-images-1.medium.com/max/800/1*yjRH7lmTQop6e2cB4pdSxA.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Streamlit Tutorial: Creating Word Reports for Data Science Projects",
+    "subtitle": "Combining python-docx and Streamlit for Data Science Report Automation",
+    "date": "2023-04-17T08:21:30.814Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/streamlit-tutorial-creating-word-reports-for-data-science-projects-96a749483cb3",
+    "image": "https://cdn-images-1.medium.com/max/800/1*1usWq9YvZp-0_OHACWB1Fg.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Upgrade Your Data Visualisations: 4 Python Libraries to Enhance Your Matplotlib Charts",
+    "subtitle": "Improve Your Data Visualisations with These Easy-to-Use Matplotlib Style Libraries",
+    "date": "2023-04-11T07:38:11.480Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/upgrade-your-data-visualisations-4-python-libraries-to-enhance-your-matplotlib-charts-74361bc3b92e",
+    "image": "https://cdn-images-1.medium.com/max/800/1*CcYlk6SK9bK7c15xbH0C6w.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "From Dull to Stunning: How Matplotx Can Improve Your Matplotlib Charts",
+    "subtitle": "Simplifying the process of creating stunning charts with Matplotx",
+    "date": "2023-04-03T12:58:42.047Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/from-dull-to-stunning-how-matplotx-can-improve-your-matplotlib-charts-f370cbf7acc",
+    "image": "https://cdn-images-1.medium.com/max/800/1*wh--qbFelmlG92UpAcoH5A.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "7 Steps to Help You Make Your Matplotlib Bar Charts Beautiful",
+    "subtitle": "Easily Improve the Quality of Your Matplotlib Data Visualisations With a Few Simple Tweaks",
+    "date": "2023-03-27T12:27:18.897Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/7-steps-to-help-you-make-your-matplotlib-bar-charts-beautiful-f87419cb14cb",
+    "image": "https://cdn-images-1.medium.com/max/800/1*4aNiYaHY4a36-4IQG9AjfA.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "3 Unique Charts You Wouldn’t Think Were Created with Matplotlib",
+    "subtitle": "Utilising Python’s Matplotlib to Create Advanced Data Visualisations",
+    "date": "2023-03-20T08:50:43.725Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/3-unique-charts-created-with-matplotlib-you-probably-havent-seen-before-421ab8cdd36f",
+    "image": "https://cdn-images-1.medium.com/max/800/1*uIp1dJpebnY7K5T56kmtQg.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating Geospatial Heatmaps With Python’s Plotly and Folium Libraries",
+    "subtitle": "Two Great Python Options for Visualising Geospatial Variation",
+    "date": "2023-03-17T16:06:18.856Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/creating-geospatial-heatmaps-with-pythons-plotly-and-folium-libraries-4159e98a1ae8",
+    "image": "https://cdn-images-1.medium.com/max/800/0*potYOOdPXWdoo-W8",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "4 Essential Tools to Help You Select a Colour Palette for Your Data Visualisation",
+    "subtitle": "Tools for Making it Easy to Select Colour Palettes for Data Visualisations",
+    "date": "2023-03-15T08:30:54.048Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/4-essential-tools-to-help-you-select-a-colour-palette-for-your-data-visualisation-ddb2ec92a08",
+    "image": "https://cdn-images-1.medium.com/max/800/0*hTH1amGujGpJ9YSe",
+    "tags": [
+      "data visualisation"
+    ],
+    "paid": true
+  },
+  {
+    "title": "Create Eye-Catching Radial Bar Charts With Matplotlib",
+    "subtitle": "Easily Create Visually Appealing Circular Bar Plots in Python",
+    "date": "2023-03-06T16:42:46.136Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/create-eye-catching-radial-bar-charts-with-matplotlib-fd03ff732048",
+    "image": "https://cdn-images-1.medium.com/max/800/1*pFZg9j4W5GJSc2vCAtmSRg.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Using PyGWalker to Enhance Your Jupyter Notebook EDA Experience",
+    "subtitle": "An Introduction to the PyGWalker Library for Easy Data Visualisation",
+    "date": "2023-03-01T16:39:44.307Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/use-pygwalker-to-enhance-your-jupyter-notebook-eda-experience-d7a5ee358be9",
+    "image": "https://cdn-images-1.medium.com/max/800/1*jJDVB9TlJWJd-TAH3_9Myg.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Building a Medium Stats Tracker With Streamlit",
+    "subtitle": "Using the Python Streamlit Library to Track and Monitor Medium Statistics",
+    "date": "2023-02-27T17:13:05.246Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/building-a-medium-stats-tracker-with-streamlit-dfe75f69b8fc",
+    "image": "https://cdn-images-1.medium.com/max/800/0*j9ccfgsN5dvBl4LW",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "How to Display Data From GeoJSON Files Using the Folium Python Library",
+    "subtitle": "Creating Interactive Maps of UKCS Oil and Gas Field Outlines",
+    "date": "2023-02-24T16:24:31.996Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-display-data-from-geojson-files-using-the-folium-python-library-f7284cb2a256",
+    "image": "https://cdn-images-1.medium.com/max/800/0*QmZD7h9nPQnUW1L4",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Sketch: A Promising AI Library to Help With Pandas Dataframes Directly in Jupyter",
+    "subtitle": "Leveraging the Power of AI Within Jupyter Notebooks",
+    "date": "2023-02-21T14:57:17.108Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/sketch-a-promising-ai-library-to-help-with-pandas-dataframes-directly-in-jupyter-5162c32c66ef",
+    "image": "https://cdn-images-1.medium.com/max/800/0*bQ4InGsIY5fatcVf",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "3 Easy Ways to Include Interactive Maps in a Streamlit App",
+    "subtitle": "Visualising Geospatial Data Within Streamlit",
+    "date": "2023-02-19T15:28:38.787Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/3-easy-ways-to-include-interactive-maps-in-a-streamlit-app-b49f6a22a636",
+    "image": "https://cdn-images-1.medium.com/max/800/0*_gz4D_nAAj3AcNAW",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "5 Powerful Python Libraries For EDA You Need to Know About",
+    "subtitle": "Leverage the Power of Python to Explore and Understand Your Data",
+    "date": "2023-02-15T16:55:14.173Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/5-powerful-python-libraries-you-need-to-know-to-enhance-your-eda-process-f0100d563c16",
+    "image": "https://cdn-images-1.medium.com/max/800/0*ajM-qG71KCDdiQLR.jpg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "D-Tale for Fast and Easy Exploratory Data Analysis of Well Log Data",
+    "subtitle": "Speeding Up The Exploratory Data Analysis Workflow With The D-Tale Python Library",
+    "date": "2023-02-13T20:28:26.185Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/d-tale-for-fast-and-easy-exploratory-data-analysis-of-well-log-data-a2ffca5295b6",
+    "image": "https://cdn-images-1.medium.com/max/800/1*drVMtyU0vS802O6OtXhNZA.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "9 Creative Alternatives to the Traditional Pie Chart for Data Visualisation",
+    "subtitle": "Using Python to Create Alternatives to the Pie Chart",
+    "date": "2023-02-10T17:32:05.123Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/9-creative-alternatives-to-the-traditional-pie-chart-for-data-visualisation-4d0a624aafe5",
+    "image": "https://cdn-images-1.medium.com/max/800/0*8OrdyTkU-mVyUNF7",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "How to Create Beautiful Waffle Charts for Data Visualisation in Python",
+    "subtitle": "A Great Alternative to Pie Charts for Data Visualisation",
+    "date": "2023-02-08T16:45:50.245Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-create-beautiful-waffle-charts-for-data-visualisation-in-python-e9760a3f8594",
+    "image": "https://cdn-images-1.medium.com/max/800/0*jb3FPp7GYp1p3Hv3",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Building a LAS File Data Explorer App with Streamlit",
+    "subtitle": "Exploring Log ASCII Standard files using Python and Streamlit",
+    "date": "2023-02-03T14:47:18.331Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/building-a-las-file-data-explorer-app-with-streamlit-347289e0d000",
+    "image": "https://cdn-images-1.medium.com/max/800/0*-aI8M25DteT2PUI8",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Learning Python With ChatGPT",
+    "subtitle": "Can AI Replace Online Python Courses?",
+    "date": "2023-01-24T16:54:35.771Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/learning-python-with-chatgpt-4c6bb75550d7",
+    "image": "https://cdn-images-1.medium.com/max/800/0*pEWFcpqHEaIuHe4n",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Uploading and Reading Files with Streamlit",
+    "subtitle": "Allow Your Streamlit Dashboard Users to Upload Their Own Data",
+    "date": "2023-01-22T13:59:49.778Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/uploading-and-reading-files-with-streamlit-92885ac3a1b6",
+    "image": "https://cdn-images-1.medium.com/max/800/0*Sb7ZHWuf-lJMx8M3",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Notion for Home Renovation and DIY",
+    "subtitle": "Manage Your Home Renovation and Makeover Projects Within Notion",
+    "date": "2023-01-20T10:27:56.777Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/notion-for-home-renovation-and-diy-6dfa3d6f6631",
+    "image": "https://cdn-images-1.medium.com/max/800/0*B3bKictiIZmAw2X6.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "How to Use Streamlit’s st.write Function to Improve Your Streamlit Dashboard",
+    "subtitle": "The Swiss Army Knife of Streamlit Functions",
+    "date": "2023-01-17T10:38:08.969Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-use-streamlits-st-write-function-to-improve-your-streamlit-dashboard-1586333eb24d",
+    "image": "https://cdn-images-1.medium.com/max/800/0*nbD3kwhw4z7HCy2A",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "The Streamlit Colour Picker: An Easy Way to Change Chart Colours on Your Streamlit Dashboard",
+    "subtitle": "Provide Your Dashboard Users with Greater Flexibility",
+    "date": "2022-12-20T12:06:01.266Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/streamlit-color-picker-widget-an-easy-way-to-change-chart-colours-7929973393ea",
+    "image": "https://cdn-images-1.medium.com/max/800/1*fittSjUEJ0EbMK1Kz_whHg.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "ChatGPT: Building an Online Course Using AI",
+    "subtitle": "Creating Digital Products with the Help of Artificial Intelligence",
+    "date": "2022-12-18T14:01:45.615Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/chatgpt-building-an-online-course-using-ai-31020827d76f",
+    "image": "https://cdn-images-1.medium.com/max/800/1*ACeAT9NxKzSRDwcqft6CpQ.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Getting Started With Streamlit: 5 Functions You Need To Know When Starting Out",
+    "subtitle": "Streamline your Streamlit learning with these 5 functions",
+    "date": "2022-12-16T13:20:53.996Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/getting-started-with-streamlit-5-functions-you-need-to-know-when-starting-out-b35ed7d872b9",
+    "image": "https://cdn-images-1.medium.com/max/800/1*pwcDkgLqPOmczpb3sWiXoA.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "5 Great Data Science Side Hustles to Explore in 2023",
+    "subtitle": "Leverage Your Data Science Skills and Knowledge to Make Extra Cash",
+    "date": "2022-12-11T13:38:44.324Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/5-great-data-science-side-hustles-to-explore-in-2023-1a166f739519",
+    "image": "https://cdn-images-1.medium.com/max/800/1*k6OPobeV4R3BjfXBgeosTw.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "OpenAI’s Amazing ChatGPT: Is It Promising for Niche Topics?",
+    "subtitle": "Asking ChatGPT about Petrophysics",
+    "date": "2022-12-06T15:24:33.415Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/openais-amazing-chatgpt-is-it-promising-for-niche-topics-fcee2328dbd8",
+    "image": "https://cdn-images-1.medium.com/max/800/1*67J6C4N0rnnUmGgSOIceSQ.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "7 Useful Pandas Display Options You Need to Know",
+    "subtitle": "Levelling Up Your Pandas Skills One Step at a Time",
+    "date": "2022-12-05T15:27:43.699Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/7-useful-pandas-display-options-you-need-to-know-51956e89aa2f",
+    "image": "https://cdn-images-1.medium.com/max/800/1*GIk2-th5mTi3pe8mvOUKRg.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "How to Level up Your Pandas Skills in 5 Easy Ways",
+    "subtitle": "5 Ways to Level Up Your Data Science Skills with Pandas",
+    "date": "2022-12-02T10:48:03.435Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-level-up-your-pandas-skills-in-5-easy-ways-223208ce18cc",
+    "image": "https://cdn-images-1.medium.com/max/800/1*37nlwnqi_vV5he4uJvCX2w.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "k-Nearest Neighbors for Lithology Classification from Well Logs Using Python",
+    "subtitle": "Subdividing the Subsurface Based on Well Log Measurements",
+    "date": "2022-11-29T13:49:18.822Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/k-nearest-neighbors-for-lithology-classification-from-well-logs-using-python-a13ac69367ce",
+    "image": "https://cdn-images-1.medium.com/max/800/0*BvTG2XdzK6WExd3S",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating a Multi-Well Integrated Well Log and Formation Tops Dataframe in Python",
+    "subtitle": "Combining formation data and well log measurements for multiple wells in Python",
+    "date": "2022-11-03T17:01:48.720Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/creating-an-multi-well-integrated-well-log-and-formation-tops-dataframe-in-python-469670550aaf",
+    "image": "https://cdn-images-1.medium.com/max/800/1*H8vNKZphb9HBnVMdIBzFuA.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "5 Essential Soft Skills to Succeed as a Data Scientist",
+    "subtitle": "Improve the value you can deliver through developing soft skills",
+    "date": "2022-10-28T16:01:01.192Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/5-essential-soft-skills-to-succeed-as-a-data-scientist-1fffbcb74717",
+    "image": "https://cdn-images-1.medium.com/max/800/0*xYaScSmTHdR6K1rT",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "How to Create a Simple Neural Network Model in Python",
+    "subtitle": "Building a Simple Neural Network with Scikit-Learn to Predict Well Log Measurements",
+    "date": "2022-10-22T17:34:23.386Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-create-a-simple-neural-network-model-in-python-70697967738f",
+    "image": "https://cdn-images-1.medium.com/max/800/1*IY57fuzy9jWdf2UfLqFioQ.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Folium Mapping: Displaying Markers on a Map",
+    "subtitle": "A Short Guide on Adding Markers to a Folium Map in Python",
+    "date": "2022-10-19T14:26:15.450Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/folium-mapping-displaying-markers-on-a-map-6bd56f3e3420",
+    "image": "https://cdn-images-1.medium.com/max/800/0*IE_XvWOezH6ddnXH",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Data Quality Considerations for Machine Learning Models",
+    "subtitle": "Reducing the Impacts of Garbage In Garbage Out on Machine Learning Models",
+    "date": "2022-10-07T18:53:00.493Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/data-quality-considerations-for-machine-learning-models-dcbe9cab34cb",
+    "image": "https://cdn-images-1.medium.com/max/800/1*8CQK1RYWbzOvumzl_aCdNA.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Isolation Forest — Auto Anomaly Detection with Python",
+    "subtitle": "Detecting Outliers Using Python’s Scikit-learn Library",
+    "date": "2022-09-29T09:52:12.491Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/isolation-forest-auto-anomaly-detection-with-python-e7a8559d4562",
+    "image": "https://cdn-images-1.medium.com/max/800/1*93pit0tTWbbeZ_wf5b4LmQ.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "4 Ways I’m Using Data Science Skills to Generate Income From Side Hustles",
+    "subtitle": "Using your passion to build multiple revenue streams",
+    "date": "2022-09-26T20:19:07.394Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/4-ways-im-using-data-science-skills-to-generate-income-from-side-hustles-638fffc0bbca",
+    "image": "https://cdn-images-1.medium.com/max/800/0*OvVv69bqx8Iicoy1",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "5 Ways to Transform Your Seaborn Data Visualisations",
+    "subtitle": "Simple and easy pieces of code to enhance your seaborn scatter plots",
+    "date": "2022-09-21T03:30:55.550Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/5-ways-to-transform-your-seaborn-data-visualisations-1ed2cb484e38",
+    "image": "https://cdn-images-1.medium.com/max/800/0*KlbNuVg0R2lCnlR7",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Working with Well Trajectories in Python",
+    "subtitle": "Convert raw well survey data to complete positional data with wellpathpy",
+    "date": "2022-09-19T22:29:39.033Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/working-with-well-trajectories-in-python-b8eb39773f64",
+    "image": "https://cdn-images-1.medium.com/max/800/0*MFd3BT5PWv1VKY6x",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Combining Formation Data With Well Log Measurements in Pandas",
+    "subtitle": "Integrating subsurface measurements with Python",
+    "date": "2022-09-12T18:39:42.322Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/combining-formation-data-with-well-log-measurements-in-pandas-8c29589ec132",
+    "image": "https://cdn-images-1.medium.com/max/800/1*UUKjI0PM-wvuRiHUlxZm3Q.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "7 Simple Ways To Enhance Your Matplotlib Charts",
+    "subtitle": "Improve your matplotlib figures with these simple steps",
+    "date": "2022-09-03T14:28:29.236Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/7-simple-ways-to-enhance-your-matplotlib-charts-a232823efed9",
+    "image": "https://cdn-images-1.medium.com/max/800/1*ujLCPl1BttlOS4S7Jbi8lw.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Random Forest Regression for Continuous Well Log Prediction",
+    "subtitle": "An overview of a popular machine learning algorithm applied to petrophysics",
+    "date": "2022-08-24T14:03:28.405Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/random-forest-regression-for-continuous-well-log-prediction-61d3ec1c683a",
+    "image": "https://cdn-images-1.medium.com/max/800/1*7mXV-WsrAgscRMNf7CV9Jw.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Random Forest for Lithology Classification From Well Log Data",
+    "subtitle": "Classifying the Subsurface With Machine Learning",
+    "date": "2022-08-20T12:00:41.374Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/random-forest-for-lithology-classification-from-well-log-data-4a1380ef025b",
+    "image": "https://cdn-images-1.medium.com/max/800/1*s7anbk4yj9CIv2fZAXCVVg.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Seaborn Heatmap for Visualising Data Correlations",
+    "subtitle": "Visualise how features correlate with each other with a simple heatmap",
+    "date": "2022-08-14T07:31:04.055Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/seaborn-heatmap-for-visualising-data-correlations-66cbef09c1fe",
+    "image": "https://cdn-images-1.medium.com/max/800/0*DyiD26jxRPn3tncx",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Using Notion for Data Science",
+    "subtitle": "How I manage Data Science tasks, projects, and resources within a Single Notion Dashboard",
+    "date": "2022-08-12T09:33:36.288Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/using-notion-for-data-science-777bd04870fe",
+    "image": "https://cdn-images-1.medium.com/max/800/0*fpEZjCq_wMSL6JNo",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "K-Means Clustering — An Introduction",
+    "subtitle": "An overview of a popular unsupervised machine learning method",
+    "date": "2022-08-07T08:53:25.034Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/k-means-clustering-an-introduction-9825ea998d1e",
+    "image": "https://cdn-images-1.medium.com/max/800/1*FGkt5Oll4cyBVYuYk77guQ.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "7 Tips To Get You Off To A Great Start When Learning Python",
+    "subtitle": "Lessons learned from 5 years of developing Python skills",
+    "date": "2022-08-03T07:20:11.165Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/7-tips-to-get-you-off-to-a-great-start-when-learning-python-c878113b8082",
+    "image": "https://cdn-images-1.medium.com/max/800/1*NvDQlosb1h1heAO-rVPr8A.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "6 Machine Learning Algorithms to Know About When Learning Data Science",
+    "subtitle": "Short Explanations of 6 Popular Machine Learning Algorithms",
+    "date": "2022-07-25T16:25:32.110Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/6-machine-learning-algorithms-to-know-when-learning-data-science-6e45ef139b99",
+    "image": "https://cdn-images-1.medium.com/max/800/1*S83D2f3dDqSMELl3Byo7fw.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "5 Essential Tips to Improve the Readability of Your Python Code",
+    "subtitle": "Improving your Python Code Through Documentation, Type Hinting and Proper Variable Names",
+    "date": "2022-07-22T16:21:36.213Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/5-essential-tips-to-improve-the-readability-of-your-python-code-a1d5e62a4bf0",
+    "image": "https://cdn-images-1.medium.com/max/800/0*N8XFZSa9ls_kO5El",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Use Seaborn FacetGrid to Quickly Create Figures With Subplots",
+    "subtitle": "Enhance your Exploratory Data Analysis Process by Using Seaborn’s FacetGrid — An Example Using Earthquake Data",
+    "date": "2022-07-20T11:10:55.979Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/use-seaborn-facetgrid-to-quickly-create-figures-with-subplots-6fd72dc90b5d",
+    "image": "https://cdn-images-1.medium.com/max/800/0*CMHiXKs0GmcHP9Ux",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating Boxplots with the Seaborn Python Library",
+    "subtitle": "A Quick Getting Started Guide for Seaborn Boxplots",
+    "date": "2022-07-17T08:03:56.644Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/creating-boxplots-with-the-seaborn-python-library-f0c20f09bd57",
+    "image": "https://cdn-images-1.medium.com/max/800/1*ij5hQymHcsWB1rWDYCmpwA.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Using the Power of AI to Document Your Code",
+    "subtitle": "Document your code automatically with Mintlify",
+    "date": "2022-07-15T08:30:22.341Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/using-the-power-of-ai-to-document-your-code-82f3cc98a5ca",
+    "image": "https://cdn-images-1.medium.com/max/800/0*2WkH3RlmjNxlW0Se",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating True Multi-Page Streamlit Apps — The New Way (2022)",
+    "subtitle": "The Latest Way to Make Streamlit Apps Multi-page",
+    "date": "2022-07-04T10:18:57.397Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/creating-true-multi-page-streamlit-apps-the-new-way-2022-b859b3ea2a15",
+    "image": "https://cdn-images-1.medium.com/max/800/0*qKvlmwj7PE6UiPGv",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Seaborn Relplot in Python: Visualising Relationships in Data",
+    "subtitle": "Visualising Well Log Data Using Seaborn’s relplot",
+    "date": "2022-06-19T08:01:24.201Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/seaborn-relplot-in-python-visualising-relationships-in-data-ee39138d53aa",
+    "image": "https://cdn-images-1.medium.com/max/800/0*ieDmwWWXosNyiM3h",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Getting Started With Streamlit Web Based Applications",
+    "subtitle": "A gentle introduction to creating Streamlit web apps",
+    "date": "2022-05-23T15:57:33.080Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/getting-started-with-streamlit-web-based-applications-626095135cb8",
+    "image": "https://cdn-images-1.medium.com/max/800/0*lPc5zr4vJRmZhXpf",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Pandas Profiling — Easy Exploratory Data Analysis in Python",
+    "subtitle": "Fast and effective EDA with the Pandas Profiling Library",
+    "date": "2022-05-08T11:03:07.409Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/pandas-profiling-easy-exploratory-data-analysis-in-python-65d6d0e23650",
+    "image": "https://cdn-images-1.medium.com/max/800/0*whbNL8IBAm4pWZqz",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Notion for Academic Research Management",
+    "subtitle": "Manage your research, notes and academic references all in one place with Notion",
+    "date": "2022-05-06T16:37:39.721Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/notion-for-academic-research-management-9cb81a333d75",
+    "image": "https://cdn-images-1.medium.com/max/800/1*dd4PaNxIyQyYMHNh1xzEaw.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Convert CSV Files to LAS Files with Python",
+    "subtitle": "Quick and simple conversion process to create a LAS file from scratch using LASIO and CSV Data",
+    "date": "2022-04-25T11:33:06.518Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/convert-csv-files-to-las-files-with-python-7de4a47fc996",
+    "image": "https://cdn-images-1.medium.com/max/800/1*uA-jrr6riCn3koai7rCwsQ.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Public Datasets for Machine Learning in Geoscience",
+    "subtitle": "The best open source websites for applying data science, machine learning and petrophysical techniques",
+    "date": "2022-04-17T07:33:19.813Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/public-datasets-for-machine-learning-in-geoscience-cf880862300a",
+    "image": "https://cdn-images-1.medium.com/max/800/0*S1LtxPOlTKHXele5",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "6 Python Libraries You Should Know About for Well Log Data & Petrophysics",
+    "subtitle": "Discover 6 great python libraries that you can start using today with well log data",
+    "date": "2022-04-10T08:19:01.878Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/6-python-libraries-you-should-know-about-for-well-log-data-petrophysics-3dfde47856b8",
+    "image": "https://cdn-images-1.medium.com/max/800/0*Xd3xu7oZTJ2EinWX",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Enhance Your Plotly Express Scatter Plot With Marginal Plots",
+    "subtitle": "Display Extra Information on your Plotly Express Scatter Plots",
+    "date": "2021-11-28T12:02:23.800Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/enhance-your-plotly-express-scatter-plot-with-marginal-plots-de469d42f12a",
+    "image": "https://cdn-images-1.medium.com/max/800/1*b_MBH4lcRX5FdOp2t98WBw.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Using Plotly Express to Create Interactive Scatter Plots",
+    "subtitle": "An Example of Creating Interactive Scatter Plots Using Well Log Data",
+    "date": "2021-11-21T12:03:10.937Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/using-plotly-express-to-create-interactive-scatter-plots-3699d8279b9e",
+    "image": "https://cdn-images-1.medium.com/max/800/1*7WR3V10c9nugoaBTg6O5eQ.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Visualizing Well Paths With The Welly Python Library",
+    "subtitle": "Creating 3D Line Plots Using Matplotlib to Visualize Well Trajectories",
+    "date": "2021-11-14T12:03:45.503Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/visualizing-well-paths-with-the-well-python-library-2104b28e5c3",
+    "image": "https://cdn-images-1.medium.com/max/800/1*9o4lu6_TwwKw5ninFsEVMw.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Well Log Data Outlier Detection With Machine Learning and Python",
+    "subtitle": "Identification of outliers is an essential step in the petrophysical machine learning workflow",
+    "date": "2021-10-22T16:26:31.581Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/well-log-data-outlier-detection-with-machine-learning-a19cafc5ea37",
+    "image": "https://cdn-images-1.medium.com/max/800/0*Q2FrSeLjqscpEgzx",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Identifying and Handling Missing Well Log Data Prior to Machine Learning",
+    "subtitle": "Part 2 in a series going from Exploratory Data Analysis to Machine Learning with Well Log Data",
+    "date": "2021-10-02T21:31:09.191Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/identifying-and-handling-missing-well-log-data-prior-to-machine-learning-5fa1a3d0eb73",
+    "image": "https://cdn-images-1.medium.com/max/800/0*XZt7Ks8seMwX7Wzw",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Exploring Well Log Data Using Pandas, Matplotlib and Seaborn",
+    "subtitle": "An example of exploring petrophysical and well log measurements using a number of plots from Seaborn and Matplotlib",
+    "date": "2021-09-21T11:09:01.899Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/exploring-well-log-data-using-pandas-matplotlib-and-seaborn-712779a39ac2",
+    "image": "https://cdn-images-1.medium.com/max/800/0*e5966qgHQ0B-Ww-K",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "How to Rename Columns in Pandas — A Quick Guide",
+    "subtitle": "A short guide on multiple options for renaming columns in a pandas dataframe",
+    "date": "2021-09-11T16:07:13.284Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-rename-columns-in-pandas-a-quick-guide-a934aa977bd5",
+    "image": "https://cdn-images-1.medium.com/max/800/0*1mFWIXXkmFV3g4Ue",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating Boxplots of Well Log Data Using Matplotlib in Python",
+    "subtitle": "",
+    "date": "2021-08-28T08:40:02.620Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/creating-boxplots-of-well-log-data-using-matplotlib-in-python-34c3816e73f4",
+    "image": "https://cdn-images-1.medium.com/max/800/1*8xhd9YFwqKwadVvHv2CpLA.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating Simple Well Log Plots Using the Matplotlib Library in Python",
+    "subtitle": "",
+    "date": "2021-08-08T12:03:10.252Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/creating-simple-well-log-plots-using-the-matplotlib-library-in-python-670325462f9e",
+    "image": "https://cdn-images-1.medium.com/max/800/1*KvlBqDAwlui8zSTn3jEvDg.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Creating Scatter Plots (Crossplots) of Well Log Data using Matplotlib in Python",
+    "subtitle": "Use scatter plots to visualise the relationship between variables",
+    "date": "2021-08-01T12:02:18.476Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/scatterplot-creation-and-visualisation-with-matplotlib-in-python-7bca2a4fa7cf",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/fa185f58-07c3-4d5d-b0f0-ba4fa53dec94_800x787.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Using Histograms to Visualise Well Log Data",
+    "subtitle": "",
+    "date": "2021-07-25T15:34:23.262Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/using-histograms-to-visualise-well-log-data-16142e2c7f81",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/a4379718-a13f-4b26-a8d7-9cbd1dcfe647_800x533.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "10 Applications of Machine Learning Within Petrophysics",
+    "subtitle": "Examples of machine learning to enhance your petrophysical workflow",
+    "date": "2021-07-10T11:55:36.452Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/10-applications-of-machine-learning-within-petrophysics-3709b1c4323a",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/fafab5a4-3861-492d-840e-753cb70ee317_800x534.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Exploring Well Log Data Using the Welly Python Library",
+    "subtitle": "A Python library dedicated to loading and exploring well log LAS files",
+    "date": "2021-06-13T14:33:32.681Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/exploring-well-log-data-using-the-welly-python-library-5e808cd3137b",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/f7e53ab9-f3e1-44d2-ad60-eb606a323854_800x532.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Using the missingno Python library to Identify and Visualise Missing Data Prior to Machine Learning",
+    "subtitle": "An example using petrophysical well log measurements",
+    "date": "2021-06-09T20:39:42.558Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/using-the-missingno-python-library-to-identify-and-visualise-missing-data-prior-to-machine-learning-34c8c5b5f009",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/9f70548b-abdc-4363-8e8f-b3f68f0b07f6_800x533.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "How to use Unsupervised Learning to Cluster Well Log Data using Python",
+    "subtitle": "",
+    "date": "2021-06-03T16:30:02.782Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/how-to-use-unsupervised-learning-to-cluster-well-log-data-using-python-a552713748b5",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/e88ee9cb-214a-480e-8878-6365916fb425_800x551.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Loading Well Log Data From DLIS using Python",
+    "subtitle": "A short tutorial on loading and displaying processed acoustic waveform data using dlisio and matplotlib",
+    "date": "2021-04-21T16:10:36.209Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/loading-well-log-data-from-dlis-using-python-9d48df9a23e2",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/82da9ecb-f36c-439a-a710-553da37e971e_1200x600.png",
+    "tags": [],
+    "paid": false
+  },
+  {
+    "title": "Adding Formation Data to a Well Log Plot",
+    "subtitle": "Taking well log plots one step further using Python and matplotlib",
+    "date": "2021-02-28T14:53:09.694Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/adding-formation-data-to-a-well-log-plot-3897b96a3967",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/3ecb9a11-189b-4896-8b12-2ee67638eb56_1200x800.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Loading Multiple Well Log LAS Files Using Python",
+    "subtitle": "Appending Multiple LAS Files to a Pandas Dataframe",
+    "date": "2021-02-14T15:53:20.081Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/loading-multiple-well-log-las-files-using-python-39ac35de99dd",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/b4e158a5-ec63-4336-93a0-904d205fe006_1200x721.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Displaying Lithology Data Using Python and matplotlib",
+    "subtitle": "Using fill_betweenx() in matplotlib to add variable color fills and hatches for geological lithology data",
+    "date": "2021-02-07T15:09:44.734Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/displaying-lithology-data-using-python-and-matplotlib-58b4d251ee7a",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/732d17ba-163e-4ea7-a7f6-4d75dfe19209_1200x600.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Displaying Logging While Drilling (LWD) Image Logs in Python",
+    "subtitle": "Utilizing the power of matplotlib to display wellbore image data",
+    "date": "2021-01-31T11:06:19.928Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/displaying-logging-while-drilling-lwd-image-logs-in-python-4babb6e577ba",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/b7310844-c034-4564-9e60-23c9299439de_800x481.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Enhancing Visualization of Well Logs With Plot Fills",
+    "subtitle": "Applying Color Infill to Well Log Data Using matplotlib",
+    "date": "2021-01-27T17:30:37.918Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/enhancing-visualization-of-well-logs-with-plot-fills-72d9dcd10c1b",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/bc3a5d3e-eac3-4e64-b938-13b14a9edf50_800x541.png",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Porosity-Permeability Relationships Using Linear Regression in Python",
+    "subtitle": "A short guide on applying a linear regression in Python to semi-log data",
+    "date": "2020-12-28T14:04:55.247Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/porosity-permeability-relationships-using-linear-regression-in-python-eef406dc6997",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/28ed62a0-d9dd-42d0-a023-5a08e05a955d_800x533.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Exploratory Data Analysis with Well Log Data",
+    "subtitle": "Exploring and Visualising Well Log Data",
+    "date": "2020-11-01T14:26:19.666Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/exploratory-data-analysis-with-well-log-data-98ad084c4e7",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/f9858e90-9f07-4aca-9615-33f0a772d987_800x530.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Visualising Well Data Coverage Using Matplotlib",
+    "subtitle": "Exploring where data is and where it isn’t",
+    "date": "2020-10-26T19:58:37.194Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/visualising-well-data-coverage-using-matplotlib-f30591c89754",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/718c4dcd-f2eb-431b-900f-53147c601750_2560x1678.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Petrophysics: Gamma Ray Normalization in Python",
+    "subtitle": "Normalization of well log data is a common and routine process within a petrophysical workflow and is used to correct for variations in…",
+    "date": "2020-10-18T10:21:41.803Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/petrophysics-gamma-ray-normalization-in-python-9a67a335dbd",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/6ad6e6c4-124e-44ef-8751-e24e9a4503d8_800x533.jpeg",
+    "tags": [],
+    "paid": true
+  },
+  {
+    "title": "Loading and Displaying Well Log Data",
+    "subtitle": "Anyone who has worked or is currently working within the oil and gas industry will understand that there are a large variety of formats…",
+    "date": "2020-08-30T19:28:06.732Z",
+    "url": "https://andymcdonaldgeo.substack.com/p/loading-and-displaying-well-log-data-b9568efd1d8",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/330e972f-fcb4-49b1-a4ec-a062c5ac5ea3_800x534.jpeg",
+    "tags": [],
+    "paid": false
+  }
+]
