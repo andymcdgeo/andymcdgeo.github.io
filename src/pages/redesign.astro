@@ -23,31 +23,16 @@ const formatDate = (date) =>
 
 const excerptFor = (post) => post.data.excerpt?.trim() || post.data.description?.trim() || "";
 
-// Formation tops: the depth each section "sits" at on the track
+// Section tops: the depth each section "sits" at on the track
 const TD = 2500;
 const tops = [
   { id: "surface", label: "Surface", depth: 0 },
-  { id: "labs", label: "Labs", depth: 650 },
-  { id: "writing", label: "Writing", depth: 1300 },
-  { id: "projects", label: "Projects", depth: 1900 },
+  { id: "writing", label: "Writing", depth: 1100 },
+  { id: "projects", label: "Projects", depth: 1800 },
   { id: "td", label: "TD", depth: TD },
 ];
 
-// A gamma-ray style curve for section dividers (seeded so it is stable between builds)
-const grCurve = (seed, width = 1000, height = 44, step = 6) => {
-  let s = seed;
-  const rand = () => ((s = (s * 16807) % 2147483647) / 2147483647);
-  let v = 0.5;
-  let bed = 0.5;
-  const pts = [];
-  for (let x = 0; x <= width; x += step) {
-    if (rand() < 0.08) bed = 0.15 + rand() * 0.7; // new bed: shift the baseline
-    v += (bed - v) * 0.35 + (rand() - 0.5) * 0.22;
-    v = Math.min(0.95, Math.max(0.05, v));
-    pts.push(`${x},${(v * height).toFixed(1)}`);
-  }
-  return `M${pts.join(" L")}`;
-};
+const [featuredPost, ...sidePosts] = morePosts;
 ---
 
 <BaseLayout title="Andy McDonald (redesign preview)">
@@ -166,76 +151,78 @@ const grCurve = (seed, width = 1000, height = 44, step = 6) => {
         </a>
       </section>
 
-      <!-- Formation: Labs -->
-      <section class="rd-formation" id="labs" data-depth="650">
-        <header class="rd-formation-top">
-          <svg viewBox="0 0 1000 44" preserveAspectRatio="none" aria-hidden="true"><path d={grCurve(7)} /></svg>
-          <div class="rd-formation-label"><span>TOP</span> LABS <span>650 m</span></div>
-        </header>
-        <h2 class="rd-h2">Learn it by changing it.</h2>
-        <p class="rd-lede">
-          Interactive 3D explainers for subsurface concepts. No install, no login: change the rock, drill the well, and
-          see what happens.
-        </p>
-        <div class="rd-lab-strip">
-          <a href="/labs/pore-lab/"><strong>Pore Lab</strong><span>Porosity, saturation, permeability</span><em>→</em></a>
-          <a href="/labs/bore-lab/"><strong>Bore Lab</strong><span>Sensor offsets, mud lag, invasion</span><em>→</em></a>
-        </div>
-      </section>
-
-      <!-- Formation: Writing -->
-      <section class="rd-formation" id="writing" data-depth="1300">
-        <header class="rd-formation-top">
-          <svg viewBox="0 0 1000 44" preserveAspectRatio="none" aria-hidden="true"><path d={grCurve(31)} /></svg>
-          <div class="rd-formation-label"><span>TOP</span> WRITING <span>1,300 m</span></div>
-        </header>
-        <div class="rd-row-head">
-          <h2 class="rd-h2">More from the blog</h2>
+      <!-- Writing -->
+      <section class="rd-section" id="writing">
+        <div class="rd-section-head">
+          <div>
+            <div class="rd-label">WRITING · 1,100 m</div>
+            <h2 class="rd-h2">More from the blog</h2>
+          </div>
           <a class="rd-link" href="/blog">All writing →</a>
         </div>
-        <ol class="rd-list">
-          {morePosts.map((post) => (
-            <li>
-              <a href={`/blog/${post.slug}`}>
-                <span class="rd-list-date">{formatDate(post.data.date)}</span>
-                <span class="rd-list-title">{post.data.title}</span>
-                <span class="rd-list-tags">{post.data.tags.slice(0, 2).join(" · ")}</span>
-                <em>→</em>
-              </a>
-            </li>
+        <div class="rd-grid">
+          <a class="rd-tile rd-post-feature" href={`/blog/${featuredPost.slug}`}>
+            <Image src={featuredPost.data.heroImage} alt="" width={900} loading="lazy" />
+            <div class="rd-overlay">
+              <div class="rd-label">{formatDate(featuredPost.data.date).toUpperCase()}</div>
+              <h3>{featuredPost.data.title}</h3>
+              <p>{excerptFor(featuredPost)}</p>
+            </div>
+          </a>
+          {sidePosts.slice(0, 2).map((post) => (
+            <a class="rd-tile rd-post-small" href={`/blog/${post.slug}`}>
+              <Image src={post.data.heroImage} alt="" width={320} loading="lazy" />
+              <div>
+                <div class="rd-label">{formatDate(post.data.date).toUpperCase()}</div>
+                <h3>{post.data.title}</h3>
+              </div>
+            </a>
           ))}
-        </ol>
+          <a class="rd-tile rd-post-all" href="/blog">
+            <span>Browse all articles</span>
+            <em>→</em>
+          </a>
+        </div>
       </section>
 
-      <!-- Formation: Projects -->
-      <section class="rd-formation" id="projects" data-depth="1900">
-        <header class="rd-formation-top">
-          <svg viewBox="0 0 1000 44" preserveAspectRatio="none" aria-hidden="true"><path d={grCurve(113)} /></svg>
-          <div class="rd-formation-label"><span>TOP</span> PROJECTS <span>1,900 m</span></div>
-        </header>
-        <h2 class="rd-h2">Selected work</h2>
-        <div class="rd-projects">
+      <!-- Projects -->
+      <section class="rd-section" id="projects">
+        <div class="rd-section-head">
+          <div>
+            <div class="rd-label">PROJECTS · 1,800 m</div>
+            <h2 class="rd-h2">Selected work</h2>
+          </div>
+        </div>
+        <div class="rd-grid">
           {projects.map((project) => (
-            <article class="rd-project">
-              <div class="rd-project-media">
-                <img src={project.data.image} alt="" loading="lazy" />
+            <a
+              class="rd-tile rd-project"
+              href={project.data.link || "#projects"}
+              target={project.data.link ? "_blank" : undefined}
+              rel={project.data.link ? "noopener noreferrer" : undefined}
+            >
+              <img src={project.data.image} alt="" loading="lazy" />
+              <div class="rd-overlay">
+                <div class="rd-label">{project.data.region.toUpperCase()}</div>
+                <h3>{project.data.title}</h3>
+                <p>{project.data.description}</p>
+                {project.data.link && <span class="rd-link">GitHub →</span>}
               </div>
-              <div class="rd-label">{project.data.region.toUpperCase()}</div>
-              <h3>{project.data.title}</h3>
-              <p>{project.data.description}</p>
-              {project.data.link && (
-                <a class="rd-link" href={project.data.link} target="_blank" rel="noopener noreferrer">GitHub →</a>
-              )}
-            </article>
+            </a>
           ))}
         </div>
       </section>
 
       <!-- TD -->
-      <section class="rd-td" id="td" data-depth="2500">
-        <div class="rd-formation-label"><span>TD</span> 2,500 m · END OF WELL</div>
-        <h2 class="rd-h2">Want the next one in your inbox?</h2>
-        <a class="rd-btn rd-btn--primary" href="https://andymcdonaldgeo.substack.com/">Subscribe to Subsurface Syntax →</a>
+      <section class="rd-section" id="td">
+        <div class="rd-tile rd-cta">
+          <div>
+            <div class="rd-label">TD · 2,500 m</div>
+            <h2 class="rd-h2">Want the next one in your inbox?</h2>
+            <p>Subsurface Syntax: AI, ML and Python for the subsurface.</p>
+          </div>
+          <a class="rd-btn rd-btn--primary" href="https://andymcdonaldgeo.substack.com/">Subscribe →</a>
+        </div>
       </section>
     </div>
   </div>
@@ -693,199 +680,165 @@ const grCurve = (seed, width = 1000, height = 44, step = 6) => {
       line-height: 1.25;
     }
 
-    /* ---------- Formations ---------- */
-    .rd-formation,
-    .rd-td {
-      padding-top: 5.5rem;
+    /* ---------- Sections below the bento: same tile language ---------- */
+    .rd-section {
+      padding-top: 4.5rem;
       scroll-margin-top: 60px;
     }
 
-    .rd-formation-top {
-      position: relative;
-      margin-bottom: 1.5rem;
-    }
-
-    .rd-formation-top svg {
-      display: block;
-      width: 100%;
-      height: 44px;
-    }
-
-    .rd-formation-top path {
-      fill: none;
-      stroke: #5fc27a;
-      stroke-width: 1.4;
-      vector-effect: non-scaling-stroke;
-      opacity: 0.7;
-    }
-
-    .rd-formation-label {
+    .rd-section-head {
       display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      padding-top: 0.6rem;
-      border-top: 1px dashed rgba(116, 208, 255, 0.5);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: var(--accent-data);
-    }
-
-    .rd-formation-label span {
-      color: var(--muted);
-    }
-
-    .rd-formation-label span:last-child {
-      margin-left: auto;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
     }
 
     .rd-h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
       letter-spacing: -0.03em;
-      margin: 0 0 0.75rem;
+      margin: 0.35rem 0 0;
     }
 
-    .rd-lede {
-      max-width: 60ch;
-      color: var(--text-2);
-      margin: 0 0 1.75rem;
-    }
-
-    .rd-lab-strip {
+    .rd-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: 14px;
     }
 
-    .rd-lab-strip a,
-    .rd-list a {
-      display: grid;
-      align-items: center;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--bg-soft);
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
-
-    .rd-lab-strip a {
-      grid-template-columns: auto 1fr auto;
-      gap: 1rem;
-      padding: 1.1rem 1.3rem;
-    }
-
-    .rd-lab-strip span,
-    .rd-list-tags {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .rd-lab-strip em,
-    .rd-list em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .rd-lab-strip a:hover,
-    .rd-list a:hover {
-      color: var(--text);
-      border-color: rgba(212, 162, 76, 0.5);
-      background: rgba(212, 162, 76, 0.05);
-    }
-
-    .rd-row-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .rd-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 8px;
-    }
-
-    .rd-list a {
-      grid-template-columns: 110px 1fr auto auto;
-      gap: 1.25rem;
-      padding: 1rem 1.25rem;
-    }
-
-    .rd-list-date {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
-
-    .rd-list-title {
-      font-weight: 500;
-    }
-
-    .rd-list-tags {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-    }
-
-    .rd-projects {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 1rem;
-    }
-
+    /* Image tiles with text laid over a dark gradient (writing feature + projects) */
+    .rd-post-feature,
     .rd-project {
+      padding: 0;
+      min-height: 340px;
+    }
+
+    .rd-post-feature img,
+    .rd-project img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.3s ease;
+    }
+
+    a.rd-post-feature:hover img,
+    a.rd-project:hover img {
+      transform: scale(1.04);
+    }
+
+    .rd-overlay {
+      position: absolute;
+      inset: auto 0 0 0;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      padding: 1.25rem;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--bg-soft);
+      gap: 0.4rem;
+      padding: 5rem 1.5rem 1.4rem;
+      background: linear-gradient(to top, rgba(11, 13, 18, 0.97) 35%, rgba(11, 13, 18, 0.75) 65%, transparent);
     }
 
-    .rd-project-media {
-      aspect-ratio: 16 / 9;
-      margin-bottom: 0.5rem;
-      padding: 8px;
-      border-radius: 12px;
-      background: var(--surface-2);
+    .rd-overlay h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    .rd-overlay p {
+      margin: 0;
+      color: var(--text-2);
+      font-size: 0.95rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
-    .rd-project-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 6px;
-      background: #fff;
+    .rd-post-feature {
+      grid-column: span 7;
+      grid-row: span 3;
+      min-height: 420px;
     }
 
-    .rd-project h3 {
-      margin: 0;
+    .rd-post-feature h3 {
+      font-size: 1.6rem;
+    }
+
+    .rd-post-small {
+      grid-column: span 5;
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 1rem;
+      align-items: center;
+      padding: 0.9rem;
+    }
+
+    .rd-post-small img {
+      width: 110px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .rd-post-small h3 {
+      margin: 0.35rem 0 0;
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
+    .rd-post-all {
+      grid-column: span 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .rd-post-all em {
+      font-style: normal;
+      color: var(--accent);
       font-size: 1.2rem;
     }
 
-    .rd-project p {
-      margin: 0 0 0.5rem;
-      color: var(--text-2);
-      font-size: 0.95rem;
+    /* Projects: 2 x 2, figures dimmed so the white charts do not glare */
+    .rd-project {
+      grid-column: span 6;
+    }
+
+    .rd-project img {
+      object-position: top;
+      filter: brightness(0.8) saturate(0.9);
+    }
+
+    .rd-project:hover img {
+      filter: none;
     }
 
     .rd-project .rd-link {
-      margin-top: auto;
+      margin-top: 0.3rem;
     }
 
-    .rd-td {
-      padding-bottom: 2rem;
+    .rd-cta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2.25rem;
+      margin-bottom: 1rem;
+      background:
+        radial-gradient(420px 220px at 100% 100%, rgba(212, 162, 76, 0.16), transparent 70%),
+        var(--bg-soft);
     }
 
-    .rd-td .rd-formation-label {
-      margin-bottom: 1.5rem;
-      border-top-color: rgba(212, 162, 76, 0.6);
-      color: var(--accent);
+    .rd-cta p {
+      margin: 0.5rem 0 0;
+      color: var(--text-2);
+    }
+
+    .rd-cta .rd-btn {
+      flex-shrink: 0;
     }
 
     /* Track needs room beside the 1100px column; hide it when there isn't any */
@@ -953,27 +906,31 @@ const grCurve = (seed, width = 1000, height = 44, step = 6) => {
         min-height: 260px;
       }
 
-      .rd-lab-strip,
-      .rd-projects {
+      .rd-grid {
         grid-template-columns: 1fr;
       }
 
-      .rd-list a {
-        grid-template-columns: 1fr auto;
-        gap: 0.25rem 1rem;
+      .rd-post-feature,
+      .rd-post-small,
+      .rd-post-all,
+      .rd-project {
+        grid-column: auto;
+        grid-row: auto;
       }
 
-      .rd-list-date {
-        grid-column: 1 / -1;
+      .rd-post-feature,
+      .rd-project {
+        min-height: 320px;
       }
 
-      .rd-list-tags {
-        display: none;
+      .rd-cta {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.75rem;
       }
 
-      .rd-formation,
-      .rd-td {
-        padding-top: 4rem;
+      .rd-section {
+        padding-top: 3.5rem;
       }
     }
   </style>
