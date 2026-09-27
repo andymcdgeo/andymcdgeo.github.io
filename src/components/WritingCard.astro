@@ -1,0 +1,41 @@
+---
+import WritingImage from "./WritingImage.astro";
+import { slugifyTag } from "../utils/slugifyTag";
+import type { WritingItem } from "../utils/writing";
+
+interface Props {
+  item: WritingItem;
+}
+
+const { item } = Astro.props;
+const linkProps = item.external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "short", day: "2-digit" }).format(date);
+---
+
+<article class="blog-card">
+  <a class="blog-image" href={item.href} tabindex="-1" aria-hidden="true" {...linkProps}>
+    {item.image ? <WritingImage item={item} width={720} /> : <span class="blog-image-empty"></span>}
+  </a>
+  <div class="blog-body">
+    <div class="blog-meta">
+      <span class="blog-date">
+        {formatDate(item.date)}
+        {item.external && <span class="source-chip">Substack ↗</span>}
+      </span>
+      <div class="blog-tags">
+        {item.tags.slice(0, 3).map((tag) => (
+          <span class="tag" data-tag={slugifyTag(tag)}>{tag}</span>
+        ))}
+      </div>
+    </div>
+    <h2 class="blog-title">
+      <a href={item.href} {...linkProps}>{item.title}</a>
+    </h2>
+    {item.excerpt && <p class="blog-excerpt">{item.excerpt}</p>}
+    <a class="card-link" href={item.href} {...linkProps}>
+      {item.external ? "Read on Substack ↗" : "Read more →"}
+    </a>
+  </div>
+</article>

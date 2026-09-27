@@ -1,0 +1,22 @@
+---
+// Site posts go through astro:assets; Substack covers are already resized by Substack's CDN.
+import { Image } from "astro:assets";
+import type { WritingItem } from "../utils/writing";
+
+interface Props {
+  item: WritingItem;
+  width: number;
+  class?: string;
+  loading?: "lazy" | "eager";
+}
+
+const { item, width, class: className, loading = "lazy" } = Astro.props;
+---
+
+{item.image && (
+  typeof item.image === "string" ? (
+    <img class={className} src={item.image} alt={item.imageAlt} width={width} height={Math.round(width * 0.5625)} loading={loading} decoding="async" />
+  ) : (
+    <Image class={className} src={item.image} alt={item.imageAlt} width={width} loading={loading} />
+  )
+)}

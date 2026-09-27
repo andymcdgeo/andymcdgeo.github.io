@@ -2493,3 +2493,50 @@ body {
     font-size: 1.0625rem;
   }
 }
+
+/* Writing from Substack: marker on cards that open there, and a denser grid now the list is long */
+.blog-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.blog-image img {
+  height: 190px;
+}
+
+.blog-image-empty {
+  display: block;
+  height: 190px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    var(--surface-2);
+  background-size: 24px 24px;
+}
+
+.blog-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.source-chip {
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 162, 76, 0.4);
+  color: var(--accent);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 1000px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}

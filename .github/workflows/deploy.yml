@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Daily rebuild so new Substack posts and YouTube videos appear without a push
+  schedule:
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:

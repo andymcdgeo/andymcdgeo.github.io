@@ -6,11 +6,14 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import { XMLParser } from "fast-xml-parser";
 import "../styles/tiles.css";
+import WritingImage from "../components/WritingImage.astro";
+import { getAllWriting } from "../utils/writing";
 import heroMe from "../assets/images/hero-me.png";
 import bookCover from "../assets/images/python_petrophysics_book_image.png";
 
-const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const [latest, ...olderPosts] = posts;
+// Site posts plus Substack-only posts, newest first
+const writing = await getAllWriting();
+const [latest, ...olderPosts] = writing;
 const morePosts = olderPosts.slice(0, 4);
 const publications = await getCollection("publications");
 const dataSources = await getCollection("data-sources");
@@ -22,7 +25,8 @@ const projects = (await getCollection("projects"))
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "short", day: "2-digit" }).format(date);
 
-const excerptFor = (post) => post.data.excerpt?.trim() || post.data.description?.trim() || "";
+// Substack-only posts open in a new tab
+const linkProps = (item) => (item.external ? { target: "_blank", rel: "noopener noreferrer" } : {});
 
 // Section tops: the depth each section "sits" at on the track
 const TD = 2500;
@@ -114,15 +118,15 @@ try {
           </div>
         </div>
 
-        <a class="rd-tile rd-latest" href={`/blog/${latest.slug}`}>
+        <a class="rd-tile rd-latest" href={latest.href} {...linkProps(latest)}>
           <div class="rd-latest-media">
-            <Image src={latest.data.heroImage} alt="" width={720} />
+            <WritingImage item={latest} width={720} loading="eager" />
           </div>
           <div class="rd-latest-body">
-            <div class="rd-label">LATEST ARTICLE · {formatDate(latest.data.date).toUpperCase()}</div>
-            <h2>{latest.data.title}</h2>
-            <p>{excerptFor(latest)}</p>
-            <span class="rd-link">Read →</span>
+            <div class="rd-label">LATEST ARTICLE · {formatDate(latest.date).toUpperCase()}</div>
+            <h2>{latest.title}</h2>
+            <p>{latest.excerpt}</p>
+            <span class="rd-link">{latest.external ? "Read on Substack ↗" : "Read →"}</span>
           </div>
         </a>
 
@@ -200,20 +204,20 @@ try {
           <a class="rd-link" href="/blog">All writing →</a>
         </div>
         <div class="rd-grid">
-          <a class="rd-tile rd-post-feature" href={`/blog/${featuredPost.slug}`}>
-            <Image src={featuredPost.data.heroImage} alt="" width={900} loading="lazy" />
+          <a class="rd-tile rd-post-feature" href={featuredPost.href} {...linkProps(featuredPost)}>
+            <WritingImage item={featuredPost} width={900} />
             <div class="rd-overlay">
-              <div class="rd-label">{formatDate(featuredPost.data.date).toUpperCase()}</div>
-              <h3>{featuredPost.data.title}</h3>
-              <p>{excerptFor(featuredPost)}</p>
+              <div class="rd-label">{formatDate(featuredPost.date).toUpperCase()}{featuredPost.external && " · SUBSTACK ↗"}</div>
+              <h3>{featuredPost.title}</h3>
+              <p>{featuredPost.excerpt}</p>
             </div>
           </a>
           {sidePosts.slice(0, 2).map((post) => (
-            <a class="rd-tile rd-post-small" href={`/blog/${post.slug}`}>
-              <Image src={post.data.heroImage} alt="" width={320} loading="lazy" />
+            <a class="rd-tile rd-post-small" href={post.href} {...linkProps(post)}>
+              <WritingImage item={post} width={320} />
               <div>
-                <div class="rd-label">{formatDate(post.data.date).toUpperCase()}</div>
-                <h3>{post.data.title}</h3>
+                <div class="rd-label">{formatDate(post.date).toUpperCase()}{post.external && " · SUBSTACK ↗"}</div>
+                <h3>{post.title}</h3>
               </div>
             </a>
           ))}
