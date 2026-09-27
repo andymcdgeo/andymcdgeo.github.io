@@ -1879,11 +1879,15 @@ h3 {
   font-weight: 600;
 }
 
-/* Glass nav, as in the labs */
-.nav {
+/* Glass nav, as in the labs. The layout's <header> wraps the nav and is
+   exactly as tall as it, so the wrapper is what has to be sticky. */
+body > header {
   position: sticky;
   top: 0;
   z-index: 40;
+}
+
+.nav {
   background: rgba(11, 13, 18, 0.72);
   backdrop-filter: blur(20px) saturate(1.3);
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
