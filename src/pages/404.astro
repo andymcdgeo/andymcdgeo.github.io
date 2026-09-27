@@ -1,17 +1,11 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 - Andy McDonald</title>
-    <link rel="icon" href="/images/favicon-andymcdonaldscot.png" type="image/png" />
-    <link rel="stylesheet" href="/styles/global.css" />
-  </head>
-  <body>
-    <main class="not-found-page">
+<BaseLayout title="404 - Andy McDonald">
+  <Navbar slot="nav" />
+    <div class="not-found-page">
       <section class="not-found" aria-labelledby="not-found-title">
         <div class="not-found-inner">
           <h1 class="not-found-code">404</h1>
@@ -20,15 +14,15 @@
           <a class="not-found-link" href="/">→ Return to home</a>
         </div>
       </section>
-    </main>
+    </div>
 
     <style>
       .not-found-page {
-        min-height: 100vh;
+        min-height: 55vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 4rem 1.5rem;
+        padding: 1rem 0;
       }
 
       .not-found {
@@ -107,5 +101,4 @@
         }
       }
     </style>
-  </body>
-</html>
+</BaseLayout>

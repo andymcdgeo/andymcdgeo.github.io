@@ -32,7 +32,7 @@ try {
       link,
       published,
       videoId,
-      thumbnail: videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : "",
+      thumbnail: videoId ? `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg` : "",
     };
   }).filter((video) => video.title && video.link && video.thumbnail);
 } catch (error) {
@@ -53,11 +53,14 @@ const formatDate = (value) => {
 <BaseLayout title="Videos - Andy McDonald">
   <Navbar slot="nav" />
 
-  <section class="section">
+  <section class="section page-head">
     <div class="section-header">
-      <h1>Latest videos</h1>
+      <div>
+        <span class="section-kicker">YouTube</span>
+        <h1>Latest videos</h1>
+      </div>
       <a class="section-action section-action--primary" href="https://www.youtube.com/@AndyMcDonald42" target="_blank" rel="noopener noreferrer">
-        View more
+        View all on YouTube →
       </a>
     </div>
     <p class="section-lede">Short, practical walkthroughs on petrophysics, Python, and applied ML.</p>

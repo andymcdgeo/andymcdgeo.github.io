@@ -3,20 +3,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import heroMe from "../assets/images/hero-me.png";
+import bookCover from "../assets/images/python_petrophysics_book_image.png";
 
 const posts = await getCollection("blog");
 const sortedPosts = [...posts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const featuredPosts = sortedPosts.filter((post) => post.data.featured === true);
-const selectedPosts = [...featuredPosts];
-
-for (const post of sortedPosts) {
-  if (selectedPosts.length >= 3) break;
-  if (!selectedPosts.some((selected) => selected.id === post.id)) {
-    selectedPosts.push(post);
-  }
-}
-
-const displayedPosts = selectedPosts.slice(0, 3);
+const displayedPosts = sortedPosts.slice(0, 3);
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en-GB", {
@@ -54,12 +47,9 @@ const excerptFor = (post, wordCount = 28) => {
   <!-- Hero -->
   <section class="hero">
     <div class="hero-text">
-      <div class="eyebrow">PETROPHYSICS / PYTHON / AI & MACHINE LEARNING</div>
-      <h1>Subsurface data, made usable.</h1>
-      <p>
-        Hi, I'm Andy McDonald and welcome to my corner of the internet.
-        
-      </p>
+      <div class="eyebrow">PETROPHYSICS / PYTHON / AI &amp; MACHINE LEARNING</div>
+      <h1>Subsurface data, made <em>usable.</em></h1>
+      <p class="hero-intro">Hi, I'm Andy McDonald and welcome to my corner of the internet.</p>
       <p>
         I'm a petrophysicist and product manager who uses AI to solve real subsurface problems, with a focus on data
         quality first. Clean data is a luxury, so I spend my time turning messy logs into something usable, trusted, and
@@ -69,25 +59,24 @@ const excerptFor = (post, wordCount = 28) => {
       </p>
 
       <div class="hero-links">
-
-        <div class="hero-substack">
-          <p>Substack focused on sharing AI, ML, and Python for the subsurface.</p>
-                  <a class="hero-cta" href="https://andymcdonaldgeo.substack.com/">Read Subsurface Syntax -&gt;</a>
-          <p class="hero-substack-count">Join 200+ other subscribers today.</p>
-        </div>
-        <!-- <a href="#">Python for Well Log Analysis -></a> -->
+        <a class="hero-cta" href="https://andymcdonaldgeo.substack.com/">Read Subsurface Syntax →</a>
+        <a class="hero-ghost" href="#labs">Explore the labs</a>
       </div>
+      <p class="hero-note">AI, ML and Python for the subsurface. Join 200+ subscribers.</p>
     </div>
 
     <div class="hero-image">
-      <img src="/images/hero-me.png" alt="Andy McDonald portrait" width="1024" height="1536" />
+      <Image src={heroMe} alt="Andy McDonald portrait" width={600} loading="eager" />
     </div>
   </section>
 
 
-  <section class="section">
+  <section class="section" id="labs">
     <div class="section-header">
-      <h2>Labs</h2>
+      <div>
+        <span class="section-kicker">Interactive</span>
+        <h2>Labs</h2>
+      </div>
     </div>
     <p class="section-lede">Interactive 3D explainers for subsurface concepts. Change the rock, drill the well, and see what happens.</p>
     <div class="lab-grid">
@@ -96,13 +85,14 @@ const excerptFor = (post, wordCount = 28) => {
           <img src="/images/labs/pore-lab.jpg" alt="Pore Lab: a magnified cube of sandstone grains with water and oil in the pore space" width="1200" height="750" loading="lazy" />
         </a>
         <div class="lab-body">
+          <span class="lab-chip">3D · Rock physics</span>
           <h3><a href="/labs/pore-lab/">Pore Lab</a></h3>
           <p>
             A magnified cube of reservoir sandstone. Change the porosity, grain size, clay and water saturation and watch
             the grains, water films and oil or gas rebuild in front of you, then slice through it or pull it apart into its
             bulk volumes.
           </p>
-          <a class="card-link" href="/labs/pore-lab/">Open Pore Lab -&gt;</a>
+          <a class="card-link" href="/labs/pore-lab/">Open Pore Lab →</a>
         </div>
       </article>
       <article class="lab-card">
@@ -110,12 +100,13 @@ const excerptFor = (post, wordCount = 28) => {
           <img src="/images/labs/bore-lab.jpg" alt="Bore Lab: a 3D earth section with the well drilling through an oil sand beside logs filling in as it drills" width="1200" height="750" loading="lazy" />
         </a>
         <div class="lab-body">
+          <span class="lab-chip">3D · Logging while drilling</span>
           <h3><a href="/labs/bore-lab/">Bore Lab</a></h3>
           <p>
             Drill a well and watch its logs being made. Sensors trail the bit, gas and cuttings take time to reach surface,
             and mud filtrate creeps into the rock as you drill, so you can see why a log depends on when it was run.
           </p>
-          <a class="card-link" href="/labs/bore-lab/">Open Bore Lab -&gt;</a>
+          <a class="card-link" href="/labs/bore-lab/">Open Bore Lab →</a>
         </div>
       </article>
     </div>
@@ -123,39 +114,47 @@ const excerptFor = (post, wordCount = 28) => {
 
   <section class="section">
     <div class="section-header">
-      <h2>Selected writing</h2>
-      <a class="section-action" href="/blog">View all writing</a>
+      <div>
+        <span class="section-kicker">Writing</span>
+        <h2>Latest articles</h2>
+      </div>
+      <a class="section-action" href="/blog">View all writing →</a>
     </div>
-    <p class="section-lede">A few selected articles that you may find useful.</p>
+    <p class="section-lede">Notes on subsurface data, petrophysics, Python and AI.</p>
     <div class="card-grid">
       {displayedPosts.map((post) => (
         <article class="writing-card">
-          <div class="card-meta">{formatDate(post.data.date)}</div>
-          <h3><a href={`/blog/${post.slug}`}>{post.data.title}</a></h3>
-          <p>{excerptFor(post)}</p>
-          <div class="card-footer">
-            <div class="card-tags">
-              {post.data.tags.slice(0, 2).map((tag) => (
-                <span class="tag">{tag}</span>
-              ))}
+          <a class="writing-card-image" href={`/blog/${post.slug}`} tabindex="-1" aria-hidden="true">
+            <Image src={post.data.heroImage} alt="" width={640} loading="lazy" />
+          </a>
+          <div class="writing-card-body">
+            <div class="card-meta">{formatDate(post.data.date)}</div>
+            <h3><a href={`/blog/${post.slug}`}>{post.data.title}</a></h3>
+            <p>{excerptFor(post)}</p>
+            <div class="card-footer">
+              <div class="card-tags">
+                {post.data.tags.slice(0, 2).map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+              <a class="card-link" href={`/blog/${post.slug}`}>Read →</a>
             </div>
-            <a class="card-link" href={`/blog/${post.slug}`}>Read -&gt;</a>
           </div>
         </article>
       ))}
     </div>
   </section>
 
-   
+
   <section class="section">
+    <span class="section-kicker">Book</span>
     <h2>Books</h2>
     <div class="book-spotlight">
       <div class="book-cover">
-        <img
-          src="/images/project_images/python_petrophysics_book_image.png"
+        <Image
+          src={bookCover}
           alt="Python for Well Log Analysis and Visualisation cover"
-          width="480"
-          height="640"
+          width={440}
         />
       </div>
       <div class="book-meta">
@@ -173,7 +172,7 @@ const excerptFor = (post, wordCount = 28) => {
           <span class="book-progress-label">In progress: drafting Chapter 1</span>
         </div>
         <div class="book-actions">
-          <a class="card-link" href="https://www.andymcdonald.scot/python_well_log_data_book/">Check Out The Working Copy -></a>
+          <a class="card-link" href="https://www.andymcdonald.scot/python_well_log_data_book/">Check out the working copy →</a>
         </div>
       </div>
     </div>
@@ -181,8 +180,5 @@ const excerptFor = (post, wordCount = 28) => {
 
   <ProjectsSection />
 
- 
+
 </BaseLayout>
-
-
-

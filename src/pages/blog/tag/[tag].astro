@@ -60,7 +60,8 @@ const excerptFor = (post, wordCount = 28) => {
 <BaseLayout title={`Blog: ${tag} - Andy McDonald`}>
   <Navbar slot="nav" />
 
-  <section class="section">
+  <section class="section page-head">
+    <span class="section-kicker">Blog</span>
     <h1>Writing</h1>
     <p class="section-lede">Filtering by tag: {tag}</p>
 
@@ -107,7 +108,7 @@ const excerptFor = (post, wordCount = 28) => {
                 <a href={`/blog/${post.slug}`}>{post.data.title}</a>
               </h2>
               <p class="blog-excerpt">{excerptFor(post)}</p>
-              <a class="card-link" href={`/blog/${post.slug}`}>Read more -&gt;</a>
+              <a class="card-link" href={`/blog/${post.slug}`}>Read more →</a>
             </div>
           </article>
         ))}
