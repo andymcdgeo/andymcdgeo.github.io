@@ -2529,6 +2529,12 @@ body {
   letter-spacing: 0.02em;
 }
 
+.source-chip--paid {
+  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-2);
+}
+
 @media (max-width: 1000px) {
   .blog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

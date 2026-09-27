@@ -15,6 +15,8 @@ export type WritingItem = {
   tags: string[];
   href: string;
   external: boolean;
+  /** Substack post that needs a paid subscription */
+  paid: boolean;
   /** Site posts: an astro:assets image. Substack posts: a resized CDN URL. */
   image?: ImageMetadata | string;
   imageAlt: string;
@@ -27,6 +29,7 @@ type SubstackPost = {
   url: string;
   image?: string;
   tags: string[];
+  paid: boolean;
 };
 
 // Substack uses both spellings; fold them into the tag the site already uses
@@ -56,7 +59,6 @@ async function fromArchive(): Promise<SubstackPost[]> {
     const page = await fetchJson(`${SUBSTACK}/api/v1/archive?sort=new&offset=${offset}&limit=50`);
     if (!Array.isArray(page) || page.length === 0) break;
     for (const post of page) {
-      if (post.audience && post.audience !== "everyone") continue;
       posts.push({
         title: post.title,
         subtitle: post.subtitle ?? "",
@@ -64,6 +66,7 @@ async function fromArchive(): Promise<SubstackPost[]> {
         url: post.canonical_url,
         image: post.cover_image ?? undefined,
         tags: (post.postTags ?? []).map((tag: { name: string }) => tag.name),
+        paid: Boolean(post.audience && post.audience !== "everyone"),
       });
     }
     offset += page.length;
@@ -84,6 +87,7 @@ async function fromRss(): Promise<SubstackPost[]> {
     url: item.link,
     image: item.enclosure?.["@_url"],
     tags: [],
+    paid: false,
   }));
 }
 
@@ -140,6 +144,7 @@ export async function getAllWriting(): Promise<WritingItem[]> {
     tags: post.data.tags,
     href: `/blog/${post.slug}`,
     external: false,
+    paid: false,
     image: post.data.heroImage,
     imageAlt: post.data.heroImageAlt,
   }));
@@ -153,6 +158,7 @@ export async function getAllWriting(): Promise<WritingItem[]> {
       tags: [...new Set(post.tags.map(tidyTag))],
       href: post.url,
       external: true,
+      paid: post.paid,
       image: cardImage(post.image),
       imageAlt: "",
     }));

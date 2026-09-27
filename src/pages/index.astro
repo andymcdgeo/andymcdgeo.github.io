@@ -207,7 +207,7 @@ try {
           <a class="rd-tile rd-post-feature" href={featuredPost.href} {...linkProps(featuredPost)}>
             <WritingImage item={featuredPost} width={900} />
             <div class="rd-overlay">
-              <div class="rd-label">{formatDate(featuredPost.date).toUpperCase()}{featuredPost.external && " · SUBSTACK ↗"}</div>
+              <div class="rd-label">{formatDate(featuredPost.date).toUpperCase()}{featuredPost.external && (featuredPost.paid ? " · PAID ↗" : " · SUBSTACK ↗")}</div>
               <h3>{featuredPost.title}</h3>
               <p>{featuredPost.excerpt}</p>
             </div>
@@ -216,7 +216,7 @@ try {
             <a class="rd-tile rd-post-small" href={post.href} {...linkProps(post)}>
               <WritingImage item={post} width={320} />
               <div>
-                <div class="rd-label">{formatDate(post.date).toUpperCase()}{post.external && " · SUBSTACK ↗"}</div>
+                <div class="rd-label">{formatDate(post.date).toUpperCase()}{post.external && (post.paid ? " · PAID ↗" : " · SUBSTACK ↗")}</div>
                 <h3>{post.title}</h3>
               </div>
             </a>

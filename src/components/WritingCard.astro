@@ -23,6 +23,7 @@ const formatDate = (date: Date) =>
       <span class="blog-date">
         {formatDate(item.date)}
         {item.external && <span class="source-chip">Substack ↗</span>}
+        {item.paid && <span class="source-chip source-chip--paid">Paid</span>}
       </span>
       <div class="blog-tags">
         {item.tags.slice(0, 3).map((tag) => (
