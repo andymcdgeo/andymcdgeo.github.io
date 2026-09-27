@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="See how well logging tools work: gamma rays, neutrons, currents and sound in a cut-away borehole." />
+    <meta name="theme-color" content="#0a0c10" />
+    <title>Probe Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0c10'/%3E%3Crect x='13' y='3' width='6' height='24' rx='3' fill='%23c9ced4'/%3E%3Ccircle cx='16' cy='20' r='2' fill='%23ffd23f'/%3E%3Crect x='19' y='9' width='2.5' height='10' rx='1' fill='%235f646b'/%3E%3C/svg%3E" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="./assets/main-pJytuF-J.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-P2Xu9kJm.js">
+    <link rel="stylesheet" crossorigin href="./assets/main-BhPK9q5V.css">
+  </head>
+  <body>
+    <canvas id="scene" aria-label="Cut-away borehole with a logging tool. Drag to orbit, scroll to zoom."></canvas>
+    <div class="pins" id="pins" aria-hidden="true"></div>
+
+    <header class="hud" data-keepout>
+      <h1 class="hud-title"><span>Probe</span><b>Lab</b></h1>
+      <p class="hud-desc">How well logging tools see the rock. Pick a tool, set the rock and mud, and watch the measurement happen.</p>
+    </header>
+
+    <section class="left-col">
+      <div class="glass reading" id="reading" data-keepout></div>
+      <div class="note" id="note" hidden data-keepout></div>
+      <div class="glass strip" id="strip" data-keepout></div>
+    </section>
+    <section class="glass log-col" id="log-col" aria-label="Log of the interval" data-keepout></section>
+
+    <aside class="glass panel" aria-label="Tool and conditions" data-keepout>
+      <div class="panel-top">
+        <button type="button" class="glass-btn" id="intro-open">About</button>
+        <a class="glass-btn" href="./creator.html">Creator</a>
+        <button type="button" class="glass-btn" id="assumptions-open">Assumptions</button>
+        <button type="button" class="glass-btn" id="changelog-open">Changelog</button>
+      </div>
+      <div class="panel-body" id="panel-body"></div>
+    </aside>
+
+    <section class="glass dock" aria-label="Playback" data-keepout>
+      <button type="button" class="primary-btn" id="play">Pause gamma rays</button>
+      <button type="button" class="ghost-btn" id="log-btn">Log the interval</button>
+      <label class="dock-depth" for="depth"><span class="dock-depth-word">Tool depth </span><output id="depth-out">1.50 m</output></label>
+      <input type="range" id="depth" class="range" min="0.25" max="2.75" step="0.01" />
+      <button type="button" class="ghost-btn" id="card-open">How it works</button>
+    </section>
+
+    <dialog class="dlg wide" id="changelog"><div id="changelog-body"></div><form method="dialog"><button class="primary-btn">Close</button></form></dialog>
+    <dialog class="dlg wide" id="assumptions"><div id="assumptions-body"></div><form method="dialog"><button class="primary-btn">Close</button></form></dialog>
+    <dialog class="dlg" id="intro" aria-labelledby="intro-title">
+      <p class="kicker">How logging tools see the rock</p>
+      <h2 id="intro-title">Probe <b>Lab</b></h2>
+      <p>A log is made by a physical measurement: counted gamma rays, slowed neutrons, electrical current or sound. Here you can watch that measurement happen in a cut-away borehole.</p>
+      <p>Start with the <strong>density tool</strong>. A radioactive source sends gamma rays into the rock; they scatter off electrons, and two detectors count those that come back. Change the rock, add mudcake or barite, or switch to the LWD collar, and see how the reading responds.</p>
+      <p class="small">Borehole, rock and tool are drawn to scale. The front quarter of the rock is cut away and shown as a ghost so the gamma rays can be seen.</p>
+      <form method="dialog"><button class="primary-btn">Start</button></form>
+    </dialog>
+
+  </body>
+</html>
