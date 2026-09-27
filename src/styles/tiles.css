@@ -388,7 +388,7 @@ a.rd-tile:hover {
 .rd-lab img {
   display: block;
   width: 100%;
-  height: 200px;
+  height: 260px;
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -401,7 +401,28 @@ a.rd-tile:hover {
 }
 
 .rd-lab-body {
-  padding: 1rem 0.75rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem 0.9rem 0.8rem;
+}
+
+.rd-lab-body p {
+  margin-bottom: 0.9rem;
+}
+
+.rd-lab-body .rd-link {
+  margin-top: auto;
+}
+
+.rd-lab-body .rd-chip {
+  align-self: flex-start;
+}
+
+.rd-section-lede {
+  max-width: 60ch;
+  margin: -0.25rem 0 1.25rem;
+  color: var(--text-2);
 }
 
 .rd-lab-body h3 {
@@ -412,7 +433,6 @@ a.rd-tile:hover {
 .rd-lab-body p {
   margin: 0;
   color: var(--text-2);
-  max-width: 40ch;
 }
 
 .rd-chip {
@@ -828,7 +848,8 @@ a.rd-tile:hover::after {
   .rd-post-feature,
   .rd-post-small,
   .rd-post-all,
-  .rd-project {
+  .rd-project,
+  .rd-grid .rd-lab {
     grid-column: auto;
     grid-row: auto;
   }

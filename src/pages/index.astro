@@ -32,6 +32,7 @@ const linkProps = (item) => (item.external ? { target: "_blank", rel: "noopener 
 const TD = 2500;
 const tops = [
   { id: "surface", label: "Surface", depth: 0 },
+  { id: "labs", label: "Labs", depth: 600 },
   { id: "writing", label: "Writing", depth: 1100 },
   { id: "projects", label: "Projects", depth: 1800 },
   { id: "td", label: "TD", depth: TD },
@@ -137,24 +138,6 @@ try {
           <span class="rd-link">Subscribe →</span>
         </a>
 
-        <a class="rd-tile rd-lab" href="/labs/pore-lab/">
-          <img src="/images/labs/pore-lab.jpg" alt="" width="1200" height="750" />
-          <div class="rd-lab-body">
-            <span class="rd-chip">3D LAB</span>
-            <h3>Pore Lab</h3>
-            <p>Change the rock and watch porosity, saturation and permeability rebuild.</p>
-          </div>
-        </a>
-
-        <a class="rd-tile rd-lab" href="/labs/bore-lab/">
-          <img src="/images/labs/bore-lab.jpg" alt="" width="1200" height="750" />
-          <div class="rd-lab-body">
-            <span class="rd-chip">3D LAB</span>
-            <h3>Bore Lab</h3>
-            <p>Drill a well and watch its logs being made, lag and invasion included.</p>
-          </div>
-        </a>
-
         <a class="rd-tile rd-stat" href="/publications">
           <div class="rd-label">PAPERS</div>
           <div class="rd-big">{publications.length}</div>
@@ -192,6 +175,47 @@ try {
             <span class="rd-link">Read the draft →</span>
           </div>
         </a>
+      </section>
+
+      <!-- Labs -->
+      <section class="rd-section" id="labs">
+        <div class="rd-section-head">
+          <div>
+            <div class="rd-label">LABS · 600 m</div>
+            <h2 class="rd-h2">Interactive labs</h2>
+          </div>
+        </div>
+        <p class="rd-section-lede">
+          Interactive 3D explainers for subsurface concepts. Change the rock, drill the well, and see what happens.
+        </p>
+        <div class="rd-grid">
+          <a class="rd-tile rd-lab" href="/labs/pore-lab/">
+            <img src="/images/labs/pore-lab.jpg" alt="Pore Lab: a magnified cube of sandstone grains with water and oil in the pore space" width="1200" height="750" loading="lazy" />
+            <div class="rd-lab-body">
+              <span class="rd-chip">3D · ROCK PHYSICS</span>
+              <h3>Pore Lab</h3>
+              <p>
+                A magnified cube of reservoir sandstone. Change the porosity, grain size, clay and water saturation and
+                watch the grains, water films and oil or gas rebuild in front of you, then slice through it or pull it
+                apart into its bulk volumes.
+              </p>
+              <span class="rd-link">Open Pore Lab →</span>
+            </div>
+          </a>
+          <a class="rd-tile rd-lab" href="/labs/bore-lab/">
+            <img src="/images/labs/bore-lab.jpg" alt="Bore Lab: a 3D earth section with the well drilling through an oil sand beside logs filling in as it drills" width="1200" height="750" loading="lazy" />
+            <div class="rd-lab-body">
+              <span class="rd-chip">3D · LOGGING WHILE DRILLING</span>
+              <h3>Bore Lab</h3>
+              <p>
+                Drill a well and watch its logs being made. Sensors trail the bit, gas and cuttings take time to reach
+                surface, and mud filtrate creeps into the rock as you drill, so you can see why a log depends on when it
+                was run.
+              </p>
+              <span class="rd-link">Open Bore Lab →</span>
+            </div>
+          </a>
+        </div>
       </section>
 
       <!-- Writing -->
