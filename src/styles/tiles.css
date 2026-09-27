@@ -230,6 +230,38 @@ a.rd-tile:hover {
   box-shadow: 0 8px 24px rgba(212, 162, 76, 0.28);
 }
 
+/* Small avatar inside the intro tile; replaces the portrait tile on phones */
+.rd-avatar {
+  display: none;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.25rem;
+}
+
+.rd-avatar img {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  object-fit: cover;
+  object-position: 50% 18%;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.rd-avatar span {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: var(--text-2);
+  line-height: 1.35;
+}
+
+.rd-avatar strong {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
 .rd-portrait {
   grid-column: span 4;
   padding: 0;
@@ -763,21 +795,17 @@ a.rd-tile:hover::after {
   .rd-navdepth-bit {
     display: none; /* the row is full on phones; the number is enough */
   }
-}
-
-/* Smallest phones: no room beside the menu button, the top progress bar carries it */
-@media (max-width: 359px) {
-  .nav-inner .rd-navdepth {
-    display: none;
-  }
 
   .rd-intro {
     padding: 1.75rem;
   }
 
   .rd-portrait {
-    min-height: 340px;
-    order: -1;
+    display: none;
+  }
+
+  .rd-avatar {
+    display: flex;
   }
 
   .rd-latest {
@@ -817,5 +845,12 @@ a.rd-tile:hover::after {
 
   .rd-section {
     padding-top: 3.5rem;
+  }
+}
+
+/* Smallest phones: no room beside the menu button, the top progress bar carries it */
+@media (max-width: 359px) {
+  .nav-inner .rd-navdepth {
+    display: none;
   }
 }
