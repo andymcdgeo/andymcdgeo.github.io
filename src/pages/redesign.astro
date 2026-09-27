@@ -1,0 +1,980 @@
+---
+// Redesign preview: bento homepage + well-log depth track.
+// Standalone page so it can be compared with / side by side.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import heroMe from "../assets/images/hero-me.png";
+import bookCover from "../assets/images/python_petrophysics_book_image.png";
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const [latest, ...olderPosts] = posts;
+const morePosts = olderPosts.slice(0, 4);
+const publications = await getCollection("publications");
+const dataSources = await getCollection("data-sources");
+const projects = (await getCollection("projects"))
+  .filter((project) => project.data.featured === true && project.data.image)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+
+const formatDate = (date) =>
+  new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "short", day: "2-digit" }).format(date);
+
+const excerptFor = (post) => post.data.excerpt?.trim() || post.data.description?.trim() || "";
+
+// Formation tops: the depth each section "sits" at on the track
+const TD = 2500;
+const tops = [
+  { id: "surface", label: "Surface", depth: 0 },
+  { id: "labs", label: "Labs", depth: 650 },
+  { id: "writing", label: "Writing", depth: 1300 },
+  { id: "projects", label: "Projects", depth: 1900 },
+  { id: "td", label: "TD", depth: TD },
+];
+
+// A gamma-ray style curve for section dividers (seeded so it is stable between builds)
+const grCurve = (seed, width = 1000, height = 44, step = 6) => {
+  let s = seed;
+  const rand = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+  let v = 0.5;
+  let bed = 0.5;
+  const pts = [];
+  for (let x = 0; x <= width; x += step) {
+    if (rand() < 0.08) bed = 0.15 + rand() * 0.7; // new bed: shift the baseline
+    v += (bed - v) * 0.35 + (rand() - 0.5) * 0.22;
+    v = Math.min(0.95, Math.max(0.05, v));
+    pts.push(`${x},${(v * height).toFixed(1)}`);
+  }
+  return `M${pts.join(" L")}`;
+};
+---
+
+<BaseLayout title="Andy McDonald (redesign preview)">
+  <Navbar slot="nav" />
+
+  <div class="rd">
+    <!-- Depth track: fixed on desktop, fills as you scroll -->
+    <aside class="rd-track" aria-label="Page depth">
+      <div class="rd-track-head">
+        <span>DEPTH</span>
+        <span>m MD</span>
+      </div>
+      <div class="rd-track-body">
+        <div class="rd-track-fill"></div>
+        {Array.from({ length: TD / 100 + 1 }, (_, i) => (
+          <span class:list={["rd-tick", i % 5 === 0 && "rd-tick--major"]} style={`top: ${(i * 100 / TD) * 100}%`}>
+            {i % 5 === 0 && <em>{(i * 100).toLocaleString("en-GB")}</em>}
+          </span>
+        ))}
+        {tops.map((top) => (
+          <a class="rd-top" href={`#${top.id}`} style={`top: ${(top.depth / TD) * 100}%`}>
+            <span>{top.label}</span>
+          </a>
+        ))}
+        <div class="rd-bit" aria-hidden="true"></div>
+      </div>
+      <div class="rd-track-readout"><span id="rd-depth">0</span> m</div>
+    </aside>
+    <div class="rd-progress" aria-hidden="true"><div></div></div>
+
+    <div class="rd-main">
+      <!-- Bento -->
+      <section class="rd-bento" id="surface" data-depth="0">
+        <div class="rd-tile rd-intro">
+          <div class="rd-label">PETROPHYSICS / PYTHON / AI &amp; ML</div>
+          <h1>Subsurface data, made <em>usable.</em></h1>
+          <p>
+            I'm Andy McDonald, a petrophysicist and product manager. I turn messy, incomplete well data into something
+            trusted, before the machine learning ever gets a look in.
+          </p>
+          <div class="rd-actions">
+            <a class="rd-btn rd-btn--primary" href="https://andymcdonaldgeo.substack.com/">Read Subsurface Syntax →</a>
+            <a class="rd-btn" href="/about">About me</a>
+          </div>
+        </div>
+
+        <div class="rd-tile rd-portrait">
+          <Image src={heroMe} alt="Andy McDonald portrait" width={640} loading="eager" />
+          <div class="rd-portrait-tag">
+            <span class="rd-dot"></span> Petrophysicist · Product manager
+          </div>
+        </div>
+
+        <a class="rd-tile rd-latest" href={`/blog/${latest.slug}`}>
+          <div class="rd-latest-media">
+            <Image src={latest.data.heroImage} alt="" width={720} />
+          </div>
+          <div class="rd-latest-body">
+            <div class="rd-label">LATEST ARTICLE · {formatDate(latest.data.date).toUpperCase()}</div>
+            <h2>{latest.data.title}</h2>
+            <p>{excerptFor(latest)}</p>
+            <span class="rd-link">Read →</span>
+          </div>
+        </a>
+
+        <a class="rd-tile rd-substack" href="https://andymcdonaldgeo.substack.com/">
+          <div class="rd-label">NEWSLETTER</div>
+          <div class="rd-big">200<small>+</small></div>
+          <p>readers of <strong>Subsurface Syntax</strong>: AI, ML and Python for the subsurface.</p>
+          <span class="rd-link">Subscribe →</span>
+        </a>
+
+        <a class="rd-tile rd-lab" href="/labs/pore-lab/">
+          <img src="/images/labs/pore-lab.jpg" alt="" width="1200" height="750" />
+          <div class="rd-lab-body">
+            <span class="rd-chip">3D LAB</span>
+            <h3>Pore Lab</h3>
+            <p>Change the rock and watch porosity, saturation and permeability rebuild.</p>
+          </div>
+        </a>
+
+        <a class="rd-tile rd-lab" href="/labs/bore-lab/">
+          <img src="/images/labs/bore-lab.jpg" alt="" width="1200" height="750" />
+          <div class="rd-lab-body">
+            <span class="rd-chip">3D LAB</span>
+            <h3>Bore Lab</h3>
+            <p>Drill a well and watch its logs being made, lag and invasion included.</p>
+          </div>
+        </a>
+
+        <a class="rd-tile rd-stat" href="/publications">
+          <div class="rd-label">PAPERS</div>
+          <div class="rd-big">{publications.length}</div>
+          <p>Journal and conference publications</p>
+        </a>
+
+        <a class="rd-tile rd-stat" href="/data">
+          <div class="rd-label">OPEN DATA</div>
+          <div class="rd-big">{dataSources.length}</div>
+          <p>Public well data sources, catalogued</p>
+        </a>
+
+        <a class="rd-tile rd-stat" href="/videos">
+          <div class="rd-label">YOUTUBE</div>
+          <div class="rd-big rd-big--icon">▶</div>
+          <p>Practical Python walkthroughs</p>
+        </a>
+
+        <a class="rd-tile rd-book" href="https://www.andymcdonald.scot/python_well_log_data_book/">
+          <Image src={bookCover} alt="" width={200} />
+          <div>
+            <div class="rd-label">BOOK · WORKING COPY</div>
+            <h3>Python for Well Log Analysis</h3>
+            <span class="rd-link">Read the draft →</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- Formation: Labs -->
+      <section class="rd-formation" id="labs" data-depth="650">
+        <header class="rd-formation-top">
+          <svg viewBox="0 0 1000 44" preserveAspectRatio="none" aria-hidden="true"><path d={grCurve(7)} /></svg>
+          <div class="rd-formation-label"><span>TOP</span> LABS <span>650 m</span></div>
+        </header>
+        <h2 class="rd-h2">Learn it by changing it.</h2>
+        <p class="rd-lede">
+          Interactive 3D explainers for subsurface concepts. No install, no login: change the rock, drill the well, and
+          see what happens.
+        </p>
+        <div class="rd-lab-strip">
+          <a href="/labs/pore-lab/"><strong>Pore Lab</strong><span>Porosity, saturation, permeability</span><em>→</em></a>
+          <a href="/labs/bore-lab/"><strong>Bore Lab</strong><span>Sensor offsets, mud lag, invasion</span><em>→</em></a>
+        </div>
+      </section>
+
+      <!-- Formation: Writing -->
+      <section class="rd-formation" id="writing" data-depth="1300">
+        <header class="rd-formation-top">
+          <svg viewBox="0 0 1000 44" preserveAspectRatio="none" aria-hidden="true"><path d={grCurve(31)} /></svg>
+          <div class="rd-formation-label"><span>TOP</span> WRITING <span>1,300 m</span></div>
+        </header>
+        <div class="rd-row-head">
+          <h2 class="rd-h2">More from the blog</h2>
+          <a class="rd-link" href="/blog">All writing →</a>
+        </div>
+        <ol class="rd-list">
+          {morePosts.map((post) => (
+            <li>
+              <a href={`/blog/${post.slug}`}>
+                <span class="rd-list-date">{formatDate(post.data.date)}</span>
+                <span class="rd-list-title">{post.data.title}</span>
+                <span class="rd-list-tags">{post.data.tags.slice(0, 2).join(" · ")}</span>
+                <em>→</em>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <!-- Formation: Projects -->
+      <section class="rd-formation" id="projects" data-depth="1900">
+        <header class="rd-formation-top">
+          <svg viewBox="0 0 1000 44" preserveAspectRatio="none" aria-hidden="true"><path d={grCurve(113)} /></svg>
+          <div class="rd-formation-label"><span>TOP</span> PROJECTS <span>1,900 m</span></div>
+        </header>
+        <h2 class="rd-h2">Selected work</h2>
+        <div class="rd-projects">
+          {projects.map((project) => (
+            <article class="rd-project">
+              <div class="rd-project-media">
+                <img src={project.data.image} alt="" loading="lazy" />
+              </div>
+              <div class="rd-label">{project.data.region.toUpperCase()}</div>
+              <h3>{project.data.title}</h3>
+              <p>{project.data.description}</p>
+              {project.data.link && (
+                <a class="rd-link" href={project.data.link} target="_blank" rel="noopener noreferrer">GitHub →</a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- TD -->
+      <section class="rd-td" id="td" data-depth="2500">
+        <div class="rd-formation-label"><span>TD</span> 2,500 m · END OF WELL</div>
+        <h2 class="rd-h2">Want the next one in your inbox?</h2>
+        <a class="rd-btn rd-btn--primary" href="https://andymcdonaldgeo.substack.com/">Subscribe to Subsurface Syntax →</a>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const root = document.querySelector(".rd");
+    const readout = document.getElementById("rd-depth");
+    if (root && readout) {
+      const TD = 2500;
+      let ticking = false;
+      const update = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        root.style.setProperty("--p", p.toFixed(4));
+        readout.textContent = Math.round(p * TD).toLocaleString("en-GB");
+        ticking = false;
+      };
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+          }
+        },
+        { passive: true }
+      );
+      window.addEventListener("resize", update);
+      update();
+    }
+  </script>
+
+  <style is:global>
+    .rd {
+      --p: 0;
+      --track-w: 92px;
+      position: relative;
+    }
+
+    /* ---------- Depth track ---------- */
+    .rd-track {
+      position: fixed;
+      top: 88px;
+      bottom: 24px;
+      left: max(12px, calc((100vw - 1100px) / 2 - var(--track-w) - 24px));
+      width: var(--track-w);
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      z-index: 5;
+    }
+
+    .rd-track-head,
+    .rd-track-readout {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg-soft);
+      letter-spacing: 0.06em;
+    }
+
+    .rd-track-head {
+      border-radius: 8px 8px 0 0;
+    }
+
+    .rd-track-readout {
+      justify-content: center;
+      gap: 0.3rem;
+      border-radius: 0 0 8px 8px;
+      color: var(--accent);
+      font-size: 0.72rem;
+    }
+
+    .rd-track-body {
+      position: relative;
+      flex: 1;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      background:
+        linear-gradient(90deg, transparent 49.5%, rgba(255, 255, 255, 0.08) 49.5%, rgba(255, 255, 255, 0.08) 50.5%, transparent 50.5%);
+    }
+
+    .rd-track-fill {
+      position: absolute;
+      left: calc(50% - 1px);
+      top: 0;
+      width: 2px;
+      height: calc(var(--p) * 100%);
+      background: linear-gradient(to bottom, rgba(212, 162, 76, 0.2), var(--accent));
+    }
+
+    .rd-bit {
+      position: absolute;
+      left: 50%;
+      top: calc(var(--p) * 100%);
+      width: 10px;
+      height: 14px;
+      transform: translate(-50%, -100%);
+      background: var(--accent);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      filter: drop-shadow(0 0 6px rgba(212, 162, 76, 0.7));
+    }
+
+    .rd-tick {
+      position: absolute;
+      left: 0;
+      width: 6px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .rd-tick--major {
+      width: 12px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .rd-tick em {
+      position: absolute;
+      left: 15px;
+      top: -0.45rem;
+      font-style: normal;
+      color: var(--muted);
+    }
+
+    .rd-top {
+      position: absolute;
+      right: 0;
+      left: 50%;
+      height: 1px;
+      background: var(--accent-data);
+      opacity: 0.55;
+      transition: opacity 0.15s ease;
+    }
+
+    .rd-top span {
+      position: absolute;
+      right: 4px;
+      top: 2px;
+      color: var(--accent-data);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .rd-top:hover {
+      opacity: 1;
+    }
+
+    .rd-progress {
+      display: none;
+    }
+
+    /* ---------- Bento ---------- */
+    .rd-bento {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: minmax(0, auto);
+      gap: 14px;
+      scroll-margin-top: 90px;
+    }
+
+    .rd-tile {
+      position: relative;
+      display: block;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg-soft);
+      overflow: hidden;
+      color: var(--text);
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    a.rd-tile:hover {
+      color: var(--text);
+      border-color: rgba(212, 162, 76, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .rd-label {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .rd-link {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .rd-intro {
+      grid-column: span 8;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background:
+        radial-gradient(500px 260px at 90% 0%, rgba(212, 162, 76, 0.12), transparent 70%),
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        var(--bg-soft);
+      background-size: auto, 32px 32px, 32px 32px, auto;
+    }
+
+    .rd-intro h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin: 1rem 0 1.25rem;
+    }
+
+    .rd-intro h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .rd-intro p {
+      max-width: 46ch;
+      margin: 0;
+      color: var(--text-2);
+      font-size: 1.1rem;
+    }
+
+    .rd-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.75rem;
+    }
+
+    .rd-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.3rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      font-weight: 500;
+    }
+
+    .rd-btn:hover {
+      color: var(--text);
+      border-color: rgba(212, 162, 76, 0.6);
+    }
+
+    .rd-btn--primary {
+      border: 0;
+      background: var(--accent);
+      color: #1a1206;
+      font-weight: 600;
+    }
+
+    .rd-btn--primary:hover {
+      color: #1a1206;
+      box-shadow: 0 8px 24px rgba(212, 162, 76, 0.28);
+    }
+
+    .rd-portrait {
+      grid-column: span 4;
+      padding: 0;
+      min-height: 420px;
+    }
+
+    .rd-portrait img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 20%;
+    }
+
+    .rd-portrait-tag {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 0.8rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(11, 13, 18, 0.6);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    .rd-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #5fc27a;
+      box-shadow: 0 0 0 3px rgba(95, 194, 122, 0.2);
+    }
+
+    .rd-latest {
+      grid-column: span 8;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      padding: 0;
+    }
+
+    .rd-latest-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .rd-latest-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding: 1.75rem;
+    }
+
+    .rd-latest-body h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      line-height: 1.15;
+    }
+
+    .rd-latest-body p {
+      margin: 0;
+      color: var(--text-2);
+    }
+
+    .rd-latest-body .rd-link {
+      margin-top: auto;
+    }
+
+    .rd-substack {
+      grid-column: span 4;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      background:
+        radial-gradient(260px 200px at 100% 100%, rgba(212, 162, 76, 0.16), transparent 70%),
+        var(--bg-soft);
+    }
+
+    .rd-substack p {
+      margin: 0;
+      color: var(--text-2);
+    }
+
+    .rd-substack .rd-link {
+      margin-top: auto;
+    }
+
+    .rd-big {
+      font-size: 3.6rem;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin: 0.4rem 0 0.2rem;
+    }
+
+    .rd-big small {
+      font-size: 0.5em;
+      color: var(--accent);
+    }
+
+    .rd-big--icon {
+      font-size: 2.6rem;
+      color: var(--accent);
+      margin: 0.8rem 0 0.4rem;
+    }
+
+    .rd-lab {
+      grid-column: span 6;
+      padding: 0;
+      min-height: 300px;
+    }
+
+    .rd-lab img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .rd-lab:hover img {
+      transform: scale(1.04);
+    }
+
+    .rd-lab-body {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 4rem 1.5rem 1.4rem;
+      background: linear-gradient(to top, rgba(11, 13, 18, 0.95), rgba(11, 13, 18, 0.6) 60%, transparent);
+    }
+
+    .rd-lab-body h3 {
+      margin: 0.5rem 0 0.25rem;
+      font-size: 1.6rem;
+    }
+
+    .rd-lab-body p {
+      margin: 0;
+      color: var(--text-2);
+      max-width: 40ch;
+    }
+
+    .rd-chip {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(116, 208, 255, 0.4);
+      background: rgba(116, 208, 255, 0.1);
+      color: var(--accent-data);
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.06em;
+    }
+
+    .rd-stat {
+      grid-column: span 3;
+    }
+
+    .rd-stat p {
+      margin: 0;
+      color: var(--text-2);
+      font-size: 0.92rem;
+    }
+
+    .rd-book {
+      grid-column: span 3;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .rd-book img {
+      width: 64px;
+      height: auto;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .rd-book h3 {
+      margin: 0.35rem 0;
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    /* ---------- Formations ---------- */
+    .rd-formation,
+    .rd-td {
+      padding-top: 5.5rem;
+      scroll-margin-top: 60px;
+    }
+
+    .rd-formation-top {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .rd-formation-top svg {
+      display: block;
+      width: 100%;
+      height: 44px;
+    }
+
+    .rd-formation-top path {
+      fill: none;
+      stroke: #5fc27a;
+      stroke-width: 1.4;
+      vector-effect: non-scaling-stroke;
+      opacity: 0.7;
+    }
+
+    .rd-formation-label {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      padding-top: 0.6rem;
+      border-top: 1px dashed rgba(116, 208, 255, 0.5);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--accent-data);
+    }
+
+    .rd-formation-label span {
+      color: var(--muted);
+    }
+
+    .rd-formation-label span:last-child {
+      margin-left: auto;
+    }
+
+    .rd-h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      letter-spacing: -0.03em;
+      margin: 0 0 0.75rem;
+    }
+
+    .rd-lede {
+      max-width: 60ch;
+      color: var(--text-2);
+      margin: 0 0 1.75rem;
+    }
+
+    .rd-lab-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .rd-lab-strip a,
+    .rd-list a {
+      display: grid;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-soft);
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .rd-lab-strip a {
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      padding: 1.1rem 1.3rem;
+    }
+
+    .rd-lab-strip span,
+    .rd-list-tags {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .rd-lab-strip em,
+    .rd-list em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .rd-lab-strip a:hover,
+    .rd-list a:hover {
+      color: var(--text);
+      border-color: rgba(212, 162, 76, 0.5);
+      background: rgba(212, 162, 76, 0.05);
+    }
+
+    .rd-row-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .rd-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .rd-list a {
+      grid-template-columns: 110px 1fr auto auto;
+      gap: 1.25rem;
+      padding: 1rem 1.25rem;
+    }
+
+    .rd-list-date {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .rd-list-title {
+      font-weight: 500;
+    }
+
+    .rd-list-tags {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+
+    .rd-projects {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 1rem;
+    }
+
+    .rd-project {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg-soft);
+    }
+
+    .rd-project-media {
+      aspect-ratio: 16 / 9;
+      margin-bottom: 0.5rem;
+      padding: 8px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+
+    .rd-project-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .rd-project h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .rd-project p {
+      margin: 0 0 0.5rem;
+      color: var(--text-2);
+      font-size: 0.95rem;
+    }
+
+    .rd-project .rd-link {
+      margin-top: auto;
+    }
+
+    .rd-td {
+      padding-bottom: 2rem;
+    }
+
+    .rd-td .rd-formation-label {
+      margin-bottom: 1.5rem;
+      border-top-color: rgba(212, 162, 76, 0.6);
+      color: var(--accent);
+    }
+
+    /* Track needs room beside the 1100px column; hide it when there isn't any */
+    @media (max-width: 1340px) {
+      .rd-track {
+        display: none;
+      }
+
+      .rd-progress {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        z-index: 60;
+      }
+
+      .rd-progress div {
+        height: 100%;
+        width: calc(var(--p) * 100%);
+        background: var(--accent);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .rd-bento {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .rd-intro,
+      .rd-latest,
+      .rd-lab,
+      .rd-book {
+        grid-column: span 2;
+      }
+
+      .rd-portrait,
+      .rd-substack {
+        grid-column: span 2;
+      }
+
+      .rd-stat {
+        grid-column: span 1;
+      }
+
+      .rd-intro {
+        padding: 1.75rem;
+      }
+
+      .rd-portrait {
+        min-height: 340px;
+        order: -1;
+      }
+
+      .rd-latest {
+        grid-template-columns: 1fr;
+      }
+
+      .rd-latest-media {
+        aspect-ratio: 16 / 9;
+      }
+
+      .rd-lab {
+        min-height: 260px;
+      }
+
+      .rd-lab-strip,
+      .rd-projects {
+        grid-template-columns: 1fr;
+      }
+
+      .rd-list a {
+        grid-template-columns: 1fr auto;
+        gap: 0.25rem 1rem;
+      }
+
+      .rd-list-date {
+        grid-column: 1 / -1;
+      }
+
+      .rd-list-tags {
+        display: none;
+      }
+
+      .rd-formation,
+      .rd-td {
+        padding-top: 4rem;
+      }
+    }
+  </style>
+</BaseLayout>
