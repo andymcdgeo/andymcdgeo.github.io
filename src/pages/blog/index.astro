@@ -1,0 +1,411 @@
+---
+// Writing: every article on one page, grouped by year like a well section.
+// Youngest at the surface, oldest at depth; the rail jumps between years.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import WritingCard from "../../components/WritingCard.astro";
+import WritingImage from "../../components/WritingImage.astro";
+import { slugifyTag } from "../../utils/slugifyTag";
+import { getAllWriting, tagLinksFor } from "../../utils/writing";
+import "../../styles/tiles.css";
+
+const writing = await getAllWriting();
+const tagLinks = tagLinksFor(writing);
+const currentYear = new Date().getFullYear();
+
+const years = [...new Set(writing.map((item) => item.date.getFullYear()))].sort((a, b) => b - a);
+const byYear = years.map((year) => ({
+  year,
+  items: writing.filter((item) => item.date.getFullYear() === year),
+}));
+
+// Server-side rail positions by post count ("thickness"); the script refines them to real scroll offsets
+let running = 0;
+const tops = byYear.map(({ year, items }) => {
+  const top = { year, count: items.length, at: running / writing.length };
+  running += items.length;
+  return top;
+});
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat("en-GB", { month: "short", day: "2-digit" }).format(date);
+const linkProps = (item) => (item.external ? { target: "_blank", rel: "noopener noreferrer" } : {});
+const tagSlugs = (item) => item.tags.map(slugifyTag).join(" ");
+---
+
+<BaseLayout title="Blog - Andy McDonald">
+  <Navbar slot="nav" />
+
+  <div class="rd wr">
+    <!-- Age rail: fixed on wide screens -->
+    <aside class="rd-track wr-track" aria-label="Jump to year">
+      <div class="rd-track-head"><span>AGE</span><span>{writing.length}</span></div>
+      <div class="rd-track-body">
+        <div class="rd-track-fill"></div>
+        {tops.map((top) => (
+          <a class="rd-top wr-top" href={`#y${top.year}`} data-year={top.year} style={`top: ${(top.at * 100).toFixed(2)}%`}>
+            <span>{top.year}</span>
+            <em>{top.count}</em>
+          </a>
+        ))}
+        <div class="rd-bit" aria-hidden="true"></div>
+      </div>
+      <div class="rd-track-readout"><span class="wr-year-readout">{years[0]}</span></div>
+    </aside>
+    <div class="rd-progress" aria-hidden="true"><div></div></div>
+    <div class="rd-navdepth" id="rd-navdepth" aria-hidden="true">
+      <span class="rd-navdepth-bit"></span><span class="wr-year-readout">{years[0]}</span>
+    </div>
+
+    <section class="section page-head">
+      <span class="section-kicker">Blog</span>
+      <h1>Writing</h1>
+      <p class="section-lede">
+        {writing.length} articles on subsurface data, petrophysics, Python and AI, newest first. Articles marked Substack
+        open on <a class="section-link" href="https://andymcdonaldgeo.substack.com/">Subsurface Syntax</a>.
+      </p>
+
+      <div class="tag-filters" role="list">
+        <a href="/blog" class="tag tag-link is-active" data-filter="">All</a>
+        {tagLinks.map((tag) => (
+          <a href={`/blog/tag/${tag.slug}`} class="tag tag-link" data-tag={tag.slug} data-filter={tag.slug}>
+            {tag.label}
+          </a>
+        ))}
+      </div>
+      <p class="wr-filter-status" aria-live="polite"></p>
+    </section>
+
+    <!-- Year chips: shown when there is no room for the rail -->
+    <nav class="wr-years" aria-label="Jump to year">
+      {tops.map((top) => (
+        <a href={`#y${top.year}`} data-year={top.year}>{top.year}</a>
+      ))}
+    </nav>
+
+    {byYear.map(({ year, items }) => (
+      <section class="wr-year" id={`y${year}`} data-year={year}>
+        <header class="wr-year-head">
+          <h2>{year}</h2>
+          <span class="rd-label"><span class="wr-count">{items.length}</span> {items.length === 1 ? "ARTICLE" : "ARTICLES"}</span>
+        </header>
+
+        {year === currentYear ? (
+          <div class="blog-grid">
+            {items.map((item) => (
+              <div class="wr-item" data-tags={tagSlugs(item)}>
+                <WritingCard item={item} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <ol class="wr-rows">
+            {items.map((item) => (
+              <li class="wr-item" data-tags={tagSlugs(item)}>
+                <a class="wr-row" href={item.href} {...linkProps(item)}>
+                  <span class="wr-thumb">
+                    {item.image ? <WritingImage item={item} width={200} /> : <span class="wr-thumb-empty"></span>}
+                  </span>
+                  <span class="wr-row-body">
+                    <span class="wr-row-meta">
+                      {formatDate(item.date)}
+                      {item.external && <span class="source-chip">Substack ↗</span>}
+                      {item.paid && <span class="source-chip source-chip--paid">Paid</span>}
+                    </span>
+                    <span class="wr-row-title">{item.title}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        )}
+      </section>
+    ))}
+  </div>
+
+  <script>
+    const root = document.querySelector(".wr");
+    const sections = [...document.querySelectorAll(".wr-year")];
+    const railTops = [...document.querySelectorAll(".wr-top")];
+    const chipBar = document.querySelector(".wr-years");
+    const chips = [...document.querySelectorAll(".wr-years a")];
+    const readouts = [...document.querySelectorAll(".wr-year-readout")];
+    const navDepth = document.getElementById("rd-navdepth");
+    const navHome = document.querySelector(".nav-home");
+    if (navDepth && navHome) navHome.after(navDepth);
+
+    let activeYear = "";
+
+    const maxScroll = () => Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    // Position in the document (offsetTop is relative to the positioned wrapper, not the page)
+    const docTop = (el) => el.getBoundingClientRect().top + window.scrollY;
+
+    // Put each year on the rail where scrolling actually reaches it
+    const placeTops = () => {
+      const visible = sections.filter((section) => !section.hidden);
+      railTops.forEach((top) => {
+        const section = visible.find((s) => s.dataset.year === top.dataset.year);
+        top.hidden = !section;
+        if (!section) return;
+        const y = Math.min(1, Math.max(0, (docTop(section) - 120) / maxScroll()));
+        top.style.top = `${(y * 100).toFixed(2)}%`;
+      });
+    };
+
+    const setActive = (year) => {
+      if (year === activeYear) return;
+      activeYear = year;
+      readouts.forEach((el) => (el.textContent = year));
+      railTops.forEach((el) => el.classList.toggle("is-active", el.dataset.year === year));
+      chips.forEach((el) => {
+        const on = el.dataset.year === year;
+        el.classList.toggle("is-active", on);
+        // Centre the chip by scrolling the chip bar only; scrollIntoView would also move the page
+        if (on && chipBar) chipBar.scrollTo({ left: el.offsetLeft - (chipBar.clientWidth - el.offsetWidth) / 2 });
+      });
+    };
+
+    const update = () => {
+      root.style.setProperty("--p", (window.scrollY / maxScroll()).toFixed(4));
+      const line = window.scrollY + 140;
+      const visible = sections.filter((section) => !section.hidden);
+      let current = visible[0];
+      for (const section of visible) if (docTop(section) <= line) current = section;
+      // The last year is too short to reach the top, so the bottom of the page counts as it
+      if (window.scrollY >= maxScroll() - 4) current = visible[visible.length - 1];
+      if (current) setActive(current.dataset.year);
+    };
+
+    // Cheap enough (seven sections) to run on every scroll event
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", () => {
+      placeTops();
+      update();
+    });
+    window.addEventListener("load", placeTops);
+
+    // Tag filter on the page; the links still work as tag pages without JavaScript
+    const filters = [...document.querySelectorAll(".tag-filters [data-filter]")];
+    const items = [...document.querySelectorAll(".wr-item")];
+    const status = document.querySelector(".wr-filter-status");
+
+    const applyFilter = (slug) => {
+      let shown = 0;
+      items.forEach((item) => {
+        const match = !slug || item.dataset.tags.split(" ").includes(slug);
+        item.hidden = !match;
+        if (match) shown += 1;
+      });
+      sections.forEach((section) => {
+        const count = section.querySelectorAll(".wr-item:not([hidden])").length;
+        section.hidden = count === 0;
+        section.querySelector(".wr-count").textContent = String(count);
+        chips.find((chip) => chip.dataset.year === section.dataset.year).hidden = count === 0;
+      });
+      filters.forEach((f) => f.classList.toggle("is-active", f.dataset.filter === slug));
+      const label = filters.find((f) => f.dataset.filter === slug)?.textContent.trim();
+      status.textContent = slug ? `${shown} articles tagged ${label}` : "";
+      activeYear = "";
+      placeTops();
+      update();
+    };
+
+    filters.forEach((filter) =>
+      filter.addEventListener("click", (event) => {
+        event.preventDefault();
+        const slug = filter.dataset.filter === new URLSearchParams(location.search).get("tag") ? "" : filter.dataset.filter;
+        const url = new URL(location.href);
+        if (slug) url.searchParams.set("tag", slug);
+        else url.searchParams.delete("tag");
+        history.replaceState(null, "", url);
+        applyFilter(slug);
+      })
+    );
+
+    applyFilter(new URLSearchParams(location.search).get("tag") ?? "");
+  </script>
+
+  <style is:global>
+    .wr-track {
+      top: 120px;
+    }
+
+    .wr-top em {
+      position: absolute;
+      left: -34px;
+      top: 2px;
+      font-style: normal;
+      color: var(--muted);
+      font-size: 0.58rem;
+    }
+
+    .wr-top span {
+      font-size: 0.66rem;
+    }
+
+    .wr-top.is-active {
+      opacity: 1;
+      background: var(--accent);
+    }
+
+    .wr-top.is-active span {
+      color: var(--accent);
+    }
+
+    .wr-filter-status {
+      margin: -1rem 0 0;
+      min-height: 1.2em;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    /* Year chips: sticky under the nav, only when the rail is hidden */
+    .wr-years {
+      display: none;
+      position: sticky;
+      top: 61px;
+      z-index: 30;
+      gap: 0.4rem;
+      margin: 0 -1.5rem;
+      padding: 0.6rem 1.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      background: rgba(11, 13, 18, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wr-years::-webkit-scrollbar {
+      display: none;
+    }
+
+    .wr-years a {
+      flex-shrink: 0;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-2);
+    }
+
+    .wr-years a.is-active {
+      border-color: rgba(212, 162, 76, 0.6);
+      background: rgba(212, 162, 76, 0.12);
+      color: var(--accent);
+    }
+
+    .wr-year {
+      padding-top: 2.5rem;
+      scroll-margin-top: 80px;
+    }
+
+    .wr-year-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wr-year-head h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      letter-spacing: -0.03em;
+    }
+
+    .wr-item[hidden] {
+      display: none;
+    }
+
+    .wr-item {
+      display: flex;
+    }
+
+    .wr-item > .blog-card {
+      flex: 1;
+    }
+
+    .wr-rows {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .wr-row {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 0.9rem;
+      align-items: center;
+      padding: 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-soft);
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .wr-row:hover {
+      color: var(--text);
+      border-color: rgba(212, 162, 76, 0.5);
+      background: rgba(212, 162, 76, 0.05);
+    }
+
+    .wr-thumb img,
+    .wr-thumb-empty {
+      display: block;
+      width: 96px;
+      height: 60px;
+      border-radius: 9px;
+      object-fit: cover;
+      background: var(--surface-2);
+    }
+
+    .wr-row-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 0;
+    }
+
+    .wr-row-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .wr-row-title {
+      font-weight: 500;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    @media (max-width: 1340px) {
+      .wr-years {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .wr-years {
+        margin: 0 -1.5rem;
+      }
+
+      .wr-rows {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>
