@@ -1,0 +1,272 @@
+---
+// Labs: one page listing every interactive lab, with a view count from GoatCounter.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import "../../styles/tiles.css";
+
+type Lab = {
+  href: string;
+  image: string;
+  alt: string;
+  chip: string;
+  title: string;
+  kicker: string;
+  description: string;
+  points?: { lead: string; text: string }[];
+  article?: { title: string; href: string };
+  wip?: boolean;
+};
+
+// Copy from each lab's own intro screen and the homepage blurbs
+const labs: Lab[] = [
+  {
+    href: "/labs/pore-lab/",
+    image: "/images/labs/pore-lab.jpg",
+    alt: "Pore Lab: a magnified cube of sandstone grains with water and oil in the pore space",
+    chip: "3D · ROCK PHYSICS",
+    title: "Pore Lab",
+    kicker: "A sandstone, opened up",
+    description:
+      "A magnified cube of reservoir sandstone. Change the porosity, grain size, clay and water saturation and watch the grains, water films and oil or gas rebuild in front of you, then slice through it or pull it apart into its bulk volumes.",
+    points: [
+      { lead: "How much space?", text: "Porosity is the room between the grains." },
+      { lead: "How much of it is hydrocarbon?", text: "Water clings to the grains; oil or gas sits in the pore centres." },
+      { lead: "How easily does it flow?", text: "Narrow pore throats slow it far more than lost porosity does." },
+    ],
+    article: {
+      title: "Pore Lab: Seeing Inside Reservoir Sandstone",
+      href: "https://andymcdonaldgeo.substack.com/p/pore-lab-seeing-inside-reservoir",
+    },
+  },
+  {
+    href: "/labs/bore-lab/",
+    image: "/images/labs/bore-lab.jpg",
+    alt: "Bore Lab: a 3D earth section with the well drilling through an oil sand beside logs filling in as it drills",
+    chip: "3D · LOGGING WHILE DRILLING",
+    title: "Bore Lab",
+    kicker: "Logs, as they are made",
+    description:
+      "Drill a well and watch its logs being made. Sensors trail the bit, gas and cuttings take time to reach surface, and mud filtrate creeps into the rock as you drill, so you can see why a log depends on when it was run.",
+    points: [
+      { lead: "Sensors trail the bit.", text: "Gamma ray, resistivity and density each sit metres behind it." },
+      { lead: "The mud log lags.", text: "Gas and cuttings reach surface tens of minutes after the rock was drilled." },
+      { lead: "The rock changes as you watch.", text: "Filtrate invades sands and shales wash out." },
+    ],
+  },
+  {
+    href: "/labs/probe-lab/",
+    image: "/images/labs/probe-lab.jpg",
+    alt: "Probe Lab: a density tool in a cut-away borehole with simulated gamma rays scattering through sandstone, beside its detector spectra",
+    chip: "3D · LOGGING TOOLS",
+    title: "Probe Lab",
+    kicker: "Inside the logging tools",
+    description:
+      "Put a logging tool in a cut-away borehole and watch it measure. Gamma rays scatter, neutrons slow, currents flow and sound waves travel through the rock you set, so you can see what each tool responds to and what fools it.",
+    wip: true,
+  },
+];
+---
+
+<BaseLayout title="Labs - Andy McDonald" description="Interactive 3D explainers for subsurface concepts: rock physics, logging while drilling and logging tools.">
+  <Navbar slot="nav" />
+
+  <section class="section page-head">
+    <span class="section-kicker">Labs</span>
+    <h1>Interactive labs</h1>
+    <p class="section-lede">
+      Interactive 3D explainers for subsurface concepts. Change the rock, drill the well, and see what happens. They run in
+      the browser with nothing to install.
+    </p>
+  </section>
+
+  <div class="rd labs-list">
+    {labs.map((lab, index) => (
+      <article class:list={["rd-tile", "lab-feature", index % 2 === 1 && "lab-feature--flip"]}>
+        <a class="lab-feature-media" href={lab.href} tabindex="-1" aria-hidden="true">
+          <img src={lab.image} alt="" width="1200" height="750" loading={index === 0 ? "eager" : "lazy"} />
+        </a>
+        <div class="lab-feature-body">
+          <div class="lab-feature-tags">
+            <span class="rd-chip">{lab.chip}</span>
+            {lab.wip && <span class="lab-wip">Work in progress</span>}
+            <span class="lab-views" data-path={lab.href} hidden></span>
+          </div>
+          <div class="rd-label">{lab.kicker.toUpperCase()}</div>
+          <h2><a href={lab.href}>{lab.title}</a></h2>
+          <p class="lab-feature-desc">{lab.description}</p>
+          {lab.points && (
+            <ol class="lab-points">
+              {lab.points.map((point) => (
+                <li><strong>{point.lead}</strong> {point.text}</li>
+              ))}
+            </ol>
+          )}
+          <div class="lab-feature-actions">
+            <a class="rd-btn rd-btn--primary" href={lab.href}>Open {lab.title} →</a>
+            {lab.article && (
+              <a class="rd-link" href={lab.article.href} target="_blank" rel="noopener noreferrer">Read the article ↗</a>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <script>
+    // View counts from GoatCounter's public counter. They stay hidden unless
+    // "Allow adding visitor counts on your website" is switched on in GoatCounter.
+    const format = (n) => `${n} ${n === "1" ? "view" : "views"}`;
+    document.querySelectorAll<HTMLElement>(".lab-views[data-path]").forEach(async (el) => {
+      try {
+        const path = encodeURIComponent(el.dataset.path ?? "");
+        const response = await fetch(`https://andymcdgeo.goatcounter.com/counter/${path}.json`);
+        if (!response.ok) return;
+        const data = await response.json();
+        if (!data?.count) return;
+        el.textContent = format(String(data.count));
+        el.hidden = false;
+      } catch {
+        // Counter unavailable: leave it hidden
+      }
+    });
+  </script>
+
+  <style is:global>
+    .labs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-top: 1rem;
+    }
+
+    .lab-feature {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+      padding: 12px;
+    }
+
+    .lab-feature--flip {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    }
+
+    .lab-feature--flip .lab-feature-media {
+      order: 2;
+    }
+
+    .lab-feature-media img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      filter: brightness(0.92);
+      transition: filter 0.3s ease;
+    }
+
+    .lab-feature:hover .lab-feature-media img {
+      filter: none;
+    }
+
+    .lab-feature-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding: 1rem 1.25rem 1rem 0.25rem;
+    }
+
+    .lab-feature--flip .lab-feature-body {
+      padding: 1rem 0.25rem 1rem 1.25rem;
+    }
+
+    .lab-feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .lab-wip,
+    .lab-views {
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.04em;
+    }
+
+    .lab-wip {
+      border: 1px solid rgba(212, 162, 76, 0.45);
+      background: rgba(212, 162, 76, 0.1);
+      color: var(--accent);
+    }
+
+    .lab-views {
+      border: 1px solid var(--border);
+      color: var(--text-2);
+    }
+
+    .lab-views[hidden] {
+      display: none;
+    }
+
+    .lab-feature h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      letter-spacing: -0.03em;
+    }
+
+    .lab-feature h2 a {
+      color: inherit;
+    }
+
+    .lab-feature-desc {
+      margin: 0;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .lab-points {
+      margin: 0.25rem 0 0;
+      padding-left: 1.2rem;
+      display: grid;
+      gap: 0.35rem;
+      color: var(--text-2);
+      font-size: 0.95rem;
+    }
+
+    .lab-points strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .lab-feature-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.25rem;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .lab-feature {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 10px;
+      }
+
+      .lab-feature--flip .lab-feature-media {
+        order: 0;
+      }
+
+      .lab-feature-body,
+      .lab-feature--flip .lab-feature-body {
+        padding: 0.75rem 0.6rem 0.6rem;
+      }
+    }
+  </style>
+</BaseLayout>

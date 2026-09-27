@@ -2546,3 +2546,15 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Labs menu: link to the Labs page, set apart from the individual labs */
+.nav-right .nav-dropdown-menu a.nav-dropdown-all {
+  margin-top: 0.3rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 7px 7px;
+}
+
+.nav-dropdown-all .nav-dropdown-title {
+  color: var(--accent);
+}
