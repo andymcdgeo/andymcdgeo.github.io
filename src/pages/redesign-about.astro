@@ -1,0 +1,392 @@
+---
+// Redesign preview: About page in the same tile language as /redesign.
+// All copy is from the current /about page.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import "../styles/redesign.css";
+import heroMe from "../assets/images/hero-me.png";
+
+const publications = await getCollection("publications");
+const projects = await getCollection("projects");
+const linkFor = (slug) => projects.find((project) => project.slug === slug)?.data.link;
+
+const focus = [
+  "Designing and maintaining workflows for well log and petrophysical data",
+  "Using machine learning where it genuinely adds value, and leaving it out where it does not",
+  "Building tools and interfaces that help people understand complex results",
+  "Connecting exploratory analysis with software that can be used in production",
+];
+
+const selectedWork = [
+  {
+    title: "Python and Petrophysics notebooks",
+    label: "GITHUB",
+    href: linkFor("python-petrophysics-notebook-series"),
+  },
+  {
+    title: "SPWLA Machine Learning Workshop",
+    label: "GITHUB",
+    href: linkFor("spwla-2021-machine-learning-workshop"),
+  },
+  {
+    title: "Subsurface Syntax, writing on Python and geoscience",
+    label: "SUBSTACK",
+    href: "https://andymcdonaldgeo.substack.com/",
+  },
+];
+---
+
+<BaseLayout title="About (redesign preview) - Andy McDonald">
+  <Navbar slot="nav" />
+
+  <div class="rd rd-about">
+    <!-- Bento -->
+    <section class="rd-bento">
+      <div class="rd-tile rd-intro">
+        <div class="rd-label">ABOUT</div>
+        <h1>I work across geoscience, software, and machine learning.</h1>
+        <p>
+          Building practical tools for subsurface data, interpretation and decision making. Most of my time is spent
+          dealing with real data that is noisy, incomplete, and occasionally uncooperative.
+        </p>
+      </div>
+
+      <div class="rd-tile rd-portrait">
+        <Image src={heroMe} alt="Andy McDonald portrait" width={640} loading="eager" />
+        <div class="rd-portrait-tag">
+          <span class="rd-dot"></span> Petrophysicist · Product manager
+        </div>
+      </div>
+
+      <div class="rd-tile rd-stat">
+        <div class="rd-label">EXPERIENCE</div>
+        <div class="rd-big">~20<small>yrs</small></div>
+        <p>Working with subsurface data in oil and gas</p>
+      </div>
+
+      <a class="rd-tile rd-stat" href="/publications">
+        <div class="rd-label">PAPERS</div>
+        <div class="rd-big">{publications.length}</div>
+        <p>Journal and conference publications</p>
+      </a>
+
+      <a class="rd-tile rd-stat" href="https://andymcdonaldgeo.substack.com/">
+        <div class="rd-label">NEWSLETTER</div>
+        <div class="rd-big">200<small>+</small></div>
+        <p>Readers of Subsurface Syntax</p>
+      </a>
+
+      <div class="rd-tile rd-stat rd-social">
+        <div class="rd-label">FIND ME ON</div>
+        <SocialLinks />
+      </div>
+    </section>
+
+    <!-- What I work on -->
+    <section class="rd-section">
+      <div class="rd-section-head">
+        <div>
+          <div class="rd-label">FOCUS</div>
+          <h2 class="rd-h2">What I work on</h2>
+        </div>
+      </div>
+      <p class="rd-about-lede">Much of my work centres on turning messy subsurface data into something usable and trustworthy.</p>
+      <div class="rd-grid">
+        {focus.map((item, index) => (
+          <div class="rd-tile rd-focus">
+            <span class="rd-focus-num">{String(index + 1).padStart(2, "0")}</span>
+            <p>{item}</p>
+          </div>
+        ))}
+        <blockquote class="rd-tile rd-quote">
+          <p>The common thread is pragmatism.</p>
+          <span>I care about data limits, method assumptions, and the context in which results will actually be used.</span>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Experience + selected work -->
+    <section class="rd-section">
+      <div class="rd-section-head">
+        <div>
+          <div class="rd-label">EXPERIENCE</div>
+          <h2 class="rd-h2">Nearly 20 years with subsurface data</h2>
+        </div>
+      </div>
+      <div class="rd-grid">
+        <div class="rd-tile rd-prose">
+          <p>
+            I have nearly 20 years of experience working with subsurface data in the oil and gas industry, across
+            technical, software, and product-facing roles.
+          </p>
+          <p>
+            My work has included building and maintaining industry software modules, developing applied machine
+            learning workflows for geoscience problems, and creating technical training material for geoscientists.
+          </p>
+          <p>
+            I have delivered conference workshops, written long-form technical articles, and published open notebooks
+            focused on Python and subsurface data analysis.
+          </p>
+          <p>
+            That mix of hands-on technical work and software development shapes how I approach problems. I care about
+            what works in practice, how tools are actually used, and where theory meets operational reality.
+          </p>
+          <p>
+            Alongside this, I write and publish independently through Subsurface Syntax, where I explore practical ways
+            of working with geological data using Python. The focus is on clarity, data quality, visualisation, and
+            interpretation rather than novelty for its own sake.
+          </p>
+        </div>
+        <div class="rd-work">
+          <div class="rd-label rd-work-label">SELECTED WORK</div>
+          {selectedWork.map((work) => (
+            <a class="rd-tile rd-work-item" href={work.href} target="_blank" rel="noopener noreferrer">
+              <div>
+                <div class="rd-label">{work.label}</div>
+                <h3>{work.title}</h3>
+              </div>
+              <em>→</em>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- How I think about the work -->
+    <section class="rd-section">
+      <div class="rd-section-head">
+        <div>
+          <div class="rd-label">APPROACH</div>
+          <h2 class="rd-h2">How I think about the work</h2>
+        </div>
+      </div>
+      <div class="rd-grid">
+        <blockquote class="rd-tile rd-quote rd-quote--big">
+          <p>A result that cannot be explained or trusted is rarely useful, no matter how clever it looks.</p>
+        </blockquote>
+        <div class="rd-tile rd-prose rd-prose--half">
+          <p>
+            I am cautious about hype and optimistic about tools. Machine learning is most useful when it is grounded in
+            domain understanding and supports existing interpretation workflows rather than replacing them.
+          </p>
+          <p>
+            Good software design, clear visualisation, and transparent assumptions matter just as much as model metrics.
+          </p>
+        </div>
+        <div class="rd-tile rd-prose rd-prose--half">
+          <p>
+            I am especially interested in the step between experimentation and production. How ideas move from
+            notebooks into tools other people can rely on, and how to do that without losing rigour or context along the
+            way.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Close -->
+    <section class="rd-section">
+      <div class="rd-tile rd-cta">
+        <div>
+          <div class="rd-label">SAY HELLO</div>
+          <h2 class="rd-h2">You can follow me or reach out on LinkedIn.</h2>
+          <p>Or read along on Subsurface Syntax: AI, ML and Python for the subsurface.</p>
+        </div>
+        <div class="rd-actions">
+          <a class="rd-btn rd-btn--primary" href="https://www.linkedin.com/in/andymcdonaldgeo/" target="_blank" rel="noopener noreferrer">LinkedIn →</a>
+          <a class="rd-btn" href="https://andymcdonaldgeo.substack.com/">Subscribe</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const tiles = document.querySelectorAll(".rd-tile");
+
+    if (!reduceMotion && "IntersectionObserver" in window) {
+      tiles.forEach((tile) => {
+        const siblings = [...tile.parentElement.children];
+        tile.style.transitionDelay = `${(siblings.indexOf(tile) % 6) * 60}ms`;
+        tile.classList.add("rd-reveal");
+      });
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-in");
+            observer.unobserve(entry.target);
+            setTimeout(() => (entry.target.style.transitionDelay = ""), 900);
+          });
+        },
+        { rootMargin: "0px 0px -8% 0px" }
+      );
+      tiles.forEach((tile) => observer.observe(tile));
+    }
+
+    if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
+      tiles.forEach((tile) => {
+        tile.addEventListener("pointermove", (event) => {
+          const rect = tile.getBoundingClientRect();
+          tile.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+          tile.style.setProperty("--my", `${event.clientY - rect.top}px`);
+        });
+      });
+    }
+  </script>
+
+  <style is:global>
+    .rd-about .rd-intro h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      line-height: 1.05;
+    }
+
+    .rd-about .rd-intro p {
+      max-width: 52ch;
+    }
+
+    .rd-about .rd-portrait {
+      min-height: 380px;
+    }
+
+    .rd-social .social-links {
+      justify-content: flex-start;
+      gap: 0.5rem;
+      margin-top: 0.9rem;
+    }
+
+    .rd-social .social-link {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .rd-about-lede {
+      max-width: 60ch;
+      margin: -0.25rem 0 1.25rem;
+      color: var(--text-2);
+    }
+
+    .rd-focus {
+      grid-column: span 3;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .rd-focus-num {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    .rd-focus p {
+      margin: 0;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .rd-quote {
+      grid-column: span 12;
+      margin: 0;
+      padding: 1.75rem 2rem;
+      border-left: 2px solid var(--accent);
+      background:
+        radial-gradient(420px 200px at 0% 0%, rgba(212, 162, 76, 0.1), transparent 70%),
+        var(--bg-soft);
+    }
+
+    .rd-quote p {
+      margin: 0 0 0.4rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .rd-quote span {
+      color: var(--text-2);
+    }
+
+    .rd-quote--big {
+      display: flex;
+      align-items: center;
+    }
+
+    .rd-quote--big p {
+      margin: 0;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      line-height: 1.2;
+      max-width: 30ch;
+    }
+
+    .rd-prose {
+      grid-column: span 7;
+      padding: 1.75rem 2rem;
+    }
+
+    .rd-prose p {
+      margin: 0 0 1rem;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+
+    .rd-prose p:last-child {
+      margin-bottom: 0;
+    }
+
+    .rd-prose--half {
+      grid-column: span 6;
+    }
+
+    .rd-work {
+      grid-column: span 5;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .rd-work-label {
+      padding: 0.5rem 0.25rem 0;
+    }
+
+    .rd-work-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .rd-work-item h3 {
+      margin: 0.35rem 0 0;
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+
+    .rd-work-item em {
+      font-style: normal;
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 900px) {
+      .rd-focus,
+      .rd-quote,
+      .rd-prose,
+      .rd-prose--half,
+      .rd-work {
+        grid-column: auto;
+      }
+
+      .rd-quote,
+      .rd-prose {
+        padding: 1.4rem;
+      }
+
+      .rd-social {
+        grid-column: span 2;
+      }
+    }
+  </style>
+</BaseLayout>
