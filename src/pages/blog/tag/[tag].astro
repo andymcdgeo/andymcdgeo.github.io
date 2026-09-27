@@ -25,7 +25,7 @@ const filtered = writing.filter((item) => item.tags.some((label) => slugifyTag(l
   <section class="section page-head">
     <span class="section-kicker">Blog</span>
     <h1>Writing</h1>
-    <p class="section-lede">Filtering by tag: {tag} ({filtered.length})</p>
+    <p class="section-lede section-lede--full">Filtering by tag: {tag} ({filtered.length})</p>
 
     <div class="tag-filters" role="list">
       <a href="/blog" class:list={["tag", "tag-link"]}>All</a>
