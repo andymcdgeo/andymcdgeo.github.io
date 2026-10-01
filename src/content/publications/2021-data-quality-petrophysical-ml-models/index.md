@@ -4,7 +4,10 @@ authors: "McDonald, A."
 year: 2021
 venue: "Petrophysics: The SPWLA Journal of Formation Evaluation and Reservoir Description, 62(6), 585-613"
 type: "journal"
-doi: "10.30632/PJV62N6-2021a1"
+featured: true
+summary: "Reviews the data quality issues petrophysicists typically face when working with well-log data and deploying machine-learning models, their impact on the algorithms, and methods for mitigating their influence."
+doi: "10.30632/pjv62n6-2020a1"
+relatedDois: ["10.30632/spwla-2021-0036"]
 url: "https://onepetro.org/petrophysics/article-abstract/62/06/585/473276/Data-Quality-Considerations-for-Petrophysical"
 abstract: |
     Decades of subsurface exploration and characterization have led to the collation and storage of large volumes of well-related data. The amount of data gathered daily continues to grow rapidly as technology and recording methods improve. With the increasing adoption of machine-learning techniques in the subsurface domain, it is essential that the quality of the input data is carefully considered when working with these tools. If the input data are of poor quality, the impact on precision and accuracy of the prediction can be significant. Consequently, this can impact key decisions about the future of a well or a field.

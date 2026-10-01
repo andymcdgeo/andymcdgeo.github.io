@@ -4,6 +4,7 @@ authors: "Law, S.; McDonald, A.; Castillo, E.; Mackay, E.; Fellows, S."
 year: 2018
 venue: "SPE Europec featured at 80th EAGE Conference and Exhibition"
 type: "conference"
+doi: "10.2118/190836-ms"
 url: "https://www.researchgate.net/publication/324468874_Multi-Disciplinary_Approach_to_Developing_Challenging_Heavy_Oilfields_with_Basal_Aquifers"
 abstract: |
     In the United Kingdom Continental Shelf (UKCS), a significant heavy oil prize of 9 billion barrels has been previously identified, but not fully developed. In the shallow unconsolidated Eocene reservoirs of Quads3 and 9, just under 3 billion barrels lie in the discovered, but undeveloped fields, of Bentley and Bressay. Discovered in the 1970s, they remain undeveloped due to the various technology challenges associated with heavy oil offshore and the presence of a basal aquifer. The Eocene reservoirs represent significant challenges to recovery due to the unconsolidated nature of the hydrocarbon bearing layers. The traditional view has been that such a nature represents a risk to successful recovery due to sand mobility; reservoir and near wellbore compaction; wormhole formation; and injectivity issues.

@@ -5,7 +5,6 @@ year: 2019
 venue: "SPWLA 60th Annual Logging Symposium"
 type: "conference"
 doi: "10.30632/T60ALS-2019_HHHH"
-url: "https://www.researchgate.net/publication/351607547_Data_Quality_Considerations_for_Petrophysical_Machine_Learning_Models"
 abstract: |
   Today, many machine learning techniques are regularly employed in petrophysical modelling such as cluster analysis, neural networks, fuzzy logic, self-organising maps, genetic algorithm, principal component analysis etc. While each of these methods has its strengths and weaknesses, one of the challenges to most of the existing techniques is how to best handle the variety of dynamic ranges present in petrophysical input data. Mixing input data with logarithmic variation (such as resistivity) and linear variation (such as gamma ray) while effectively balancing the weight of each variable can be particularly difficult to manage.
 

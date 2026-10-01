@@ -4,6 +4,7 @@ authors: "Arkalgud, R.; McDonald, A.; Brackenridge, R."
 year: 2020
 venue: "Abu Dhabi International Petroleum Exhibition & Conference (ADIPEC)"
 type: "conference"
+doi: "10.2118/203094-ms"
 url: "https://onepetro.org/SPEADIP/proceedings/20ADIP/20ADIP/D021S006R002"
 abstract: |
     Automation has impacted our everyday lives through increased speed of operations and execution of decisions. However, these processes and decisions are wholly dependent on choices made during automation model creation. Quick selection of input variables is key to the predictive modelling process; allowing for optimization of the final model. Experienced Eye, the new methodology proposed aims to identify the optimum input variables for modelling by identifying the relevant inputs and removing those that are irrelevant.

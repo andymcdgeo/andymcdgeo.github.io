@@ -4,7 +4,7 @@ authors: "Banas, R.; McDonald, A.; Perkins, T. J."
 year: 2021
 venue: "SPWLA 62nd Annual Logging Symposium"
 type: "conference"
-doi: "10.30632/SPWLA-2021-0036"
+doi: "10.30632/spwla-2021-0070"
 url: "https://www.researchgate.net/publication/351607639_Novel_Methodology_for_Automation_of_Bad_Well_Log_Data_Identification_and_Repair"
 abstract: |
     Subsurface analysis-driven field development requires quality data as input into analysis, modelling, and planning. In the case of many conventional reservoirs, pay intervals are often well consolidated and maintain integrity under drilling and geological stresses providing an ideal logging environment. Consequently, editing well logs is often overlooked or dismissed entirely.

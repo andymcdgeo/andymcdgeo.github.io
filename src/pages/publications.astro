@@ -2,113 +2,584 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
 import { getCollection } from "astro:content";
-import { slugifyTag } from "../utils/slugifyTag";
+import { getCitations } from "../utils/citations";
+import "../styles/tiles.css";
 
-const publications = await getCollection("publications");
-const sorted = publications.sort((a, b) => {
-  if (b.data.year !== a.data.year) return b.data.year - a.data.year;
-  return a.data.title.localeCompare(b.data.title);
-});
+const publications = (await getCollection("publications")).sort((a, b) =>
+  b.data.year !== a.data.year ? b.data.year - a.data.year : a.data.title.localeCompare(b.data.title)
+);
+const { citationsFor, asOf } = await getCitations(publications);
 
-const grouped = sorted.reduce((acc, pub) => {
-  const year = String(pub.data.year);
-  if (!acc[year]) acc[year] = [];
-  acc[year].push(pub);
-  return acc;
-}, {});
+const featured = publications.filter((pub) => pub.data.featured);
+const years = [...new Set(publications.map((pub) => pub.data.year))];
+const totalCitations = publications.reduce((sum, pub) => sum + (citationsFor(pub) ?? 0), 0);
+const journals = publications.filter((pub) => pub.data.type === "journal").length;
+const conferences = publications.length - journals;
 
-const years = Object.keys(grouped).sort((a, b) => Number(b) - Number(a));
+const doiUrl = (doi?: string) => (doi ? `https://doi.org/${doi}` : "");
+const primaryLink = (pub) => doiUrl(pub.data.doi) || pub.data.url || "";
+const sourceLabel = (url = "") => (url.toLowerCase().includes("researchgate.net") ? "ResearchGate" : "Publisher");
+const typeLabel = (type: string) => (type === "journal" ? "Journal" : "Conference");
+const paragraphs = (text = "") =>
+  text.split(/\n\s*\n/).map((p) => p.replace(/\s+/g, " ").trim()).filter(Boolean);
+const firstSentence = (text = "") => paragraphs(text)[0]?.match(/^.*?[.!?](\s|$)/)?.[0].trim() ?? "";
 
-const primaryLinkFor = (pub) =>
-  pub.data.url ? pub.data.url : pub.data.doi ? `https://doi.org/${pub.data.doi}` : "";
-const labelForUrl = (url) =>
-  url && url.toLowerCase().includes("researchgate.net") ? "ResearchGate" : "Publisher";
-const splitParagraphs = (text) =>
-  text
-    .split(/\n\s*\n/)
-    .map((paragraph) => paragraph.replace(/\s+/g, " ").trim())
-    .filter(Boolean);
+// Plain-text reference for the Cite button
+const reference = (pub) =>
+  `${pub.data.authors} (${pub.data.year}). ${pub.data.title}. ${pub.data.venue.replace(/,\s*$/, "")}.${
+    pub.data.doi ? ` ${doiUrl(pub.data.doi)}` : ""
+  }`;
+
+// Your name in bold in author lists
+const authorsHtml = (authors: string) =>
+  authors.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/(McDonald,\s*A\.?)/, "<strong>$1</strong>");
+
+const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(
+  new Date(asOf)
+);
 ---
 
-<BaseLayout title="Publications - Andy McDonald">
+<BaseLayout
+  title="Publications - Andy McDonald"
+  description="Peer-reviewed journal papers and conference work on petrophysics, machine learning and well-log data quality."
+>
   <Navbar slot="nav" />
 
   <section class="section page-head">
     <span class="section-kicker">Papers</span>
     <h1>Publications</h1>
-    <p class="section-lede section-lede--full">You can find a list of my Journal and conference papers, with links to DOI or PDFs (via Researchgate) when available.</p>
-
-    <div class="pub-years">
-      {years.map((year) => (
-        <section class="pub-year">
-          <h2>{year}</h2>
-          <ol class="pub-list">
-            {grouped[year].map((pub) => {
-              const primaryLink = primaryLinkFor(pub);
-              return (
-                <li class="pub-item">
-                <div class="pub-title-row">
-                  <h3 class="pub-title">
-                    {primaryLink ? (
-                      <a href={primaryLink} target="_blank" rel="noreferrer">
-                        {pub.data.title}
-                      </a>
-                    ) : (
-                      pub.data.title
-                    )}
-                  </h3>
-                  <span
-                    class:list={[
-                      "pub-type",
-                      pub.data.type === "journal" && "pub-type--journal",
-                      pub.data.type === "conference" && "pub-type--conference",
-                    ]}
-                  >
-                    {pub.data.type === "journal" ? "Journal" : "Conference"}
-                  </span>
-                </div>
-                {pub.data.tags && (
-                  <div class="pub-tags">
-                    {pub.data.tags.map((tag) => (
-                      <span class="tag" data-tag={slugifyTag(tag)}>{tag}</span>
-                    ))}
-                  </div>
-                )}
-                  <p class="pub-authors">{pub.data.authors}</p>
-                  <p class="pub-venue">{pub.data.venue}</p>
-                  {pub.data.abstract && (
-                    <details class="pub-abstract">
-                      <summary>Abstract</summary>
-                      <div>
-                        {splitParagraphs(pub.data.abstract).map((paragraph) => (
-                          <p>{paragraph}</p>
-                        ))}
-                      </div>
-                    </details>
-                  )}
-                  <div class="pub-links pub-links--right">
-                    {pub.data.doi && (
-                      <a class="pub-link" href={`https://doi.org/${pub.data.doi}`} target="_blank" rel="noreferrer">
-                        DOI
-                      </a>
-                    )}
-                    {pub.data.url && (
-                      <a class="pub-link" href={pub.data.url} target="_blank" rel="noreferrer">
-                        {labelForUrl(pub.data.url)}
-                      </a>
-                    )}
-                    {pub.data.pdf && (
-                      <a class="pub-link" href={pub.data.pdf} target="_blank" rel="noreferrer">
-                        PDF
-                      </a>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-        </section>
-      ))}
+    <p class="section-lede section-lede--full">
+      Peer-reviewed journal papers and conference work on petrophysics, machine learning and well-log data quality.
+    </p>
+    <div class="pp-stats">
+      <span><strong>{publications.length}</strong> papers</span>
+      <span><strong>{years.at(-1)}–{years[0]}</strong></span>
+      <span><strong>{journals}</strong> journal</span>
+      <span><strong>{conferences}</strong> conference</span>
+      <span><strong>{totalCitations}</strong> citations</span>
     </div>
   </section>
+
+  <div class="rd pp">
+    {featured.length > 0 && (
+      <section class="pp-featured">
+        {featured.map((pub) => {
+          const cites = citationsFor(pub);
+          return (
+            <article class="rd-tile pp-feature">
+              <div class="rd-label">KEY PAPER · {typeLabel(pub.data.type).toUpperCase()} · {pub.data.year}</div>
+              <h2><a href={primaryLink(pub)} target="_blank" rel="noopener noreferrer">{pub.data.title}</a></h2>
+              <p class="pp-feature-venue">{pub.data.venue}</p>
+              {(pub.data.summary || pub.data.abstract) && (
+                <p class="pp-feature-summary">{pub.data.summary ?? firstSentence(pub.data.abstract)}</p>
+              )}
+              <div class="pp-feature-foot">
+                {cites !== undefined && (
+                  <span class="pp-cites pp-cites--big">
+                    <strong>{cites}</strong> citations
+                    {pub.data.relatedDois?.length ? <em>journal and symposium versions</em> : null}
+                  </span>
+                )}
+                <div class="pp-actions">
+                  <a class="rd-btn rd-btn--primary" href={primaryLink(pub)} target="_blank" rel="noopener noreferrer">Read the paper ↗</a>
+                  <button class="rd-btn pp-cite" type="button" data-ref={reference(pub)}>Cite</button>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </section>
+    )}
+
+    <div class="pp-controls" role="toolbar" aria-label="Filter and sort papers">
+      <div class="pp-seg" data-group="type">
+        <button type="button" data-type="" class="is-active">All</button>
+        <button type="button" data-type="journal">Journal</button>
+        <button type="button" data-type="conference">Conference</button>
+      </div>
+      <div class="pp-seg" data-group="sort">
+        <button type="button" data-sort="newest" class="is-active">Newest</button>
+        <button type="button" data-sort="cited">Most cited</button>
+      </div>
+    </div>
+
+    <ol class="pp-list">
+      {publications.map((pub, index) => {
+        const cites = citationsFor(pub);
+        const showYear = index === 0 || publications[index - 1].data.year !== pub.data.year;
+        return (
+          <>
+            {showYear && <li class="pp-yearhead" data-year={pub.data.year}>{pub.data.year}</li>}
+            <li
+              class="pp-item"
+              data-type={pub.data.type}
+              data-year={pub.data.year}
+              data-cites={cites ?? -1}
+              data-order={index}
+            >
+              <div class="pp-meta">
+                <span class:list={["pp-type", `pp-type--${pub.data.type}`]}>{typeLabel(pub.data.type)}</span>
+                <span class="pp-year">{pub.data.year}</span>
+                {pub.data.featured && <span class="pp-key">Key paper</span>}
+              </div>
+              <h3 class="pp-title">
+                {primaryLink(pub) ? (
+                  <a href={primaryLink(pub)} target="_blank" rel="noopener noreferrer">{pub.data.title}</a>
+                ) : (
+                  pub.data.title
+                )}
+              </h3>
+              <p class="pp-venue">{pub.data.venue.replace(/,\s*$/, "")}</p>
+              <p class="pp-authors" set:html={authorsHtml(pub.data.authors)} />
+              <div class="pp-links">
+                {cites !== undefined && <span class="pp-cites"><strong>{cites}</strong> {cites === 1 ? "citation" : "citations"}</span>}
+                {pub.data.doi && <a href={doiUrl(pub.data.doi)} target="_blank" rel="noopener noreferrer">DOI</a>}
+                {pub.data.url && <a href={pub.data.url} target="_blank" rel="noopener noreferrer">{sourceLabel(pub.data.url)}</a>}
+                {pub.data.pdf && <a href={pub.data.pdf} target="_blank" rel="noopener noreferrer">PDF</a>}
+                <button type="button" class="pp-cite" data-ref={reference(pub)}>Cite</button>
+              </div>
+              {pub.data.abstract && (
+                <details class="pp-abstract">
+                  <summary>
+                    <span class="pp-teaser">{firstSentence(pub.data.abstract)}</span>
+                    <span class="pp-more">Read abstract</span>
+                  </summary>
+                  <div>
+                    {paragraphs(pub.data.abstract).map((p) => <p>{p}</p>)}
+                  </div>
+                </details>
+              )}
+            </li>
+          </>
+        );
+      })}
+    </ol>
+
+    <p class="pp-note">
+      Citation counts from <a href="https://openalex.org" target="_blank" rel="noopener noreferrer">OpenAlex</a>, as of
+      {" "}{formatAsOf}. They are usually lower than Google Scholar, which also counts theses and preprints.
+    </p>
+  </div>
+
+  <script>
+    const list = document.querySelector(".pp-list");
+    const items = [...document.querySelectorAll<HTMLElement>(".pp-item")];
+    const heads = [...document.querySelectorAll<HTMLElement>(".pp-yearhead")];
+    let type = "";
+    let sort = "newest";
+
+    const render = () => {
+      items.forEach((item) => (item.hidden = !!type && item.dataset.type !== type));
+      if (sort === "cited") {
+        heads.forEach((head) => (head.hidden = true));
+        [...items]
+          .sort((a, b) => Number(b.dataset.cites) - Number(a.dataset.cites) || Number(a.dataset.order) - Number(b.dataset.order))
+          .forEach((item) => list?.append(item));
+      } else {
+        // Original order, each year heading placed back in front of its first paper
+        const placed = new Set();
+        [...items]
+          .sort((a, b) => Number(a.dataset.order) - Number(b.dataset.order))
+          .forEach((item) => {
+            const head = heads.find((h) => h.dataset.year === item.dataset.year);
+            if (head && !placed.has(head)) {
+              list?.append(head);
+              placed.add(head);
+            }
+            list?.append(item);
+          });
+        heads.forEach((head) => {
+          head.hidden = !items.some((item) => item.dataset.year === head.dataset.year && !item.hidden);
+        });
+      }
+      list?.classList.toggle("is-by-cites", sort === "cited");
+    };
+
+    document.querySelectorAll<HTMLElement>(".pp-seg").forEach((group) =>
+      group.addEventListener("click", (event) => {
+        const button = (event.target as HTMLElement).closest("button");
+        if (!button) return;
+        group.querySelectorAll("button").forEach((b) => b.classList.toggle("is-active", b === button));
+        if (group.dataset.group === "type") type = button.dataset.type ?? "";
+        else sort = button.dataset.sort ?? "newest";
+        render();
+      })
+    );
+
+    // Cite: copy a plain-text reference
+    document.querySelectorAll<HTMLButtonElement>(".pp-cite").forEach((button) =>
+      button.addEventListener("click", async () => {
+        const label = button.textContent;
+        try {
+          await navigator.clipboard.writeText(button.dataset.ref ?? "");
+          button.textContent = "Copied ✓";
+        } catch {
+          window.prompt("Copy this reference:", button.dataset.ref ?? "");
+        }
+        setTimeout(() => (button.textContent = label), 1600);
+      })
+    );
+  </script>
+
+  <style is:global>
+    .pp-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .pp-stats span {
+      padding: 0.25rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-2);
+    }
+
+    .pp-stats strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .pp {
+      padding-top: 1.5rem;
+    }
+
+    /* Key paper */
+    .pp-featured {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 2.5rem;
+    }
+
+    .pp-feature {
+      padding: 2rem 2.25rem;
+      border-left: 2px solid var(--accent);
+      background:
+        radial-gradient(520px 260px at 100% 0%, rgba(212, 162, 76, 0.12), transparent 70%),
+        var(--bg-soft);
+    }
+
+    .pp-feature h2 {
+      margin: 0.6rem 0 0.4rem;
+      max-width: 34ch;
+      font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .pp-feature h2 a {
+      color: inherit;
+    }
+
+    .pp-feature h2 a:hover {
+      color: var(--accent);
+    }
+
+    .pp-feature-venue {
+      margin: 0 0 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .pp-feature-summary {
+      max-width: 62ch;
+      margin: 0 0 1.5rem;
+      color: var(--text-2);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .pp-feature-foot {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .pp-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .pp-actions .rd-btn {
+      font: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .pp-actions .rd-btn--primary {
+      color: #1a1206;
+      font-weight: 600;
+    }
+
+    /* Controls */
+    .pp-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pp-seg {
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg-soft);
+    }
+
+    .pp-seg button {
+      padding: 0.35rem 0.9rem;
+      border: 0;
+      border-radius: 999px;
+      background: none;
+      color: var(--text-2);
+      font: inherit;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .pp-seg button.is-active {
+      background: rgba(212, 162, 76, 0.14);
+      color: var(--accent);
+    }
+
+    /* List */
+    .pp-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .pp-yearhead {
+      padding: 2rem 0 0.4rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+    }
+
+    .pp-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pp-item[hidden],
+    .pp-yearhead[hidden] {
+      display: none;
+    }
+
+    .pp-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .pp-type,
+    .pp-key {
+      padding: 0.05rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    .pp-type--journal {
+      border-color: rgba(116, 208, 255, 0.4);
+      color: var(--accent-data);
+    }
+
+    .pp-type--conference {
+      color: var(--text-2);
+    }
+
+    .pp-key {
+      border-color: rgba(212, 162, 76, 0.45);
+      color: var(--accent);
+    }
+
+    .pp-year {
+      display: none;
+    }
+
+    .pp-title {
+      margin: 0.15rem 0 0;
+      font-size: 1.15rem;
+      line-height: 1.35;
+    }
+
+    .pp-title a {
+      color: var(--text);
+    }
+
+    .pp-title a:hover {
+      color: var(--accent);
+    }
+
+    .pp-venue {
+      margin: 0;
+      color: var(--text-2);
+      font-size: 0.95rem;
+    }
+
+    .pp-authors {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .pp-authors strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .pp-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem 1rem;
+      margin-top: 0.35rem;
+      font-size: 0.88rem;
+    }
+
+    .pp-links a,
+    .pp-links .pp-cite {
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--accent);
+      font: inherit;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .pp-links a:hover,
+    .pp-links .pp-cite:hover {
+      color: var(--text);
+    }
+
+    .pp-cites {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      padding: 0.1rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-2);
+    }
+
+    .pp-cites strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .pp-cites--big {
+      padding: 0.35rem 0.85rem;
+      font-size: 0.8rem;
+    }
+
+    .pp-cites--big strong {
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+
+    .pp-cites em {
+      font-style: normal;
+      color: var(--muted);
+    }
+
+    .pp-abstract summary {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-top: 0.4rem;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .pp-abstract summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .pp-teaser {
+      color: var(--muted);
+      font-size: 0.9rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .pp-more {
+      color: var(--text-2);
+      font-size: 0.84rem;
+    }
+
+    .pp-more::after {
+      content: " +";
+      color: var(--accent);
+    }
+
+    .pp-abstract[open] .pp-teaser {
+      display: none;
+    }
+
+    .pp-abstract[open] .pp-more::after {
+      content: " −";
+    }
+
+    .pp-abstract div {
+      max-width: 75ch;
+      margin-top: 0.4rem;
+    }
+
+    .pp-abstract p {
+      margin: 0 0 0.8rem;
+      color: var(--text-2);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Most cited: no year headings, so show the year on each paper */
+    .pp-list.is-by-cites .pp-year {
+      display: inline;
+    }
+
+    .pp-note {
+      margin: 2rem 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .pp-note a {
+      color: var(--text-2);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 900px) {
+      .pp-feature {
+        padding: 1.5rem;
+      }
+
+      .pp-feature-foot {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </BaseLayout>

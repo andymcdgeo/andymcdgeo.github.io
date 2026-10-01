@@ -82,6 +82,14 @@ const publications = defineCollection({
     pdf: z.string().optional(),
     tags: z.array(z.string()).optional(),
     abstract: z.string().optional(),
+    /** Shown as a key paper at the top of the Publications page */
+    featured: z.boolean().optional(),
+    /** One-line summary for the featured tile */
+    summary: z.string().optional(),
+    /** Other versions of the same work (e.g. the symposium paper); their citations are added in */
+    relatedDois: z.array(z.string()).optional(),
+    /** Manual citation count, e.g. from Google Scholar; overrides OpenAlex */
+    citations: z.number().int().optional(),
   }),
 });
 
