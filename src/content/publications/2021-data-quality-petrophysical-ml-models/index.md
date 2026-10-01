@@ -4,6 +4,7 @@ authors: "McDonald, A."
 year: 2021
 venue: "Petrophysics: The SPWLA Journal of Formation Evaluation and Reservoir Description, 62(6), 585-613"
 type: "journal"
+theme: "ml"
 featured: true
 summary: "Reviews the data quality issues petrophysicists typically face when working with well-log data and deploying machine-learning models, their impact on the algorithms, and methods for mitigating their influence."
 doi: "10.30632/pjv62n6-2020a1"

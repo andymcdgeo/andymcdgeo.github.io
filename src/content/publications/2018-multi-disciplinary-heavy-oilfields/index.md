@@ -4,6 +4,7 @@ authors: "Law, S.; McDonald, A.; Castillo, E.; Mackay, E.; Fellows, S."
 year: 2018
 venue: "SPE Europec featured at 80th EAGE Conference and Exhibition"
 type: "conference"
+theme: "reservoir"
 doi: "10.2118/190836-ms"
 url: "https://www.researchgate.net/publication/324468874_Multi-Disciplinary_Approach_to_Developing_Challenging_Heavy_Oilfields_with_Basal_Aquifers"
 abstract: |

@@ -4,6 +4,7 @@ authors: "Banas, R.; McDonald, A.; Perkins, T. J."
 year: 2021
 venue: "SPWLA 62nd Annual Logging Symposium"
 type: "conference"
+theme: "ml"
 doi: "10.30632/spwla-2021-0070"
 url: "https://www.researchgate.net/publication/351607639_Novel_Methodology_for_Automation_of_Bad_Well_Log_Data_Identification_and_Repair"
 abstract: |

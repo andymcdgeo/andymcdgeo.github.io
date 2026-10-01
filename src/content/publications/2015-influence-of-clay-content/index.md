@@ -4,6 +4,7 @@ authors: "Law, S.; McDonald, A.; Fellows, S.; Reed, J.; Sutcliffe, P."
 year: 2015
 venue: "SPE Offshore Europe Conference and Exhibition, Aberdeen, Scotland, UK"
 type: "conference"
+theme: "reservoir"
 doi: "10.2118/175506-MS"
 url: "https://www.researchgate.net/publication/360575342_Influence_of_Clay_Content_and_Type_on_Oil_Recovery_Under_Low_Salinity_Waterflooding_in_North_Sea_Reservoirs"
 abstract: |

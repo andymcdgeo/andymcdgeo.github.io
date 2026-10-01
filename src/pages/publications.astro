@@ -8,7 +8,7 @@ import "../styles/tiles.css";
 const publications = (await getCollection("publications")).sort((a, b) =>
   b.data.year !== a.data.year ? b.data.year - a.data.year : a.data.title.localeCompare(b.data.title)
 );
-const { citationsFor, asOf } = await getCitations(publications);
+const { citationsFor, citationsByYear, asOf } = await getCitations(publications);
 
 const featured = publications.filter((pub) => pub.data.featured);
 const years = [...new Set(publications.map((pub) => pub.data.year))];
@@ -20,6 +20,47 @@ const doiUrl = (doi?: string) => (doi ? `https://doi.org/${doi}` : "");
 const primaryLink = (pub) => doiUrl(pub.data.doi) || pub.data.url || "";
 const sourceLabel = (url = "") => (url.toLowerCase().includes("researchgate.net") ? "ResearchGate" : "Publisher");
 const typeLabel = (type: string) => (type === "journal" ? "Journal" : "Conference");
+
+// Short venue label for the meta row; the full venue stays in the list and the reference
+const venueShort = (pub) => {
+  if (pub.data.venueShort) return pub.data.venueShort;
+  const v = pub.data.venue;
+  if (/^Petrophysics/i.test(v)) return "Petrophysics";
+  if (/SPWLA/i.test(v)) return "SPWLA";
+  if (/ADIPEC|Abu Dhabi/i.test(v)) return "ADIPEC";
+  if (/EAGE/i.test(v)) return "SPE · EAGE";
+  if (/\bSPE\b/.test(v)) return "SPE";
+  return v.split(/[,:]/)[0];
+};
+
+// Research themes: the default view groups by these
+const themes = [
+  {
+    id: "ml",
+    title: "Machine learning and data quality",
+    blurb: "Machine learning on well logs, and the data quality work it depends on.",
+  },
+  {
+    id: "reservoir",
+    title: "Reservoir and field studies",
+    blurb: "Integrated studies from reservoir description through to drilling and field development.",
+  },
+];
+const themeYears = (id) => {
+  const ys = publications.filter((pub) => pub.data.theme === id).map((pub) => pub.data.year);
+  return ys.length ? `${Math.min(...ys)}–${Math.max(...ys)}` : "";
+};
+const themeCount = (id) => publications.filter((pub) => pub.data.theme === id).length;
+
+const maxCites = Math.max(1, ...publications.map((pub) => citationsFor(pub) ?? 0));
+const barWidth = (cites) => `${Math.max(4, Math.round(((cites ?? 0) / maxCites) * 100))}%`;
+
+// Citations-per-year chart for the key paper(s)
+const chartFor = (pub) => {
+  const rows = citationsByYear(pub, pub.data.year);
+  const max = Math.max(1, ...rows.map((r) => r.count));
+  return { rows, max };
+};
 const paragraphs = (text = "") =>
   text.split(/\n\s*\n/).map((p) => p.replace(/\s+/g, " ").trim()).filter(Boolean);
 const firstSentence = (text = "") => paragraphs(text)[0]?.match(/^.*?[.!?](\s|$)/)?.[0].trim() ?? "";
@@ -67,6 +108,7 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
           const cites = citationsFor(pub);
           return (
             <article class="rd-tile pp-feature">
+              <div class="pp-feature-text">
               <div class="rd-label">KEY PAPER · {typeLabel(pub.data.type).toUpperCase()} · {pub.data.year}</div>
               <h2><a href={primaryLink(pub)} target="_blank" rel="noopener noreferrer">{pub.data.title}</a></h2>
               <p class="pp-feature-venue">{pub.data.venue}</p>
@@ -85,6 +127,26 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
                   <button class="rd-btn pp-cite" type="button" data-ref={reference(pub)}>Cite</button>
                 </div>
               </div>
+              </div>
+              {(() => {
+                const { rows, max } = chartFor(pub);
+                if (!rows.some((r) => r.count > 0)) return null;
+                return (
+                  <figure class="pp-chart" aria-label={`Citations per year: ${rows.map((r) => `${r.year} ${r.count}`).join(", ")}`}>
+                    <figcaption class="rd-label">CITATIONS PER YEAR</figcaption>
+                    <div class="pp-chart-bars">
+                      {rows.map((r) => (
+                        <div class="pp-chart-col" title={`${r.year}: ${r.count}`}>
+                          <span class="pp-chart-val">{r.count || ""}</span>
+                          <span class="pp-chart-bar" style={`height: ${Math.round((r.count / max) * 100)}%`}></span>
+                          <span class="pp-chart-year">{String(r.year).slice(2)}</span>
+                        </div>
+                      ))}
+                    </div>
+                    {new Date().getFullYear() === rows.at(-1)?.year && <span class="pp-chart-note">'{String(rows.at(-1)?.year).slice(2)} so far</span>}
+                  </figure>
+                );
+              })()}
             </article>
           );
         })}
@@ -98,12 +160,20 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
         <button type="button" data-type="conference">Conference</button>
       </div>
       <div class="pp-seg" data-group="sort">
-        <button type="button" data-sort="newest" class="is-active">Newest</button>
+        <button type="button" data-sort="themes" class="is-active">Themes</button>
+        <button type="button" data-sort="newest">Newest</button>
         <button type="button" data-sort="cited">Most cited</button>
       </div>
     </div>
 
     <ol class="pp-list">
+      {themes.map((theme) => (
+        <li class="pp-themehead" data-theme={theme.id}>
+          <div class="rd-label">{themeCount(theme.id)} PAPERS · {themeYears(theme.id)}</div>
+          <h2>{theme.title}</h2>
+          <p>{theme.blurb}</p>
+        </li>
+      ))}
       {publications.map((pub, index) => {
         const cites = citationsFor(pub);
         const showYear = index === 0 || publications[index - 1].data.year !== pub.data.year;
@@ -113,12 +183,14 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
             <li
               class="pp-item"
               data-type={pub.data.type}
+              data-theme={pub.data.theme ?? "ml"}
               data-year={pub.data.year}
               data-cites={cites ?? -1}
               data-order={index}
             >
               <div class="pp-meta">
                 <span class:list={["pp-type", `pp-type--${pub.data.type}`]}>{typeLabel(pub.data.type)}</span>
+                <span class="pp-venue-short">{venueShort(pub)}</span>
                 <span class="pp-year">{pub.data.year}</span>
                 {pub.data.featured && <span class="pp-key">Key paper</span>}
               </div>
@@ -132,7 +204,12 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
               <p class="pp-venue">{pub.data.venue.replace(/,\s*$/, "")}</p>
               <p class="pp-authors" set:html={authorsHtml(pub.data.authors)} />
               <div class="pp-links">
-                {cites !== undefined && <span class="pp-cites"><strong>{cites}</strong> {cites === 1 ? "citation" : "citations"}</span>}
+                {cites !== undefined && (
+                  <span class="pp-cites">
+                    <span class="pp-cites-bar" aria-hidden="true"><span style={`width: ${barWidth(cites)}`}></span></span>
+                    <strong>{cites}</strong> {cites === 1 ? "citation" : "citations"}
+                  </span>
+                )}
                 {pub.data.doi && <a href={doiUrl(pub.data.doi)} target="_blank" rel="noopener noreferrer">DOI</a>}
                 {pub.data.url && <a href={pub.data.url} target="_blank" rel="noopener noreferrer">{sourceLabel(pub.data.url)}</a>}
                 {pub.data.pdf && <a href={pub.data.pdf} target="_blank" rel="noopener noreferrer">PDF</a>}
@@ -165,12 +242,23 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
     const list = document.querySelector(".pp-list");
     const items = [...document.querySelectorAll<HTMLElement>(".pp-item")];
     const heads = [...document.querySelectorAll<HTMLElement>(".pp-yearhead")];
+    const themeHeads = [...document.querySelectorAll<HTMLElement>(".pp-themehead")];
     let type = "";
-    let sort = "newest";
+    let sort = "themes";
 
     const render = () => {
       items.forEach((item) => (item.hidden = !!type && item.dataset.type !== type));
-      if (sort === "cited") {
+      themeHeads.forEach((head) => (head.hidden = sort !== "themes"));
+      const byOrder = (a, b) => Number(a.dataset.order) - Number(b.dataset.order);
+      if (sort === "themes") {
+        heads.forEach((head) => (head.hidden = true));
+        themeHeads.forEach((head) => {
+          list?.append(head);
+          const own = items.filter((item) => item.dataset.theme === head.dataset.theme).sort(byOrder);
+          own.forEach((item) => list?.append(item));
+          head.hidden = !own.some((item) => !item.hidden);
+        });
+      } else if (sort === "cited") {
         heads.forEach((head) => (head.hidden = true));
         [...items]
           .sort((a, b) => Number(b.dataset.cites) - Number(a.dataset.cites) || Number(a.dataset.order) - Number(b.dataset.order))
@@ -192,7 +280,7 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
           head.hidden = !items.some((item) => item.dataset.year === head.dataset.year && !item.hidden);
         });
       }
-      list?.classList.toggle("is-by-cites", sort === "cited");
+      list?.classList.toggle("is-by-cites", sort !== "newest");
     };
 
     document.querySelectorAll<HTMLElement>(".pp-seg").forEach((group) =>
@@ -201,10 +289,12 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
         if (!button) return;
         group.querySelectorAll("button").forEach((b) => b.classList.toggle("is-active", b === button));
         if (group.dataset.group === "type") type = button.dataset.type ?? "";
-        else sort = button.dataset.sort ?? "newest";
+        else sort = button.dataset.sort ?? "themes";
         render();
       })
     );
+
+    render();
 
     // Cite: copy a plain-text reference
     document.querySelectorAll<HTMLButtonElement>(".pp-cite").forEach((button) =>
@@ -317,6 +407,122 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
     .pp-actions .rd-btn--primary {
       color: #1a1206;
       font-weight: 600;
+    }
+
+    .pp-feature {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 2rem;
+      align-items: end;
+    }
+
+    .pp-feature-text {
+      min-width: 0;
+    }
+
+    .pp-chart {
+      position: relative;
+      margin: 0;
+      padding: 1rem 1rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(11, 13, 18, 0.45);
+    }
+
+    .pp-chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 130px;
+      margin-top: 0.75rem;
+    }
+
+    .pp-chart-col {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pp-chart-bar {
+      width: 100%;
+      min-height: 2px;
+      border-radius: 4px 4px 1px 1px;
+      background: linear-gradient(to top, rgba(212, 162, 76, 0.55), var(--accent));
+    }
+
+    .pp-chart-val,
+    .pp-chart-year,
+    .pp-chart-note {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: var(--muted);
+    }
+
+    .pp-chart-val {
+      color: var(--text-2);
+    }
+
+    .pp-chart-note {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    /* Theme headings */
+    .pp-themehead {
+      padding: 2.5rem 0 0.9rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pp-themehead:first-child {
+      padding-top: 1.25rem;
+    }
+
+    .pp-themehead h2 {
+      margin: 0.35rem 0 0.25rem;
+      font-size: clamp(1.5rem, 2.8vw, 1.9rem);
+      letter-spacing: -0.03em;
+    }
+
+    .pp-themehead p {
+      margin: 0;
+      color: var(--text-2);
+    }
+
+    .pp-themehead[hidden] {
+      display: none;
+    }
+
+    .pp-venue-short {
+      color: var(--text-2);
+    }
+
+    .pp-venue-short::before,
+    .pp-list.is-by-cites .pp-year::before {
+      content: "·";
+      margin-right: 0.5rem;
+      color: var(--muted);
+    }
+
+    .pp-cites-bar {
+      display: inline-block;
+      width: 48px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      align-self: center;
+    }
+
+    .pp-cites-bar span {
+      display: block;
+      height: 100%;
+      border-radius: 2px;
+      background: var(--accent);
     }
 
     /* Controls */
@@ -573,6 +779,7 @@ const formatAsOf = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "lo
 
     @media (max-width: 900px) {
       .pp-feature {
+        grid-template-columns: 1fr;
         padding: 1.5rem;
       }
 

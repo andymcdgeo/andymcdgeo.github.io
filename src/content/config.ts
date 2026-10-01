@@ -77,6 +77,10 @@ const publications = defineCollection({
     year: z.number().int(),
     venue: z.string(),
     type: z.enum(["journal", "conference"]),
+    /** Research theme the Publications page groups by */
+    theme: z.enum(["ml", "reservoir"]).optional(),
+    /** Short venue label (SPWLA, SPE...); worked out from venue when not set */
+    venueShort: z.string().optional(),
     doi: z.string().optional(),
     url: z.string().optional(),
     pdf: z.string().optional(),

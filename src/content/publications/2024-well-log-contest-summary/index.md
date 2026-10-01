@@ -4,6 +4,7 @@ authors: "Fu, L.; Yu, Y.; Xu, C.; Ashby, M.; McDonald, A.; Pan, W.; Deng, T.; Sz
 year: 2024
 venue: "Petrophysics, 65(1), 108-127"
 type: "journal"
+theme: "ml"
 doi: "10.30632/PJV65N1-2024a6"
 url: "https://onepetro.org/petrophysics/article/65/01/108/540802/Well-Log-Based-Reservoir-Property-Estimation-With"
 abstract: |

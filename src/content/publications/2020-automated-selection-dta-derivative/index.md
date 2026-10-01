@@ -4,6 +4,7 @@ authors: "Arkalgud, R.; McDonald, A.; Brackenridge, R."
 year: 2020
 venue: "Abu Dhabi International Petroleum Exhibition & Conference (ADIPEC)"
 type: "conference"
+theme: "ml"
 doi: "10.2118/203094-ms"
 url: "https://onepetro.org/SPEADIP/proceedings/20ADIP/20ADIP/D021S006R002"
 abstract: |

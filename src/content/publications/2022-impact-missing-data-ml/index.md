@@ -4,6 +4,7 @@ authors: "McDonald, A."
 year: 2022
 venue: "SPWLA 63rd Annual Logging Symposium"
 type: "conference"
+theme: "ml"
 doi: "10.30632/SPWLA-2022-0125"
 url: "https://www.researchgate.net/publication/361314163_Impact_of_Missing_Data_on_Petrophysical_Regression-Based_Machine_Learning_Model_Performance"
 abstract: |

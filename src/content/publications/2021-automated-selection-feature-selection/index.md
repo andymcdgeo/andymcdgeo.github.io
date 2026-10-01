@@ -4,6 +4,7 @@ authors: "Arkalgud, R.; McDonald, A.; Brackenridge, R."
 year: 2021
 venue: "SPWLA 62nd Annual Logging Symposium"
 type: "conference"
+theme: "ml"
 doi: "10.30632/spwla-2021-0091"
 url: "https://www.researchgate.net/publication/351607445_Automated_Selection_of_Inputs_for_Log_Prediction_Models_Using_a_New_Feature_Selection_Method"
 abstract: |

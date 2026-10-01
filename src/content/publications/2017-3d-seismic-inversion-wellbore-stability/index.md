@@ -4,6 +4,7 @@ authors: "Mulders, F.; Lemanczyk, R.; Johnstone, K.; Spencer, S.; Castillo, E.; 
 year: 2017
 venue: "SPE/IATMI Asia Pacific Oil & Gas Conference and Exhibition, Jakarta, Indonesia,"
 type: "conference"
+theme: "reservoir"
 doi: "10.2118/186335-MS"
 url: "https://www.researchgate.net/publication/320460395_From_3D_Seismic_Inversion_to_Drilling_Engineering_A_Multidisciplinary_Approach_to_Resolve_Wellbore_Stability_Issues_Offshore_West_Madura"
 abstract: |
