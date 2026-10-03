@@ -1,0 +1,20 @@
+Copyright (c) 2026 Andy McDonald. All rights reserved.
+
+This repository and the website built from it (andymcdonald.scot), including
+its source code, design, articles, images, data, publications listings and the
+interactive labs under public/labs/, are the property of Andy McDonald.
+
+You may view and use the published website and labs in a web browser for
+personal, educational or professional reference. You may quote short excerpts
+with attribution and a link to the source.
+
+Without prior written permission you may not copy, modify, redistribute,
+republish, sell, sublicense or create derivative works from any part of this
+repository or the published website and labs, or use them to train
+machine-learning models.
+
+Third-party components keep their own licences. The labs list theirs in
+public/labs/<lab>/third-party-notices.txt; the site is built with Astro
+(MIT licence) and uses Google Fonts (SIL Open Font License), served by Google.
+
+Permission requests: https://www.linkedin.com/in/andymcdonaldgeo/
