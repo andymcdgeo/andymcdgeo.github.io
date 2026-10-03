@@ -57,19 +57,15 @@
     </dialog>
 
     <!-- Watermark and right-click block (deterrents, not protection) -->
-    <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    <div class="am-mark" style="--am-x: 50%; --am-y: 60%; --am-px: 50%; --am-py: 36%" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
     <style>
-      .am-mark { position: fixed; z-index: 2147483000; pointer-events: none; user-select: none; white-space: nowrap;
-        font: 500 11px/1 "Outfit", "Segoe UI", system-ui, sans-serif; letter-spacing: 0.04em;
-        color: rgba(238, 240, 243, 0.4); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7); }
-      .am-mark--top { top: max(10px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); }
-      .am-mark--br { right: 14px; bottom: max(10px, env(safe-area-inset-bottom)); }
+      /* Faint watermark on the main view; white with a soft dark edge so it reads on light and dark scenes */
+      .am-mark { position: absolute; z-index: 2147483000; pointer-events: none; user-select: none; white-space: nowrap;
+        left: var(--am-x); top: var(--am-y); transform: translate(-50%, -50%);
+        font: 500 14px/1 "Outfit", "Segoe UI", system-ui, sans-serif; letter-spacing: 0.12em;
+        color: rgba(255, 255, 255, 0.2); text-shadow: 0 0 2px rgba(0, 0, 0, 0.35); }
+      @media (orientation: portrait) { .am-mark { left: var(--am-px); top: var(--am-py); font-size: 13px; } }
       @media (max-width: 700px) { .am-mark span { display: none; } }
-      /* Portrait: lower, on the main view, and much fainter */
-      @media (orientation: portrait) {
-        .am-mark, .am-mark--top, .am-mark--br { position: absolute; top: 36%; bottom: auto; left: 50%; right: auto;
-          transform: translate(-50%, -50%); writing-mode: horizontal-tb; font-size: 13px; letter-spacing: 0.1em;
-          color: rgba(238, 240, 243, 0.16); text-shadow: 0 0 3px rgba(0, 0, 0, 0.22); } }
     </style>
     <script>
       document.addEventListener("contextmenu", function (e) {
