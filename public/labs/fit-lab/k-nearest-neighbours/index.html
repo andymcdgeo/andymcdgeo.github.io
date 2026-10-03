@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>k-nearest neighbours: lithology by vote · Fit Lab</title>
+    <meta name="description" content="Which lithology is this sample, going by the wells we know? Classify samples by hand, then watch their nearest neighbours vote." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/knn-B2SIie-t.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="modulepreload" crossorigin href="../assets/rng-CF1C7Ptq.js">
+    <link rel="modulepreload" crossorigin href="../assets/data-HiAZ1lSs.js">
+    <link rel="modulepreload" crossorigin href="../assets/linechart-DXxhyCnp.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 3 · Supervised learning</div>
+        <h1>k-nearest neighbours: lithology by vote</h1>
+        <p class="standfirst">Which lithology is this sample, going by the wells we've already described? Find the samples most like it and let them vote. That's k-nearest neighbours, the simplest supervised method there is.</p>
+        <div class="meta"><span>8 minutes</span><span>Learns from Wells A and B, tested on Well C</span><span>1,312 labelled samples</span></div>
+      </div>
+
+      <h2>Labels change everything</h2>
+      <p class="note-anchor">In chapter 1, k-means found groups without knowing what any of them were. Now suppose the facies in Wells A and B have been described from core and cuttings. Every sample from those wells carries a label, and the question for Well C becomes: which of the labelled samples does each new sample look like?<span class="note"><em>Supervised</em> learning means learning from examples that come with the answers. Chapter 1 was <em>unsupervised</em>: no answers, just groups.</span></p>
+      <p>Below are 1,312 labelled samples from Wells A and B on the density-neutron crossplot, coloured by facies. A blue sample from Well C is waiting. Decide what it is from where it falls, then see what its seven nearest neighbours say.</p>
+
+      <section class="figure" id="fig-quiz" aria-label="Figure 3.1"></section>
+
+      <p>If you looked at the colours around the blue sample and went with the majority, you did exactly what the algorithm does. There's no fitting and no equation: the model is the labelled samples themselves, and every prediction is a fresh search for the nearest ones.</p>
+
+      <h2>How many neighbours?</h2>
+      <p>The one choice to make is k, how many neighbours get a vote. The background below shows what the vote would decide at every point on the plot: the <em>decision map</em>. Drag the blue probe to watch a vote, then change k.</p>
+
+      <section class="figure" id="fig-vote" aria-label="Figure 3.2"></section>
+
+      <p class="note-anchor">With one neighbour the map is a patchwork. Every odd sample claims a patch of its own, and the model scores 100% on the wells it learned from, because every sample is its own nearest neighbour. That's memorising, not learning. With a handful of neighbours the patchwork smooths over and Well C does slightly better. With too many, the vote drowns out anything rare: by 75, coal and anhydrite have vanished from the map, because there are only 17 and 22 samples of them to learn from.<span class="note">Rare classes losing every vote is a symptom of imbalanced data. Chapter 4 shows how a single accuracy figure hides it.</span></p>
+
+      <h2>Units, again</h2>
+      <p>Nearest means a distance, and as in chapter 1, distance depends on units. Here's gamma ray against density, unscaled and scaled.</p>
+
+      <section class="figure" id="fig-units" aria-label="Figure 3.3"></section>
+
+      <h2>More logs, or a better k?</h2>
+      <p>Two logs fit on a crossplot, but the algorithm doesn't need to see a plot. Give it five logs (gamma ray, density, neutron, Pe and sonic) and it measures distance in five dimensions in exactly the same way.</p>
+
+      <section class="figure" id="fig-logs" aria-label="Figure 3.4"></section>
+
+      <p>Tuning k is worth about a point. Adding three logs is worth about three: shaly sand and limestone overlap on density and neutron but separate on Pe and sonic. The misses that remain sit almost all at bed boundaries, where the tools' vertical resolution blends one bed into the next. No choice of k can fix a sample whose logs are a mixture of two rocks.</p>
+      <p>One caution before trusting numbers this good. Well C was logged with the same tools as Wells A and B, and it cuts the same beds. Chapter 4 is about what happens when the new well isn't so kind.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>Seven neighbours scored 98.9% on the teaching field's Well C. Here they face real wells, one of them from another part of the North Sea.</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 3.5"></section>
+
+      <h2 id="words">Words you'll meet</h2>
+      <p>Nearest neighbours has a short vocabulary, and scikit-learn's <code>KNeighborsClassifier</code> uses it. Here they are in plain words, with scikit-learn's name where it has one.</p>
+      <dl class="glossary">
+        <div><dt>Neighbours</dt><dd>The training samples closest to the sample being predicted, measured across all the logs at once.</dd></div>
+        <div><dt>k</dt><dd>How many neighbours vote. Small k follows every wrinkle; big k smooths, and can outvote rare classes. <code>n_neighbors</code></dd></div>
+        <div><dt>Distance</dt><dd>Straight-line (Euclidean) distance across the logs, unless you choose another. <code>metric</code></dd></div>
+        <div><dt>Majority vote</dt><dd>The prediction is the facies most of the neighbours have; ties go to the class listed first.</dd></div>
+        <div><dt>Distance weighting</dt><dd>Closer neighbours get a bigger say. <code>weights='distance'</code></dd></div>
+        <div><dt>Decision map</dt><dd>The facies the model would predict at every point of a crossplot. Its edges are the decision boundaries.</dd></div>
+        <div><dt>Scaling</dt><dd>Putting the logs in standard units first, so a log with big numbers doesn't dominate the distances. <code>StandardScaler</code></dd></div>
+        <div><dt>Lazy learner</dt><dd>kNN doesn't learn a formula; it keeps every training sample and does the work at prediction time, which makes it slow on big datasets.</dd></div>
+        <div><dt>Vote shares</dt><dd>The share of neighbours of each facies: a rough probability, used for ROC curves in chapter 5. <code>predict_proba</code></dd></div>
+        <div><dt>Curse of dimensionality</dt><dd>With many logs, all samples end up far from each other, and "nearest" stops meaning much. More logs help only if they carry information.</dd></div>
+        <div><dt>kNN regression</dt><dd>The same idea for numbers: predict the average of the neighbours' values. <code>KNeighborsRegressor</code></dd></div>
+      </dl>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>k-nearest neighbours labels a sample by a vote of the k most similar labelled samples. There's no training step: the model is the data.</li>
+          <li>k = 1 memorises and a large k outvotes rare facies. A handful of neighbours is usually best, but the choice matters less than the logs you give it.</li>
+          <li>Scale the logs. Distance-based methods treat the biggest numbers as the most important.</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Try any combination</h3>
+          <p>Neighbours on any logs, on the teaching field or the real wells, in the <a href="../workbench/?algo=knn">workbench</a>.</p>
+        </div>
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/k-nearest-neighbors-for-lithology-classification-from-well-logs-using-python-a13ac69367ce" target="_blank" rel="noopener">k-Nearest Neighbors for Lithology Classification from Well Logs Using Python</a></p>
+        </div>
+        <div>
+          <h3>Next: train, validate and test</h3>
+          <p><a href="../train-validate-test/">Why can 98% accuracy be useless?</a> Testing a model on wells it has never seen.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

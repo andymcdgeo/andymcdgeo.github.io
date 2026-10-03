@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Glossary · Fit Lab</title>
+    <meta name="description" content="Every machine learning term in Fit Lab in plain words, with scikit-learn names and links to the chapters." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/page-DIaNLSEq.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Glossary</div>
+        <h1>Words you'll meet</h1>
+        <p class="standfirst">Every term from every chapter, in one place: 134 entries in plain words, with scikit-learn's name where it has one and a link to the chapter that explains it.</p>
+      </div>
+      <nav class="letters" aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
+      <h2 id="letter-A">A</h2>
+      <dl class="glossary">
+        <div><dt>Accuracy</dt><dd>How many samples did it get right? Watch out: rewards always saying the common answer. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Activation</dt><dd>What a unit does to its sum. ReLU keeps positive values and cuts negatives to zero; tanh squashes everything between −1 and 1; the logistic function between 0 and 1. <code>activation</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Adam and SGD</dt><dd>Ways of taking the steps. Plain stochastic gradient descent steps by the learning rate times the gradient; Adam adapts the step for each weight from its recent gradients, and usually needs less tuning. <code>solver</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Anomaly, or outlier</dt><dd>A sample unlike most of the others. Unlike doesn't mean wrong: a coal is an outlier among shales. <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Anomaly score</dt><dd>Two to the power of minus the average path length over its expected value: near 1 is very strange, about 0.5 or below is ordinary. scikit-learn reports its negative. <code>score_samples</code> <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Assign and update</dt><dd>The two moves k-means repeats: every sample joins its nearest centroid, then every centroid moves to the mean of its samples. Also called Lloyd's algorithm. <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Average precision</dt><dd>How precise is it as it finds more of the class? Watch out: its floor is the class's share, not 50%, so compare it with that. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+      </dl>
+      <h2 id="letter-B">B</h2>
+      <dl class="glossary">
+        <div><dt>Backpropagation</dt><dd>The bookkeeping that works out the gradient for every weight at once, by applying the chain rule from the output back through the layers. <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Bad hole</dt><dd>Where the borehole is enlarged or rough enough that pad tools (density, Pe, often neutron) read wrong. Usually flagged from the caliper and the density correction. <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Bagging</dt><dd>Bootstrap aggregating: train each model on its own bootstrap sample, then let them vote (or average, for numbers). <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Balanced accuracy, macro F1</dt><dd>How well does it do on every class, rare ones included? Watch out: a tiny class with a few errors can swing them. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Batch and epoch</dt><dd>A batch is the handful of samples used for one step; an epoch is one pass through all of them. <code>batch_size</code>, <code>max_iter</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Bias</dt><dd>Does it read high or low on average? Watch out: zero bias can hide big errors that cancel out. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Bias and variance</dt><dd>Bias is being wrong in the same way every time (too simple a model); variance is giving different answers for small changes to the data (too flexible a model). Deep trees have low bias and high variance, and averaging cuts the variance. <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Block cross-validation</dt><dd>Folds made of depth blocks within a well, when there are too few wells to hold any out. Blocks must be thick enough not to leak, and thin enough not to starve the training data. <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Bootstrap sample</dt><dd>As many samples as the training data, drawn at random with replacement: some twice or more, about a third not at all. <code>bootstrap=True</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+      </dl>
+      <h2 id="letter-C">C</h2>
+      <dl class="glossary">
+        <div><dt>Centroid</dt><dd>The middle of a cluster: the average of its samples on every log. <code>cluster_centers_</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Classification</dt><dd>A supervised question whose answer is a category: which facies, pay or not. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Class probabilities</dt><dd>The forest's vote shares, one per facies. Useful for ranking and for ROC curves (chapter 5), but not true probabilities without calibration. <code>predict_proba</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Cluster</dt><dd>A group of samples the algorithm puts together because they read alike. It has no name until a person gives it one. <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Confusion matrix</dt><dd>True facies against predicted, counting every combination. Rows give recall, columns precision (chapter 5). <code>confusion_matrix</code> <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Confusion matrix</dt><dd>Which classes does it mistake for which? Watch out: rows give recall, columns precision. Look at the counts as well as the shares. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Contamination</dt><dd>The share of samples you expect to be outliers, which sets the cutoff for flagging. Left at <code>'auto'</code>, samples scoring above 0.5 are flagged. <code>contamination</code> <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Converged</dt><dd>Stopped because the centroids have stopped moving (by less than a tolerance), or after a maximum number of rounds. <code>tol</code>, <code>max_iter</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Cross-validation</dt><dd>Splitting the training data into folds, holding each out in turn and averaging the scores, so every sample is used for both training and checking. <code>KFold</code>, <code>cross_val_score</code> <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Curse of dimensionality</dt><dd>With many logs, all samples end up far from each other, and "nearest" stops meaning much. More logs help only if they carry information. <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+      </dl>
+      <h2 id="letter-D">D</h2>
+      <dl class="glossary">
+        <div><dt>DataFrame</dt><dd>pandas's table, the usual way to hold logs in Python once they're read from a LAS file: one row per depth, one column per curve. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Dataset shift</dt><dd>New data that differs from the training data, such as a well logged with older tools. Also called domain shift. <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Decision map</dt><dd>The facies the model would predict at every point of a crossplot. Its edges are the decision boundaries. <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+        <div><dt>Deep learning</dt><dd>Networks with many layers, often of special kinds (convolutional, recurrent, transformers), built in libraries such as Keras or PyTorch. The ideas here carry over. <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Depth</dt><dd>How many questions deep the tree goes. Deeper means more boxes, and sooner or later boxes around single samples. <code>max_depth</code> <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Depth and leaf size</dt><dd>Forests usually grow every tree to full depth and let the vote do the smoothing. Setting a minimum number of samples in a leaf, or a maximum depth, smooths each tree too. <code>max_depth</code>, <code>min_samples_leaf</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Distance</dt><dd>Straight-line (Euclidean) distance across the logs, unless you choose another. <code>metric</code> <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+        <div><dt>Distance weighting</dt><dd>Closer neighbours get a bigger say. <code>weights='distance'</code> <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+      </dl>
+      <h2 id="letter-E">E</h2>
+      <dl class="glossary">
+        <div><dt>Early stopping</dt><dd>Score a validation set after every epoch, keep the best weights, and stop after a set number of epochs without improvement (the patience). <code>early_stopping</code>, <code>n_iter_no_change</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Elbow plot</dt><dd>Spread against k. It always falls; look for where the gains flatten. <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Electrofacies</dt><dd>Clusters of log responses, named afterwards. They're groups of readings, which may or may not match the geologist's facies. <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Ensemble</dt><dd>A model made of many models whose answers are combined. A forest is an ensemble of trees. <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Entropy</dt><dd>Another measure of how mixed a box is, from information theory. It usually picks very similar splits. <code>criterion='entropy'</code> <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Extrapolation</dt><dd>Predicting outside the range of the training data, where the fitted line has no evidence either way. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Extra trees</dt><dd>A cousin of the forest that also picks each cutoff at random, rather than the best one. <code>ExtraTreesClassifier</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+      </dl>
+      <h2 id="letter-F">F</h2>
+      <dl class="glossary">
+        <div><dt>F1</dt><dd>Precision and recall together? Watch out: treats a miss and a false alarm as equally bad, which your job may not. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Feature</dt><dd>A column that goes into the model: here a log. Also called an input, a predictor, a variable or an attribute. scikit-learn calls the table of features <code>X</code>. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Feature importance</dt><dd>How much each log's splits reduced the impurity, totalled over the tree. Chapter 7 shows how it can mislead. <code>feature_importances_</code> <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Feature space</dt><dd>The space with one axis per feature, where each sample is a point. With two logs it's a crossplot; with five it can't be drawn, but the algorithms don't mind. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Flags</dt><dd>scikit-learn's <code>predict</code> returns −1 for an outlier and 1 for an inlier; <code>decision_function</code> is the score shifted so that 0 is the cutoff. <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+      </dl>
+      <h2 id="letter-G">G</h2>
+      <dl class="glossary">
+        <div><dt>Gini impurity</dt><dd>How mixed a box is: the chance two samples drawn from it at random are different facies. 0 is pure. <code>criterion='gini'</code> <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Gradient and learning rate</dt><dd>The gradient says which way to move each weight to lower the loss; the learning rate says how far. Too big and training jumps about or blows up; too small and it crawls, as in chapter 2. <code>learning_rate_init</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Gradient boosting</dt><dd>A different family: trees grown one after another, each fixing the last one's mistakes, rather than side by side. XGBoost and LightGBM are boosting, not forests. <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Gradient descent</dt><dd>Finding the bottom of the loss by repeatedly stepping downhill: work out which way the loss falls fastest, and take a small step that way. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Greedy</dt><dd>Choosing each split as the best one on its own, without looking ahead to the splits that follow. <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Grouped cross-validation</dt><dd>Folds made of whole groups, here whole wells, so no well is on both sides. <code>GroupKFold</code>, <code>LeaveOneGroupOut</code> <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+      </dl>
+      <h2 id="letter-H">H</h2>
+      <dl class="glossary">
+        <div><dt>Hard and soft voting</dt><dd>A hard vote counts each tree's facies; a soft vote averages the share of each facies in each tree's leaf. scikit-learn's forests vote soft. <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Hyperparameter</dt><dd>A setting chosen by you, not learned from the data: k, a tree's depth, the number of trees. <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+      </dl>
+      <h2 id="letter-I">I</h2>
+      <dl class="glossary">
+        <div><dt>Impurity importance</dt><dd>How much each log's splits cleaned up the boxes, totalled over the forest (Figure 7.4). Shared among similar logs. <code>feature_importances_</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>In bag, out of bag</dt><dd>For one tree, the samples it learned from, and the ones it never saw. <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Isolation tree</dt><dd>A tree of random cuts, each on a random log at a random value within the box, grown until samples are alone or a height limit is reached. <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+      </dl>
+      <h2 id="letter-K">K</h2>
+      <dl class="glossary">
+        <div><dt>k</dt><dd>The number of clusters you ask for. k-means always returns exactly k. <code>n_clusters</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>k</dt><dd>How many neighbours vote. Small k follows every wrinkle; big k smooths, and can outvote rare classes. <code>n_neighbors</code> <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+        <div><dt>k-means++</dt><dd>A smarter start: each new centroid is picked from the samples, favouring ones far from the centroids already chosen. scikit-learn's default. <code>init='k-means++'</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>kNN regression</dt><dd>The same idea for numbers: predict the average of the neighbours' values. <code>KNeighborsRegressor</code> <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+      </dl>
+      <h2 id="letter-L">L</h2>
+      <dl class="glossary">
+        <div><dt>Label</dt><dd>The column the model is asked to predict. Also called the target, the response or the output. scikit-learn calls it <code>y</code>. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Layer</dt><dd>A set of units that all take the same inputs. The input layer is the logs, the output layer the prediction; the layers between are hidden. <code>hidden_layer_sizes</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Lazy learner</dt><dd>kNN doesn't learn a formula; it keeps every training sample and does the work at prediction time, which makes it slow on big datasets. <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+        <div><dt>Leaf size</dt><dd>A minimum number of samples in a leaf, or needed to split, which stops the tree carving out single samples. <code>min_samples_leaf</code>, <code>min_samples_split</code> <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Leakage</dt><dd>Information from the test samples reaching the model during training, so the score flatters it. Neighbouring depths are the commonest leak in well data. <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Learning rate</dt><dd>How big each downhill step is. Too small and it crawls; too big and it overshoots and can blow up. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Least squares</dt><dd>Choosing the line that makes the sum of the squared residuals as small as possible. Also called ordinary least squares, or OLS. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Local outlier factor</dt><dd>Another detector: compares each sample's crowding with its neighbours', so it finds samples strange for their neighbourhood. <code>LocalOutlierFactor</code> <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Logs tried per split</dt><dd>How many logs, picked at random, each split may choose from. Fewer makes the trees more different from each other. For facies the default is the square root of the number of logs; for a number like sonic, all of them. <code>max_features</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Log transform</dt><dd>Fitting log<sub>10</sub> of permeability instead of permeability, because permeability spans orders of magnitude and its scatter grows with its size. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Loss</dt><dd>The number training tries to make small; here the mean squared error. Also called the cost or objective. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Loss</dt><dd>The error training tries to shrink. For predicting a log, the mean squared error (scikit-learn halves it). <code>loss_curve_</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+      </dl>
+      <h2 id="letter-M">M</h2>
+      <dl class="glossary">
+        <div><dt>MAE</dt><dd>How far off is a typical prediction? Watch out: says nothing about the worst misses. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Majority vote</dt><dd>The prediction is the facies most of the neighbours have; ties go to the class listed first. <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+        <div><dt>Masking and swamping</dt><dd>Masking: a big cluster of outliers looks normal to itself, so it's missed. Swamping: ordinary samples near outliers get flagged too. Small samples per tree reduce both. <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Micro average</dt><dd>Pool every class's boxes, then score? Watch out: with one label per sample it's just accuracy. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Missing value</dt><dd>A gap in the table, such as a sonic that wasn't run. Most algorithms can't use a row with a gap, so the row is dropped or the gap is filled. In pandas it's <code>NaN</code>. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Model</dt><dd>The recipe that turns features into a prediction, with numbers learned from the data. <code>fit</code> learns them; <code>predict</code> uses them. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Multilayer perceptron</dt><dd>The classic network of fully connected layers, the kind in this chapter. <code>MLPRegressor</code>, <code>MLPClassifier</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+      </dl>
+      <h2 id="letter-N">N</h2>
+      <dl class="glossary">
+        <div><dt>Neighbours</dt><dd>The training samples closest to the sample being predicted, measured across all the logs at once. <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+        <div><dt>Node, split and leaf</dt><dd>A node is a box of samples; a split is a cutoff on one log that divides it in two; a leaf is a box that isn't split again. The first node is the root. <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Normalisation</dt><dd>Rescaling one well's log to match a reference, for example matching its 5th and 95th percentiles, to remove tool and calibration differences before modelling. <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Novelty</dt><dd>A new sample unlike the training data, as opposed to an odd one inside it. Chapter 7's unfamiliarity check was novelty detection. <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Number of trees</dt><dd>More trees never make a forest overfit; the vote just settles, and the forest gets slower. 100 is the default and usually plenty. <code>n_estimators</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Number of trees</dt><dd>As in a random forest, more trees make the score steadier; 100 is the default. <code>n_estimators</code> <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+      </dl>
+      <h2 id="letter-O">O</h2>
+      <dl class="glossary">
+        <div><dt>One-class SVM</dt><dd>Another detector: draws a boundary around the bulk of the data and flags what falls outside. <code>OneClassSVM</code> <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>One-vs-rest AUC, macro</dt><dd>Does it rank every class well against the others? Watch out: can be near perfect while a class is never called. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Out-of-bag score</dt><dd>Each training sample predicted only by the trees that left it out, then scored. Free, and optimistic when samples have near-copies in the training data, as neighbouring depths do. <code>oob_score=True</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Overfitting</dt><dd>Fitting the training samples' quirks instead of the rock: training error keeps falling while validation error rises. <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Overfitting and underfitting</dt><dd>Too flexible a model chases the noise in its training samples; too stiff a one misses the real shape. Both show up as poor scores on new samples. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+      </dl>
+      <h2 id="letter-P">P</h2>
+      <dl class="glossary">
+        <div><dt>Path length</dt><dd>How many cuts it took to reach a sample's leaf. Short means strange. <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Permutation importance</dt><dd>Shuffle one log in a test well and see how far the score falls. Slower, but it answers the more useful question. <code>permutation_importance</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Polynomial features</dt><dd>Powers of the input (porosity squared, cubed and so on) added as extra inputs, so a straight-line method can fit a curve. <code>PolynomialFeatures</code>, <code>degree</code> <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Precision</dt><dd>When it says "sand", how often is it sand? Watch out: can be perfect while missing most of the sand. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Pruning</dt><dd>Growing a big tree, then cutting back branches that add little. <code>ccp_alpha</code> <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+      </dl>
+      <h2 id="letter-R">R</h2>
+      <dl class="glossary">
+        <div><dt>R²</dt><dd>How much better than predicting the average? Watch out: no units; depends on how varied the truth is; can hide a bias. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Random seed</dt><dd>The number that fixes the random draws, so a forest can be grown again exactly. Change it and a good forest's score barely moves. <code>random_state</code> <a class="from" href="../random-forests/#words">Chapter 7</a></dd></div>
+        <div><dt>Random split</dt><dd>Dealing samples into sets at random. Fine for independent samples; for logs it puts near-copies on both sides. <code>train_test_split</code> <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Random start</dt><dd>Where the centroids begin. Different starts can settle in different places. <code>random_state</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Random start</dt><dd>The random weights a network begins from. Different starts end in different places; averaging a few networks is cheap insurance. <code>random_state</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Recall</dt><dd>Of all the sand, how much did it find? Watch out: can be perfect by calling everything sand. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Regression</dt><dd>A supervised question whose answer is a number: what porosity, what sonic. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Regression tree</dt><dd>The same idea for numbers: split to make each box's values alike, and predict the box's average. <code>DecisionTreeRegressor</code> <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Regularisation</dt><dd>A penalty on large weights, which keeps the network smoother. Also called L2 or weight decay. <code>alpha</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Residual</dt><dd>The miss for one sample: the true value minus the prediction. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>RMSE</dt><dd>How far off, with big misses counting extra? Watch out: a handful of bad samples can dominate it. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>ROC AUC</dt><dd>Does the score rank the class above the rest, whatever the cutoff? Watch out: says nothing about the cutoff you use; flatters when the class is rare. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Rules</dt><dd>A tree read as a list of if-then statements, one per leaf. <code>export_text</code> <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+      </dl>
+      <h2 id="letter-S">S</h2>
+      <dl class="glossary">
+        <div><dt>Sample</dt><dd>One row of the table: one depth in one well. Also called an observation, an instance or a record. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Samples per tree</dt><dd>Each tree sees a random subset, 256 by default, which keeps it fast and stops dense clusters of outliers hiding each other. <code>max_samples</code> <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+        <div><dt>Scaling</dt><dd>Putting the logs in standard units first, so a log with big numbers doesn't dominate the distances. <code>StandardScaler</code> <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+        <div><dt>Scaling</dt><dd>Networks train badly on raw logs with wildly different units, so the inputs, and here the sonic too, are put in standard units first, as in chapter 1. <code>StandardScaler</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Several starts</dt><dd>Run k-means more than once and keep the tightest result. With k-means++ scikit-learn runs one start by default; with random starts, ten. <code>n_init</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Silhouette score</dt><dd>Another guide to k: how much closer each sample is to its own cluster than to the next one, from −1 to 1. <code>silhouette_score</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Slope and intercept</dt><dd>The two numbers of a straight line: how much the answer changes per unit of the input, and where it starts. <code>coef_</code>, <code>intercept_</code> <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Spread, or inertia</dt><dd>The total squared distance from each sample to its centroid. Lower is tighter. <code>inertia_</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Standardising</dt><dd>Putting every log in standard units (subtract the mean, divide by the standard deviation) so no log dominates the distances because of its units. <code>StandardScaler</code> <a class="from" href="../k-means/#words">Chapter 1</a></dd></div>
+        <div><dt>Supervised</dt><dd>Learning from rows where the label is known, to predict it where it isn't. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Support</dt><dd>How many true samples of each class are there? Watch out: a score from a handful of samples is mostly luck. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+      </dl>
+      <h2 id="letter-T">T</h2>
+      <dl class="glossary">
+        <div><dt>Test set, or blind well</dt><dd>Samples kept back until the very end and used once, to report how the model will do on new data. <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Threshold</dt><dd>The cutoff value of a split. scikit-learn tries the midpoints between neighbouring values. <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Training and test error</dt><dd>The miss on the samples the model learned from, and on samples it didn't. Only the second tells you how it will do. <a class="from" href="../linear-regression/#words">Chapter 2</a></dd></div>
+        <div><dt>Training set</dt><dd>The samples a model learns from. <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Training, validation and test</dt><dd>The rows a model learns from, the rows used to choose its settings, and the rows kept back to score it honestly. Chapter 4 is about getting these right. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Tuning</dt><dd>Trying settings and keeping the best on validation data. <code>GridSearchCV</code>, with a grouped splitter for wells <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+      </dl>
+      <h2 id="letter-U">U</h2>
+      <dl class="glossary">
+        <div><dt>Unit, or neuron</dt><dd>One weighted sum of its inputs, plus a constant, passed through an activation. A hidden unit's output is a log the network invents. <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+        <div><dt>Unsupervised</dt><dd>Learning without labels: finding groups or oddities in the features alone. <a class="from" href="../a-log-is-a-table/#words">Chapter 0</a></dd></div>
+        <div><dt>Unsupervised</dt><dd>Learning without labels: the model is never told which samples are bad hole, so it can only find structure, never meaning. <a class="from" href="../isolation-forest/#words">Chapter 9</a></dd></div>
+      </dl>
+      <h2 id="letter-V">V</h2>
+      <dl class="glossary">
+        <div><dt>Validation set</dt><dd>The samples used to choose settings, such as k, and to compare models. Used often, so it gets used up. <a class="from" href="../train-validate-test/#words">Chapter 4</a></dd></div>
+        <div><dt>Variance</dt><dd>How much a model changes when the training data changes a little. Deep trees have a lot of it, which chapter 7's forests fix. <a class="from" href="../decision-trees/#words">Chapter 6</a></dd></div>
+        <div><dt>Vote shares</dt><dd>The share of neighbours of each facies: a rough probability, used for ROC curves in chapter 5. <code>predict_proba</code> <a class="from" href="../k-nearest-neighbours/#words">Chapter 3</a></dd></div>
+      </dl>
+      <h2 id="letter-W">W</h2>
+      <dl class="glossary">
+        <div><dt>Weighted F1</dt><dd>How well does it do, sample by sample? Watch out: hides rare classes, like accuracy. <a class="from" href="../metrics/#cheat-sheet">Chapter 5</a></dd></div>
+        <div><dt>Weights and biases</dt><dd>The numbers the network learns: a weight for every connection, and a constant (a bias, or intercept) for every unit. <code>coefs_</code>, <code>intercepts_</code> <a class="from" href="../neural-networks/#words">Chapter 8</a></dd></div>
+      </dl>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

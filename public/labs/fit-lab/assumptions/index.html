@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Assumptions · Fit Lab</title>
+    <meta name="description" content="Every simplification in the teaching field, every physics value still to check, and every difference from scikit-learn." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/assumptions-Bn8rZiJX.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Assumptions</div>
+        <h1>What the lab simplifies</h1>
+        <p class="standfirst">Every simplification in the teaching field, every physics value still to check, and every place the lab's algorithms differ from scikit-learn's.</p>
+      </div>
+
+      <h2>The teaching field</h2>
+      <ul>
+        <li>Six fictional wells through the same layer-cake stratigraphy: shale, Sand A, a shale with coals, a limestone, a shale with anhydrite, Sand B and shale. Each well is 200 m, sampled every 15.24 cm, and vertical, so measured depth is true vertical depth.</li>
+        <li>Six facies, all classes in the FORCE 2020 labels: sandstone, sandstone/shale, shale, limestone, coal and anhydrite. Coal and anhydrite are kept rare on purpose.</li>
+        <li>Logs are Probe Lab's point responses for each rock, smoothed to each tool's vertical resolution, with noise matched to a FORCE 2020 interval. The deep and medium resistivity are induction curves.</li>
+        <li>One mud for every well (fresh water based, 1.2 g/cm³, no barite), an 8.5 in bit and 25 cm of invasion in permeable beds. Sand A has an oil–water contact at 2045 m.</li>
+        <li>Permeability comes from Pore Lab's Kozeny-Carman model, with grain size and sorting set bed by bed and about a quarter of a decade of variation from sample to sample. The 420 core plugs, every 30 cm through Sand A in Wells A, B and C, add a little laboratory measurement noise.</li>
+        <li>Built-in problems, each placed for a chapter: a washout in Well D that corrupts density, neutron and Pe; no sonic in the top 40 m of Wells B and F; Well E logged with older tools (gamma ray 15 API high, neutron 0.04 low, density 0.035 g/cm³ high, Pe 0.4 high); a tight dolomitised limestone in Well F, harder than any rock in the other wells; beds thinner than the tools can resolve; and step-out wells: Well D with more compacted shales and density reading 0.02 g/cm³ high, and Well F with slightly compacted shales, a feldspathic Sand B and density reading 0.015 g/cm³ low.</li>
+      </ul>
+
+      <h2>Physics values still to check</h2>
+      <p>The rock physics is copied from Probe Lab, whose research report marks some values as textbook figures still to be checked against a source. These are all the values so marked in the material table Fit Lab copies; not every one of these minerals appears in the teaching field. Two tool constants are also unverified: the density tool's mass attenuation coefficient at 662 keV, and the neutron tool's spacings and slowing-down lengths.</p>
+      <div class="cheat-wrap" id="unverified"></div>
+
+      <h2>Where the lab differs from scikit-learn</h2>
+      <dl class="glossary">
+        <div><dt>k-means</dt><dd>From the same starting centroids, the same labels, centroids and inertia as <code>KMeans</code>. The figures start from your centroids or from seeded random starts; <code>KMeans</code> starts with k-means++ by default.</dd></div>
+        <div><dt>Linear regression</dt><dd>The same coefficients as <code>LinearRegression</code> and <code>PolynomialFeatures</code>, to within 10<sup>−9</sup>. Gradient descent is the lab's own, for showing the steps.</dd></div>
+        <div><dt>k-nearest neighbours</dt><dd>Brute-force search, the same predictions and vote shares as <code>KNeighborsClassifier</code>, including ties, which go to the class listed first.</dd></div>
+        <div><dt>Decision trees</dt><dd>CART with Gini impurity and 32-bit cutoffs, as <code>DecisionTreeClassifier</code>. When two logs tie exactly for the best cut, the lab tries the logs in order (or a seeded shuffle); scikit-learn's order is its own random one, so deep trees can part ways after the first exact tie.</dd></div>
+        <div><dt>Random forests</dt><dd>Bootstrap samples, the square root of the logs at each split and a soft vote, as <code>RandomForestClassifier</code>, but with the lab's own random numbers: blind-well accuracy is within two points of scikit-learn's average over ten seeds, and the sonic regression's error within its range.</dd></div>
+        <div><dt>Neural networks</dt><dd>The design of <code>MLPRegressor</code> (Glorot starts, ReLU, Adam, half the squared error plus an L2 penalty) with the lab's own random numbers; the training loss and the blind-well error fall within scikit-learn's spread over ten seeds. The figures use a learning rate of 0.01 and batches of 64 (scikit-learn's defaults are 0.001 and up to 200) so they train in about a second, and early stopping uses a validation well where scikit-learn holds back a random tenth.</dd></div>
+        <div><dt>Isolation forest</dt><dd>The design and defaults of <code>IsolationForest</code> (100 trees of 256 samples, a height limit of 8), with the lab's own random numbers; the washout's ROC AUC is within two points of scikit-learn's average over ten seeds.</dd></div>
+        <div><dt>Metrics</dt><dd>The same values as <code>sklearn.metrics</code>, to twelve decimal places. Where a facies is never called, its precision has nothing to divide by: scikit-learn reports 0 with a warning, and so does the lab, with a note or a dash in the figures.</dd></div>
+        <div><dt>Validation</dt><dd>Random splits are seeded. Block cross-validation assigns depth blocks to folds by a fixed rule, and per-well normalisation matches each well's 5th and 95th percentiles to a reference; both are the lab's own helpers, as scikit-learn has no direct equivalent.</dd></div>
+      </dl>
+
+      <h2>Credits</h2>
+      <ul>
+        <li>Rock physics and tool responses: Probe Lab. Permeability: Pore Lab. Vertical resolution smoothing: Bore Lab. All three are in the Labs series.</li>
+        <li>Real wells: the FORCE 2020 Machine Learning Competition dataset. See the <a href="../data/">Data</a> page for the citation and licences.</li>
+      </ul>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

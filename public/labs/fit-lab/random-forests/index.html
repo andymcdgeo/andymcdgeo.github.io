@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Random forests: many trees, one vote · Fit Lab</title>
+    <meta name="description" content="Do many rough trees beat one careful one? Bootstrap samples, voting trees, log importance and a missing sonic, on six wells." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/forests-CtjiZk1R.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="modulepreload" crossorigin href="../assets/rng-CF1C7Ptq.js">
+    <link rel="modulepreload" crossorigin href="../assets/data-HiAZ1lSs.js">
+    <link rel="modulepreload" crossorigin href="../assets/stepper-c2Ws7IrS.js">
+    <link rel="modulepreload" crossorigin href="../assets/linreg-DoHo_m4p.js">
+    <link rel="modulepreload" crossorigin href="../assets/tree-Br2-fCdV.js">
+    <link rel="modulepreload" crossorigin href="../assets/validation-DE1D0iDZ.js">
+    <link rel="modulepreload" crossorigin href="../assets/model-DKEpt-Rm.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-CUA4UBsd.js">
+    <link rel="modulepreload" crossorigin href="../assets/forest-WC1gs4TM.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-Bg2at8r0.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 7 · Supervised learning</div>
+        <h1>Random forests: many trees, one vote</h1>
+        <p class="standfirst">Do many rough trees beat one careful one? Grow a hundred trees, each on a shuffled copy of the data, and let them vote. On a new well the forest does better than a single tree, and it doesn't depend on luck.</p>
+        <div class="meta"><span>13 minutes</span><span>Five logs</span><span>Learns from the crest wells, tested on the step-outs</span></div>
+      </div>
+
+      <h2>One tree is fickle</h2>
+      <p>Chapter 6 grew trees on Wells A and B and tested them on Well C, a close neighbour. Here's a weakness that test hid. Train on the three crest wells, test on the step-out wells, and tiny, arbitrary choices change a deep tree's answers.</p>
+
+      <section class="figure" id="fig-fickle" aria-label="Figure 7.1"></section>
+
+      <p class="note-anchor">A deep tree fits its training wells so closely that a coin toss deep in the tree, which log to use when two tie, changes how it treats a new well. The forest fixes that by averaging: it scores better on average, and it gives nearly the same answer whatever its random seed.<span class="note">Ties are common deep in a tree, where boxes hold a handful of samples and several cutoffs separate them equally well.</span></p>
+
+      <h2>Inside the forest</h2>
+      <p>Averaging only helps if the trees make different mistakes, so a forest makes its trees different on purpose, in two ways. Each tree learns from a <em>bootstrap</em> sample: as many samples as the data, drawn at random with replacement, so some appear twice or more and about a third are left out. And each split looks at only a random few of the logs. Step through the trees below, on gamma ray and density.</p>
+
+      <section class="figure" id="fig-inside" aria-label="Figure 7.2"></section>
+
+      <p>No single tree is much good. The vote is. It's the wisdom of crowds, and it works for the same reason: the trees' errors are different, so they cancel. This recipe, each model trained on its own bootstrap sample and then a vote, is called <em>bagging</em>, short for bootstrap aggregating. A random forest is bagged trees, plus the random choice of logs at each split, which makes the trees more different still.</p>
+
+      <h2>Out of bag: a free test, with a catch</h2>
+      <p>Every tree leaves about a third of the training samples out of its bag. Those samples are an unseen test for that tree, and between them the trees cover every sample: each one is left out by about 37 of the 100 trees. Ask just those trees to vote on it and you have a prediction for a training sample from trees that never saw it. Do that for every sample, count how often the vote is right, and you have the <strong>out-of-bag score</strong>, without setting aside a single sample.</p>
+
+      <section class="figure" id="fig-oob" aria-label="Figure 7.3"></section>
+
+      <p>That makes the out-of-bag score useful for quick comparisons on the training wells: how many trees, how many logs per split. It isn't the score to report. The samples it judges sit between their neighbours in the same wells, which is exactly chapter 4's random split. The honest test is still a well the forest has never seen.</p>
+
+      <h2>Which logs matter?</h2>
+      <p>A forest keeps count of how much each log helped: the total drop in impurity from every split on it. It's quick and it's popular, and it's easy to over-read.</p>
+
+      <section class="figure" id="fig-importance" aria-label="Figure 7.4"></section>
+
+      <h2>Filling in a missing sonic</h2>
+      <p class="note-anchor">Forests predict numbers too. Each tree predicts the average sonic of the samples in its leaf, and the forest averages its trees. Well F had no sonic run in its top 40 m. Train a forest on Wells A to E to predict sonic from gamma ray, density, neutron and Pe, and fill the gap.<span class="note">Predicting a missing log from the others is one of the commonest jobs for machine learning in petrophysics, and chapter 8 does it again with a neural network.</span></p>
+
+      <section class="figure" id="fig-sonic" aria-label="Figure 7.5"></section>
+
+      <p>A forest can only predict an average of values it has seen, so it can't produce a sonic faster than the fastest rock in its training wells. A straight line can, but here it does no better, because the bed doesn't look fast on the other logs either: it looks like nothing the models know. No model can be right about a rock it has never seen. What you can do is notice when you're asking it to try, by checking how far each new sample is from the training data.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>Does the vote still help on real wells, and does the out-of-bag score still flatter?</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 7.6"></section>
+
+      <h2 id="words">Words you'll meet</h2>
+      <p>Forests come with a vocabulary, and scikit-learn's settings use it. Here it is in plain words, with scikit-learn's name where it has one.</p>
+      <dl class="glossary">
+        <div><dt>Ensemble</dt><dd>A model made of many models whose answers are combined. A forest is an ensemble of trees.</dd></div>
+        <div><dt>Bootstrap sample</dt><dd>As many samples as the training data, drawn at random with replacement: some twice or more, about a third not at all. <code>bootstrap=True</code></dd></div>
+        <div><dt>Bagging</dt><dd>Bootstrap aggregating: train each model on its own bootstrap sample, then let them vote (or average, for numbers).</dd></div>
+        <div><dt>In bag, out of bag</dt><dd>For one tree, the samples it learned from, and the ones it never saw.</dd></div>
+        <div><dt>Out-of-bag score</dt><dd>Each training sample predicted only by the trees that left it out, then scored. Free, and optimistic when samples have near-copies in the training data, as neighbouring depths do. <code>oob_score=True</code></dd></div>
+        <div><dt>Number of trees</dt><dd>More trees never make a forest overfit; the vote just settles, and the forest gets slower. 100 is the default and usually plenty. <code>n_estimators</code></dd></div>
+        <div><dt>Logs tried per split</dt><dd>How many logs, picked at random, each split may choose from. Fewer makes the trees more different from each other. For facies the default is the square root of the number of logs; for a number like sonic, all of them. <code>max_features</code></dd></div>
+        <div><dt>Depth and leaf size</dt><dd>Forests usually grow every tree to full depth and let the vote do the smoothing. Setting a minimum number of samples in a leaf, or a maximum depth, smooths each tree too. <code>max_depth</code>, <code>min_samples_leaf</code></dd></div>
+        <div><dt>Hard and soft voting</dt><dd>A hard vote counts each tree's facies; a soft vote averages the share of each facies in each tree's leaf. scikit-learn's forests vote soft.</dd></div>
+        <div><dt>Class probabilities</dt><dd>The forest's vote shares, one per facies. Useful for ranking and for ROC curves (chapter 5), but not true probabilities without calibration. <code>predict_proba</code></dd></div>
+        <div><dt>Impurity importance</dt><dd>How much each log's splits cleaned up the boxes, totalled over the forest (Figure 7.4). Shared among similar logs. <code>feature_importances_</code></dd></div>
+        <div><dt>Permutation importance</dt><dd>Shuffle one log in a test well and see how far the score falls. Slower, but it answers the more useful question. <code>permutation_importance</code></dd></div>
+        <div><dt>Bias and variance</dt><dd>Bias is being wrong in the same way every time (too simple a model); variance is giving different answers for small changes to the data (too flexible a model). Deep trees have low bias and high variance, and averaging cuts the variance.</dd></div>
+        <div><dt>Random seed</dt><dd>The number that fixes the random draws, so a forest can be grown again exactly. Change it and a good forest's score barely moves. <code>random_state</code></dd></div>
+        <div><dt>Extra trees</dt><dd>A cousin of the forest that also picks each cutoff at random, rather than the best one. <code>ExtraTreesClassifier</code></dd></div>
+        <div><dt>Gradient boosting</dt><dd>A different family: trees grown one after another, each fixing the last one's mistakes, rather than side by side. XGBoost and LightGBM are boosting, not forests.</dd></div>
+      </dl>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>A random forest grows many deep trees, each on a bootstrap sample with a random choice of logs at each split, and lets them vote.</li>
+          <li>On a new well it beats a single tree, and it's steadier. Its out-of-bag score is a free check, but a random split in disguise: report a blind well.</li>
+          <li>It only predicts what it has seen, and importance is shared among similar logs. Check where a new well is unlike the training wells before trusting what it predicts there.</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/random-forest-for-lithology-classification-from-well-log-data-4a1380ef025b" target="_blank" rel="noopener">Random Forest for Lithology Classification From Well Log Data</a></p>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/random-forest-regression-for-continuous-well-log-prediction-61d3ec1c683a" target="_blank" rel="noopener">Random Forest Regression for Continuous Well Log Prediction</a></p>
+        </div>
+        <div>
+          <h3>Next: neural networks</h3>
+          <p><a href="../neural-networks/">Can we predict a missing sonic log?</a> Logs from logs, and when to stop training.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

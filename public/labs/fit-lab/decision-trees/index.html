@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Decision trees: cutoffs, learned · Fit Lab</title>
+    <meta name="description" content="Could a computer choose our cutoffs? Zone a crossplot with your own cutoffs, then watch a decision tree choose its own, one split at a time." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/trees-D2fxmcpp.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="modulepreload" crossorigin href="../assets/data-HiAZ1lSs.js">
+    <link rel="modulepreload" crossorigin href="../assets/linechart-DXxhyCnp.js">
+    <link rel="modulepreload" crossorigin href="../assets/stepper-c2Ws7IrS.js">
+    <link rel="modulepreload" crossorigin href="../assets/tree-Br2-fCdV.js">
+    <link rel="modulepreload" crossorigin href="../assets/rng-CF1C7Ptq.js">
+    <link rel="modulepreload" crossorigin href="../assets/validation-DE1D0iDZ.js">
+    <link rel="modulepreload" crossorigin href="../assets/model-DKEpt-Rm.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-CUA4UBsd.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 6 · Supervised learning</div>
+        <h1>Decision trees: cutoffs, learned</h1>
+        <p class="standfirst">Could a computer choose our cutoffs? A decision tree is a stack of yes-or-no questions about the logs, each one a cutoff. It's the most petrophysical of the algorithms, and the easiest to read.</p>
+        <div class="meta"><span>8 minutes</span><span>Gamma ray and density</span><span>Learns from Wells A and B, tested on Well C</span></div>
+      </div>
+
+      <h2>A crossplot zoned by cutoffs</h2>
+      <p>Petrophysicists zone crossplots with cutoffs all the time: above so many API it's shale, below so much density it's porous sand. Stack a few of those questions and you have a decision tree. Try it: three cutoffs in two levels, on gamma ray and density.</p>
+
+      <section class="figure" id="fig-yours" aria-label="Figure 6.1"></section>
+
+      <p class="note-anchor">Each box is named after the facies most of its training samples are, which is exactly how a tree labels its leaves. Whether or not you beat the algorithm, it did something you didn't: it tried every possible cutoff.<span class="note">The algorithm here is CART (classification and regression trees), the one behind scikit-learn's DecisionTreeClassifier, random forests and most gradient boosting.</span></p>
+
+      <h2>How the algorithm chooses</h2>
+      <p>At each box, the algorithm tries every cutoff on every log, halfway between each pair of neighbouring values. For each one it measures how mixed the two halves would be, and it keeps the cutoff that unmixes them most. Then it does the same again inside each half.</p>
+
+      <section class="figure" id="fig-grow" aria-label="Figure 6.2"></section>
+
+      <p class="note-anchor">That's a <em>greedy</em> strategy: each cutoff is the best it can be on its own, with no thought for the cutoffs that follow. It's fast, and it's why you can sometimes beat it by eye. And because each cutoff compares values within one log at a time, the units never matter: unlike k-means and k-nearest neighbours, a tree doesn't need scaled logs.<span class="note">The finished tree can be read as rules, as at the end of Figure 6.2. That's the main reason trees are popular: you can check every rule against what you know about the rock.</span></p>
+
+      <h2>How deep should it grow?</h2>
+      <p>Left alone, the algorithm keeps splitting until every box is pure. Depth is the tree's version of k: the one setting you have to choose.</p>
+
+      <section class="figure" id="fig-depth" aria-label="Figure 6.3"></section>
+
+      <p>Too shallow and there aren't enough boxes for six facies. Too deep and the tree carves out a sliver for every odd sample, scores nearly 100% on the wells it learned from, and does no better on Well C. Choose the depth the chapter 4 way, on a validation well. Or grow lots of deep trees and let them vote: that's the next chapter.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>Cutoffs that sort the teaching field's crest wells cleanly. What do learned cutoffs make of real wells?</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 6.4"></section>
+
+      <h2 id="words">Words you'll meet</h2>
+      <p>Trees have their own vocabulary, and scikit-learn's <code>DecisionTreeClassifier</code> uses it. Here they are in plain words, with scikit-learn's name where it has one.</p>
+      <dl class="glossary">
+        <div><dt>Node, split and leaf</dt><dd>A node is a box of samples; a split is a cutoff on one log that divides it in two; a leaf is a box that isn't split again. The first node is the root.</dd></div>
+        <div><dt>Threshold</dt><dd>The cutoff value of a split. scikit-learn tries the midpoints between neighbouring values.</dd></div>
+        <div><dt>Depth</dt><dd>How many questions deep the tree goes. Deeper means more boxes, and sooner or later boxes around single samples. <code>max_depth</code></dd></div>
+        <div><dt>Gini impurity</dt><dd>How mixed a box is: the chance two samples drawn from it at random are different facies. 0 is pure. <code>criterion='gini'</code></dd></div>
+        <div><dt>Entropy</dt><dd>Another measure of how mixed a box is, from information theory. It usually picks very similar splits. <code>criterion='entropy'</code></dd></div>
+        <div><dt>Greedy</dt><dd>Choosing each split as the best one on its own, without looking ahead to the splits that follow.</dd></div>
+        <div><dt>Leaf size</dt><dd>A minimum number of samples in a leaf, or needed to split, which stops the tree carving out single samples. <code>min_samples_leaf</code>, <code>min_samples_split</code></dd></div>
+        <div><dt>Pruning</dt><dd>Growing a big tree, then cutting back branches that add little. <code>ccp_alpha</code></dd></div>
+        <div><dt>Rules</dt><dd>A tree read as a list of if-then statements, one per leaf. <code>export_text</code></dd></div>
+        <div><dt>Feature importance</dt><dd>How much each log's splits reduced the impurity, totalled over the tree. Chapter 7 shows how it can mislead. <code>feature_importances_</code></dd></div>
+        <div><dt>Regression tree</dt><dd>The same idea for numbers: split to make each box's values alike, and predict the box's average. <code>DecisionTreeRegressor</code></dd></div>
+        <div><dt>Variance</dt><dd>How much a model changes when the training data changes a little. Deep trees have a lot of it, which chapter 7's forests fix.</dd></div>
+      </dl>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>A decision tree is a stack of cutoffs. Each box is named after the commonest facies of its training samples.</li>
+          <li>The algorithm picks each cutoff by trying them all and keeping the one that leaves the two halves least mixed. It never looks ahead.</li>
+          <li>Deep trees memorise: choose the depth on a validation well. Trees don't need scaled logs.</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/random-forest-for-lithology-classification-from-well-log-data-4a1380ef025b" target="_blank" rel="noopener">Random Forest for Lithology Classification From Well Log Data</a>, the step from one tree to many.</p>
+        </div>
+        <div>
+          <h3>Next: random forests</h3>
+          <p><a href="../random-forests/">Do many rough trees beat one careful one?</a> Bootstrap samples, votes, and a missing sonic.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

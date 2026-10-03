@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Isolation forest: finding the strange · Fit Lab</title>
+    <meta name="description" content="Which samples are bad hole? Flag a washout yourself, watch random cuts isolate strange samples, and see what an isolation forest really flags across six wells." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/iforest-DSki-Sl3.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="modulepreload" crossorigin href="../assets/rng-CF1C7Ptq.js">
+    <link rel="modulepreload" crossorigin href="../assets/data-HiAZ1lSs.js">
+    <link rel="modulepreload" crossorigin href="../assets/stepper-c2Ws7IrS.js">
+    <link rel="modulepreload" crossorigin href="../assets/metrics-CzD-6QEP.js">
+    <link rel="modulepreload" crossorigin href="../assets/validation-DE1D0iDZ.js">
+    <link rel="modulepreload" crossorigin href="../assets/model-DKEpt-Rm.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-Bg2at8r0.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 9 · Unsupervised learning</div>
+        <h1>Isolation forest: finding the strange</h1>
+        <p class="standfirst">Which samples are bad hole? An isolation forest doesn't know what bad hole is. It finds the samples that are easiest to separate from the rest, which catches a washout, and every rock that's simply rare.</p>
+        <div class="meta"><span>10 minutes</span><span>Gamma ray, density, neutron and Pe</span><span>All six wells, no labels</span></div>
+      </div>
+
+      <h2>Spot the bad hole</h2>
+      <p class="note-anchor">Where the borehole washes out, the pad tools lose contact with the formation and read the mud instead. Density reads low, Pe reads like mud, and any model trained on those samples learns nonsense. Chapter 4 showed what Well D's washout did to a classifier. Finding bad hole is usually the first job on a new well, so try it yourself first.<span class="note">Real wells have more help than this one: a density correction curve (DRHO) and caliper-based flags. Here the caliper is hidden until you've made your call.</span></p>
+
+      <section class="figure" id="fig-flag" aria-label="Figure 9.1"></section>
+
+      <p>You used petrophysics: a washout is a shale whose density and Pe have gone wrong while its gamma ray and sonic haven't. An isolation forest has no petrophysics. It never sees a label either, so it can't learn what bad hole looks like; it can only look for what's unusual. That makes it <em>unsupervised</em>, like k-means in chapter 1.</p>
+
+      <h2>Few and different</h2>
+      <p>The idea is simple. Pick a log at random and cut it at a random value; keep cutting the piece a sample is in until it's alone. A sample out on its own gets cut off in a few cuts. One in the middle of a crowd takes many, because most cuts fall where its neighbours are. Count the cuts, average over many random trees, and you have a score of how strange each sample is, without ever saying what strange means.</p>
+
+      <section class="figure" id="fig-cuts" aria-label="Figure 9.2"></section>
+
+      <p>The forest never measures distance or density of points, which makes it fast and indifferent to units: like a decision tree, it only ever compares values within one log. Each tree sees only 256 samples, which is plenty to tell strange from ordinary, and it stops at a depth of 8, because the ordinary samples are the ones it doesn't need to finish isolating.</p>
+
+      <h2>What the forest flags</h2>
+      <p>Now the whole field. One forest, every second sample of all six wells, four logs. It ranks all 3,936 samples by how strange they are; you choose how many to flag.</p>
+
+      <section class="figure" id="fig-scores" aria-label="Figure 9.3"></section>
+
+      <p>So an isolation forest doesn't find bad hole; it finds candidates. Every flag is a question for a petrophysicist: bad hole, a rare rock, or a log that needs normalising? Used that way, it's a quick first pass over a big dataset, and it's honest about what it can't know. Given a measurement of the hole itself, it gets much closer, which is the lesson of the whole lab in small: the logs you give a model matter more than the model.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>Real bad hole doesn't come labelled. Here it's marked where the density correction is large, the usual sign of poor pad contact.</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 9.4"></section>
+
+      <h2 id="words">Words you'll meet</h2>
+      <p>Anomaly detection has its own vocabulary, and scikit-learn's <code>IsolationForest</code> uses it. Here it is in plain words, with scikit-learn's name where it has one.</p>
+      <dl class="glossary">
+        <div><dt>Anomaly, or outlier</dt><dd>A sample unlike most of the others. Unlike doesn't mean wrong: a coal is an outlier among shales.</dd></div>
+        <div><dt>Novelty</dt><dd>A new sample unlike the training data, as opposed to an odd one inside it. Chapter 7's unfamiliarity check was novelty detection.</dd></div>
+        <div><dt>Unsupervised</dt><dd>Learning without labels: the model is never told which samples are bad hole, so it can only find structure, never meaning.</dd></div>
+        <div><dt>Isolation tree</dt><dd>A tree of random cuts, each on a random log at a random value within the box, grown until samples are alone or a height limit is reached.</dd></div>
+        <div><dt>Path length</dt><dd>How many cuts it took to reach a sample's leaf. Short means strange.</dd></div>
+        <div><dt>Anomaly score</dt><dd>Two to the power of minus the average path length over its expected value: near 1 is very strange, about 0.5 or below is ordinary. scikit-learn reports its negative. <code>score_samples</code></dd></div>
+        <div><dt>Contamination</dt><dd>The share of samples you expect to be outliers, which sets the cutoff for flagging. Left at <code>'auto'</code>, samples scoring above 0.5 are flagged. <code>contamination</code></dd></div>
+        <div><dt>Samples per tree</dt><dd>Each tree sees a random subset, 256 by default, which keeps it fast and stops dense clusters of outliers hiding each other. <code>max_samples</code></dd></div>
+        <div><dt>Number of trees</dt><dd>As in a random forest, more trees make the score steadier; 100 is the default. <code>n_estimators</code></dd></div>
+        <div><dt>Flags</dt><dd>scikit-learn's <code>predict</code> returns −1 for an outlier and 1 for an inlier; <code>decision_function</code> is the score shifted so that 0 is the cutoff.</dd></div>
+        <div><dt>Masking and swamping</dt><dd>Masking: a big cluster of outliers looks normal to itself, so it's missed. Swamping: ordinary samples near outliers get flagged too. Small samples per tree reduce both.</dd></div>
+        <div><dt>Local outlier factor</dt><dd>Another detector: compares each sample's crowding with its neighbours', so it finds samples strange for their neighbourhood. <code>LocalOutlierFactor</code></dd></div>
+        <div><dt>One-class SVM</dt><dd>Another detector: draws a boundary around the bulk of the data and flags what falls outside. <code>OneClassSVM</code></dd></div>
+        <div><dt>Bad hole</dt><dd>Where the borehole is enlarged or rough enough that pad tools (density, Pe, often neutron) read wrong. Usually flagged from the caliper and the density correction.</dd></div>
+      </dl>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>An isolation forest scores how easy each sample is to cut off from the rest with random cuts: strange samples are isolated in few cuts.</li>
+          <li>It finds the unusual, not the wrong. Bad hole is unusual, but so is every rare rock and every badly calibrated log.</li>
+          <li>Treat its flags as questions for a petrophysicist, and give it the measurements that describe the problem (hole size here) if you want it to find that problem.</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/isolation-forest-auto-anomaly-detection-with-python-e7a8559d4562" target="_blank" rel="noopener">Isolation Forest: Auto Anomaly Detection with Python</a></p>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/well-log-data-outlier-detection-with-machine-learning-a19cafc5ea37" target="_blank" rel="noopener">Well Log Data Outlier Detection With Machine Learning and Python</a></p>
+        </div>
+        <div>
+          <h3>That's the chapters</h3>
+          <p><a href="../">Back to the contents.</a> The workbench, where you can mix the algorithms and wells yourself, is coming soon.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

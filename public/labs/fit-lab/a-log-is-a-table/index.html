@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A log is a table · Fit Lab</title>
+    <meta name="description" content="What does a model actually see? Watch a log become a table and a crossplot, find the coal by brushing, and meet features, labels and samples." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/intro-B6Hd9Tx2.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 0 · Before the algorithms</div>
+        <h1>A log is a table</h1>
+        <p class="standfirst">What does a model actually see? Not a log, not a well, not the geology: a table of numbers, one row per depth. Everything in the chapters that follow starts from that table.</p>
+        <div class="meta"><span>6 minutes</span><span>Wells A and C</span><span>No algorithm yet</span></div>
+      </div>
+
+      <h2>What a model sees</h2>
+      <p class="note-anchor">A petrophysicist looks at a log and sees beds, boundaries and trends. A machine learning model is given something much plainer: a table, one row for each depth, one column for each log. Watch 6 m of Well A make the trip.<span class="note">The six wells in this lab are synthetic: fictional wells logged with the rock physics from Probe Lab, so the true facies is known at every depth. The logs are sampled every 15 cm, as real logs usually are.</span></p>
+
+      <section class="figure" id="fig-journey" aria-label="Figure 0.1"></section>
+
+      <p>Nothing about the rock survives the trip except the numbers. The depth is still there, but only as the row's address; the model isn't told that one row sits above another, that two rows come from the same bed, or that a log was run with an older tool. Each of those turns out to matter, and later chapters come back to every one.</p>
+
+      <h2>Points on a crossplot</h2>
+      <p>If each row is a point, then rocks that read alike sit together, and every crossplot a petrophysicist has ever drawn is already a picture of what a model works with. The log and the crossplot are two views of the same table, so a selection in one lights up the same rows in the other.</p>
+
+      <section class="figure" id="fig-coal" aria-label="Figure 0.2"></section>
+
+      <p>That's most of machine learning on logs in one figure. The facies form clouds; algorithms either find the clouds on their own (chapter 1), draw boundaries between them (chapters 3, 6 and 7), or fit a surface through them (chapters 2 and 8). The hard cases are the points between clouds, and the points that land in the wrong cloud because the hole or the tool misbehaved (chapters 4 and 9).</p>
+
+      <h2>Features and labels</h2>
+      <p>The table doesn't say what to do with it. The question does: which columns go in, which one is the answer, and which are left out.</p>
+
+      <section class="figure" id="fig-roles" aria-label="Figure 0.3"></section>
+
+      <p>Two kinds of question run through the lab. <strong>Supervised</strong> learning has a label: some rows come with the answer, from core, from an interpreter, or from a log run in another well, and the model learns to give it where it's missing. <strong>Unsupervised</strong> learning has none: the model looks for structure on its own, and a person decides what that structure means.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>The rest of the lab uses the six synthetic wells, because their truth is known. Every chapter ends here instead, on real wells from the FORCE 2020 competition, where the tidy lessons get messier. This is what those real tables look like.</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 0.4"></section>
+
+      <h2 id="words">Words you'll meet</h2>
+      <p>Machine learning renames familiar things, and different books use different names for the same one. Here they are in plain words, with the name in scikit-learn and pandas where it helps.</p>
+      <dl class="glossary">
+        <div><dt>Sample</dt><dd>One row of the table: one depth in one well. Also called an observation, an instance or a record.</dd></div>
+        <div><dt>Feature</dt><dd>A column that goes into the model: here a log. Also called an input, a predictor, a variable or an attribute. scikit-learn calls the table of features <code>X</code>.</dd></div>
+        <div><dt>Label</dt><dd>The column the model is asked to predict. Also called the target, the response or the output. scikit-learn calls it <code>y</code>.</dd></div>
+        <div><dt>Supervised</dt><dd>Learning from rows where the label is known, to predict it where it isn't.</dd></div>
+        <div><dt>Unsupervised</dt><dd>Learning without labels: finding groups or oddities in the features alone.</dd></div>
+        <div><dt>Classification</dt><dd>A supervised question whose answer is a category: which facies, pay or not.</dd></div>
+        <div><dt>Regression</dt><dd>A supervised question whose answer is a number: what porosity, what sonic.</dd></div>
+        <div><dt>Model</dt><dd>The recipe that turns features into a prediction, with numbers learned from the data. <code>fit</code> learns them; <code>predict</code> uses them.</dd></div>
+        <div><dt>Training, validation and test</dt><dd>The rows a model learns from, the rows used to choose its settings, and the rows kept back to score it honestly. Chapter 4 is about getting these right.</dd></div>
+        <div><dt>Feature space</dt><dd>The space with one axis per feature, where each sample is a point. With two logs it's a crossplot; with five it can't be drawn, but the algorithms don't mind.</dd></div>
+        <div><dt>Missing value</dt><dd>A gap in the table, such as a sonic that wasn't run. Most algorithms can't use a row with a gap, so the row is dropped or the gap is filled. In pandas it's <code>NaN</code>.</dd></div>
+        <div><dt>DataFrame</dt><dd>pandas's table, the usual way to hold logs in Python once they're read from a LAS file: one row per depth, one column per curve.</dd></div>
+      </dl>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>A model sees a table: one row per depth, one column per log. Beds, boundaries and wells aren't in it unless you put them there.</li>
+          <li>Each row is a point; rocks that read alike sit together. A crossplot is already a picture of what a model works with.</li>
+          <li>The question decides the roles: features go in, the label is the answer, and with no label the learning is unsupervised.</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/10-applications-of-machine-learning-within-petrophysics-3709b1c4323a" target="_blank" rel="noopener">10 Applications of Machine Learning Within Petrophysics</a></p>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/ai-in-petrophysics-when-did-everything" target="_blank" rel="noopener">AI in Petrophysics: when did everything become artificial intelligence?</a></p>
+        </div>
+        <div>
+          <h3>Next: k-means</h3>
+          <p><a href="../k-means/">Can the logs find the facies on their own?</a> Grouping the points without any labels.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

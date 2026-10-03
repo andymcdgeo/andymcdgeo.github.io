@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Changelog · Fit Lab</title>
+    <meta name="description" content="What's changed in Fit Lab, newest first." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/page-DIaNLSEq.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Changelog</div>
+        <h1>What's changed</h1>
+        <p class="standfirst">Fit Lab is a draft, built in the open with its author. Newest first.</p>
+      </div>
+<!-- changelog -->
+      <h2>0.3 · 3 October 2026</h2>
+      <ul>
+        <li>Try it on real wells: every chapter ends with its lesson on four North Sea wells from the FORCE 2020 competition, and a Data page describes both datasets.</li>
+        <li>The workbench: every algorithm, both datasets and every setting on one screen, with the setup kept in the address so it can be shared.</li>
+        <li>Challenges: five beat-the-algorithm puzzles, each opening once you've read its chapter, with your best kept in this browser.</li>
+        <li>A dark variant, with its own colours rather than inverted ones, and a settings menu (Aa) for the theme and the text size, from 90% to 130%.</li>
+        <li>Metrics: fill in the confusion matrix yourself, a tap at a time, and watch every score move.</li>
+        <li>Glossary, Assumptions, About, Creator and Changelog pages.</li>
+        <li>Chapters you've read are ticked on the contents page.</li>
+        <li>Words you'll meet opens in a box from the bottom right of every chapter, with a filter, so the terms are to hand while you read. Chapter 5's box carries its cheat sheet.</li>
+        <li>Rights: &copy; 2026 Andy McDonald, all rights reserved, as across the Labs, with third-party notices for the fonts and the FORCE 2020 data.</li>
+        <li>Fixed: links could lead to the contents page at the wrong address, and from there every link went astray.</li>
+        <li>Fixed: the glossary's lists sat at the left edge of the page, and four chapters still said the real wells were coming.</li>
+      </ul>
+
+      <h2>0.2 · 1 October 2026</h2>
+      <ul>
+        <li>Chapter 8, neural networks: draw the sonic yourself, watch a small network invent its own logs as it trains, see when to stop, and test five networks on a blind well.</li>
+        <li>Chapter 9, isolation forest: flag the washout yourself, watch random cuts isolate strange samples, and see what the forest really flags across six wells.</li>
+        <li>Chapter 0, a log is a table: a log becoming a table and then a crossplot, finding the coal, and features and labels.</li>
+        <li>Random forests: out of bag explained, with its catch, and the terms that come with forests.</li>
+        <li>Metrics: ROC and precision–recall curves, each facies against the rest, and the classification report.</li>
+        <li>A "Words you'll meet" glossary in every algorithm chapter.</li>
+        <li>Fixed: a huge logo flashed up on changing page; k-means' starts in scikit-learn were described wrongly.</li>
+      </ul>
+
+      <h2>0.1 · 1 October 2026</h2>
+      <ul>
+        <li>First build: the six-well teaching field, and chapters 1 to 7 (k-means, linear regression, k-nearest neighbours, train, validate and test, metrics, decision trees and random forests).</li>
+      </ul>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

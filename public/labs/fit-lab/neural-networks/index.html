@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Neural networks: logs from logs · Fit Lab</title>
+    <meta name="description" content="Can we predict a missing sonic log? Draw it yourself, watch a small network invent its own logs as it trains, see when to stop, and test it on a blind well." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/nets-7QM-zfWQ.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="modulepreload" crossorigin href="../assets/rng-CF1C7Ptq.js">
+    <link rel="modulepreload" crossorigin href="../assets/data-HiAZ1lSs.js">
+    <link rel="modulepreload" crossorigin href="../assets/linechart-DXxhyCnp.js">
+    <link rel="modulepreload" crossorigin href="../assets/stepper-c2Ws7IrS.js">
+    <link rel="modulepreload" crossorigin href="../assets/linreg-DoHo_m4p.js">
+    <link rel="modulepreload" crossorigin href="../assets/metrics-CzD-6QEP.js">
+    <link rel="modulepreload" crossorigin href="../assets/validation-DE1D0iDZ.js">
+    <link rel="modulepreload" crossorigin href="../assets/model-DKEpt-Rm.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-Bg2at8r0.js">
+    <link rel="modulepreload" crossorigin href="../assets/runner-BGUGkB01.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 8 · Supervised learning</div>
+        <h1>Neural networks: logs from logs</h1>
+        <p class="standfirst">Can we predict a missing sonic log? A neural network mixes the logs you give it into new logs of its own, then mixes those into the answer. It learns the mixing by trial and error, and the hard part is knowing when to stop.</p>
+        <div class="meta"><span>12 minutes</span><span>Gamma ray, density, neutron and resistivity</span><span>Learns from Wells A, B and D, checks on Well C, tested on Well F</span></div>
+      </div>
+
+      <h2>Draw the sonic</h2>
+      <p class="note-anchor">Sonic is the log most often missing, and the one most often predicted: it's needed for synthetics and rock mechanics, and it's frequently not run in the top hole. Before any model, try it yourself. Below is 30 m of Well F with the sonic hidden. You have the other logs and the facies; draw the sonic you'd expect.<span class="note">Well F's sonic exists below 2060 m, so any prediction there can be checked. Above it, nobody knows.</span></p>
+
+      <section class="figure" id="fig-draw" aria-label="Figure 8.1"></section>
+
+      <p>You worked from rules of thumb: shale is slow, limestone fast, coal very slow. The network had no rules, only 918 examples from three wells, and it learned the relationship well enough to be hard to beat by hand. Neither of you had seen a rock like the dolomitised bed, though, and it shows.</p>
+
+      <h2>Inside a network</h2>
+      <p>A neural network is layers of simple units. Each unit in the hidden layer takes a weighted sum of the logs, adds a constant, and cuts off anything below zero. That makes each one a new log, invented by the network: a blend of gamma ray, density, neutron and resistivity that switches on in some rocks and off in others. The output adds those invented logs up, with weights of its own, into the sonic. Training starts from random weights and nudges them, batch by batch, towards a smaller error. Step through it below; this one has six hidden units, so you can see every weight.</p>
+
+      <section class="figure" id="fig-inside" aria-label="Figure 8.2"></section>
+
+      <p class="note-anchor">Nobody told the units what to look for. Some end up as shale or hard-rock detectors you could name; others are blends that don't map onto any rock, and some switch off for good. And a unit only makes sense alongside the others: one that slows the sonic in anhydrite may be correcting another that speeds it up too far. That's the trade: a network finds useful logs on its own, and they're hard to read afterwards.<span class="note">"Neural" is a loose borrowing from biology, where a neuron fires when its inputs add up past a threshold. The resemblance stops about there.</span></p>
+
+      <h2>When to stop</h2>
+      <p>Train long enough and a network will fit its training samples almost exactly, the way chapter 2's degree-9 polynomial bent itself around 16 core plugs. Whether that's a problem depends on how much it has to learn from. Watch a bigger network, two layers of 32 units, train on 47 samples and then on ten times as many, scored after every epoch on the training samples and on Well C.</p>
+
+      <section class="figure" id="fig-stop" aria-label="Figure 8.3"></section>
+
+      <p>The training curve always falls; it's the validation curve that tells you when to stop. This is chapter 4's validation well put to work over time rather than over settings, and the same rule applies: it has to be a well the network doesn't learn from, not a random handful of samples from the training wells.</p>
+
+      <h2>The blind well</h2>
+      <p>Now the real test. Train five networks from five random starts, two layers of 16 units each, stopping each one when Well C stops improving, and predict the whole of Well F, including the top 40 m where no sonic was run.</p>
+
+      <section class="figure" id="fig-blind" aria-label="Figure 8.4"></section>
+
+      <p>Chapter 7's forest missed Well F by 3.9 µs/ft. Here a forest does much better, because it's given resistivity instead of Pe and is spared Well E's older logs, and the network does a little better again. The choice of logs and wells moved the score more than the choice of model. That's the usual story with well logs: the petrophysics before the machine learning.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>Filling in a missing sonic is the commonest real job for a network. Here it is on real wells, against the plainest model there is.</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 8.5"></section>
+
+      <h2 id="words">Words you'll meet</h2>
+      <p>Networks bring their own vocabulary, and scikit-learn's <code>MLPRegressor</code> and the deep learning libraries use it. Here it is in plain words, with scikit-learn's name where it has one.</p>
+      <dl class="glossary">
+        <div><dt>Unit, or neuron</dt><dd>One weighted sum of its inputs, plus a constant, passed through an activation. A hidden unit's output is a log the network invents.</dd></div>
+        <div><dt>Layer</dt><dd>A set of units that all take the same inputs. The input layer is the logs, the output layer the prediction; the layers between are hidden. <code>hidden_layer_sizes</code></dd></div>
+        <div><dt>Weights and biases</dt><dd>The numbers the network learns: a weight for every connection, and a constant (a bias, or intercept) for every unit. <code>coefs_</code>, <code>intercepts_</code></dd></div>
+        <div><dt>Activation</dt><dd>What a unit does to its sum. ReLU keeps positive values and cuts negatives to zero; tanh squashes everything between −1 and 1; the logistic function between 0 and 1. <code>activation</code></dd></div>
+        <div><dt>Multilayer perceptron</dt><dd>The classic network of fully connected layers, the kind in this chapter. <code>MLPRegressor</code>, <code>MLPClassifier</code></dd></div>
+        <div><dt>Loss</dt><dd>The error training tries to shrink. For predicting a log, the mean squared error (scikit-learn halves it). <code>loss_curve_</code></dd></div>
+        <div><dt>Gradient and learning rate</dt><dd>The gradient says which way to move each weight to lower the loss; the learning rate says how far. Too big and training jumps about or blows up; too small and it crawls, as in chapter 2. <code>learning_rate_init</code></dd></div>
+        <div><dt>Backpropagation</dt><dd>The bookkeeping that works out the gradient for every weight at once, by applying the chain rule from the output back through the layers.</dd></div>
+        <div><dt>Batch and epoch</dt><dd>A batch is the handful of samples used for one step; an epoch is one pass through all of them. <code>batch_size</code>, <code>max_iter</code></dd></div>
+        <div><dt>Adam and SGD</dt><dd>Ways of taking the steps. Plain stochastic gradient descent steps by the learning rate times the gradient; Adam adapts the step for each weight from its recent gradients, and usually needs less tuning. <code>solver</code></dd></div>
+        <div><dt>Overfitting</dt><dd>Fitting the training samples' quirks instead of the rock: training error keeps falling while validation error rises.</dd></div>
+        <div><dt>Early stopping</dt><dd>Score a validation set after every epoch, keep the best weights, and stop after a set number of epochs without improvement (the patience). <code>early_stopping</code>, <code>n_iter_no_change</code></dd></div>
+        <div><dt>Regularisation</dt><dd>A penalty on large weights, which keeps the network smoother. Also called L2 or weight decay. <code>alpha</code></dd></div>
+        <div><dt>Scaling</dt><dd>Networks train badly on raw logs with wildly different units, so the inputs, and here the sonic too, are put in standard units first, as in chapter 1. <code>StandardScaler</code></dd></div>
+        <div><dt>Random start</dt><dd>The random weights a network begins from. Different starts end in different places; averaging a few networks is cheap insurance. <code>random_state</code></dd></div>
+        <div><dt>Deep learning</dt><dd>Networks with many layers, often of special kinds (convolutional, recurrent, transformers), built in libraries such as Keras or PyTorch. The ideas here carry over.</dd></div>
+      </dl>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>A neural network builds new logs from the ones you give it (each a weighted blend, cut off at zero) and adds them up into the answer. Training nudges every weight, batch by batch, towards a smaller error.</li>
+          <li>The training error always falls. Watch a validation well and stop when it stops improving; more data is the better cure.</li>
+          <li>Train a few networks from different random starts. Where they disagree, they're guessing, and the choice of input logs and training wells matters more than the model.</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/well-log-measurement-prediction-using-neural-networks-with-keras-ef7dfed94077" target="_blank" rel="noopener">Well Log Measurement Prediction Using Neural Networks with Keras</a></p>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/how-to-create-a-simple-neural-network-model-in-python-70697967738f" target="_blank" rel="noopener">How to Create a Simple Neural Network Model in Python</a></p>
+        </div>
+        <div>
+          <h3>Next: isolation forest</h3>
+          <p><a href="../isolation-forest/">Which samples are bad hole?</a> Finding the strange, and deciding what it means.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fit Lab · Machine learning on well logs</title>
+    <meta name="description" content="How machine learning algorithms learn from well logs. Try each task by hand, then watch the algorithm do it step by step." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="./assets/page-DIaNLSEq.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="./">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="./" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="./workbench/">Workbench</a>
+        <a class="hide-narrow" href="./challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Labs · Machine learning on well logs</div>
+        <h1>Fit Lab</h1>
+        <p class="standfirst">How machine learning algorithms learn from well logs. In each chapter you try the task by hand, then watch the algorithm do the same thing, one step at a time, on the same samples.</p>
+        <div class="meta"><span>Ten short chapters</span><span>Six synthetic wells where the true facies is known</span><span>Four real wells to try it on</span></div>
+      </div>
+
+      <ol class="contents">
+        <li><a href="a-log-is-a-table/"><span class="n">0</span><span><span class="t">A log is a table</span><span class="q">What does a model actually see?</span></span><span class="time">6 min</span></a></li>
+        <li><a href="k-means/"><span class="n">1</span><span><span class="t">k-means</span><span class="q">Can the logs find the facies on their own?</span></span><span class="time">8 min</span></a></li>
+        <li><a href="linear-regression/"><span class="n">2</span><span><span class="t">Linear regression</span><span class="q">How well does porosity predict permeability?</span></span><span class="time">9 min</span></a></li>
+        <li><a href="k-nearest-neighbours/"><span class="n">3</span><span><span class="t">k-nearest neighbours</span><span class="q">Which lithology is this sample, going by the wells we know?</span></span><span class="time">8 min</span></a></li>
+        <li><a href="train-validate-test/"><span class="n">4</span><span><span class="t">Train, validate and test</span><span class="q">Why can 98% accuracy be useless?</span></span><span class="time">10 min</span></a></li>
+        <li><a href="metrics/"><span class="n">5</span><span><span class="t">Metrics, plainly</span><span class="q">Which number tells you a model is any good?</span></span><span class="time">16 min</span></a></li>
+        <li><a href="decision-trees/"><span class="n">6</span><span><span class="t">Decision trees</span><span class="q">Could a computer choose our cutoffs?</span></span><span class="time">8 min</span></a></li>
+        <li><a href="random-forests/"><span class="n">7</span><span><span class="t">Random forests</span><span class="q">Do many rough trees beat one careful one?</span></span><span class="time">13 min</span></a></li>
+        <li><a href="neural-networks/"><span class="n">8</span><span><span class="t">Neural networks</span><span class="q">Can we predict a missing sonic log?</span></span><span class="time">12 min</span></a></li>
+        <li><a href="isolation-forest/"><span class="n">9</span><span><span class="t">Isolation forest</span><span class="q">Which samples are bad hole?</span></span><span class="time">10 min</span></a></li>
+      </ol>
+
+      <h2 class="contents-more">Also in the lab</h2>
+      <ul class="contents more">
+        <li><a href="workbench/"><span class="n">⚙</span><span><span class="t">Workbench</span><span class="q">Every algorithm, both datasets and every setting on one screen.</span></span></a></li>
+        <li><a href="challenges/"><span class="n">★</span><span><span class="t">Challenges</span><span class="q">Five short puzzles: beat the algorithm at its own job.</span></span></a></li>
+        <li><a href="glossary/"><span class="n">Aa</span><span><span class="t">Glossary</span><span class="q">Every term from every chapter, in plain words.</span></span></a></li>
+        <li><a href="data/"><span class="n">≋</span><span><span class="t">The data</span><span class="q">Six synthetic wells and four from the North Sea.</span></span></a></li>
+      </ul>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="./about/">About</a> · <a href="./glossary/">Glossary</a> · <a href="./assumptions/">Assumptions</a> · <a href="./data/">Data</a> · <a href="./changelog/">Changelog</a> · <a href="./creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="./creator/#rights">Rights</a> · <a href="./third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

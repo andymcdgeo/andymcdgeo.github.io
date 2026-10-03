@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Metrics, plainly · Fit Lab</title>
+    <meta name="description" content="A plain guide to classification and regression metrics: accuracy, precision, recall, F1, ROC curves and AUC, averages over many classes, bias, MAE, RMSE and R², on well logs." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/metrics-DM0UEwmH.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="modulepreload" crossorigin href="../assets/data-HiAZ1lSs.js">
+    <link rel="modulepreload" crossorigin href="../assets/linechart-DXxhyCnp.js">
+    <link rel="modulepreload" crossorigin href="../assets/metrics-CzD-6QEP.js">
+    <link rel="modulepreload" crossorigin href="../assets/validation-DE1D0iDZ.js">
+    <link rel="modulepreload" crossorigin href="../assets/rng-CF1C7Ptq.js">
+    <link rel="modulepreload" crossorigin href="../assets/model-DKEpt-Rm.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 5 · Scoring a model</div>
+        <h1>Metrics, plainly</h1>
+        <p class="standfirst">Which number tells you a model is any good? Accuracy, precision, recall, F1, ROC curves, averages over many classes, RMSE and R², without the jargon: what each one answers, and how each one can fool you.</p>
+        <div class="meta"><span>16 minutes</span><span>A gamma ray cutoff, two facies models and a porosity log</span></div>
+      </div>
+
+      <h2>Two kinds of question</h2>
+      <p>A metric is a question with a number for an answer, so start with the question. Models answer two kinds. <strong>Classification</strong> asks <em>which one?</em>: which facies, sand or not, pay or not. <strong>Regression</strong> asks <em>how much?</em>: how much porosity, what permeability, what sonic. They're scored differently, because being wrong means different things. Call a shale a sand and you're simply wrong; predict 21% porosity when it's 22% and you're nearly right.</p>
+
+      <h2>Is it sand?</h2>
+      <p class="note-anchor">The simplest classification has two answers, and every petrophysicist has built one: a gamma ray cutoff. Below it, call the rock sand. Every sample then lands in one of four boxes: sand you called sand (a hit), sand you missed, something else you called sand (a false alarm), and something else you left alone. Set the cutoff where you think it does best.<span class="note">The samples are every 30 cm through Wells A, B and C: 1,968 of them, a quarter of them clean sandstone. "Sand" here means the sandstone facies; sandstone/shale counts as not sand.</span></p>
+
+      <section class="figure" id="fig-cutoff" aria-label="Figure 5.1"></section>
+
+      <p>Each score answers a different question, so each has a different best cutoff. <strong>Precision</strong> asks how much to trust a "sand" call: it's highest with a low cutoff that only calls the cleanest sand. <strong>Recall</strong> asks how much of the sand you found: it reaches 100% once the cutoff is high enough to catch everything, false alarms and all. <strong>F1</strong> balances the two. Which matters depends on the job. Summing net sand for volumes, a missed sand costs you; picking depths for sidewall cores, a false alarm does.</p>
+      <p>And watch <strong>accuracy</strong>. Press "Call nothing sand": a rule that never finds a single sand scores 74%, because three quarters of the samples aren't sand. When one answer is much more common than the other, accuracy rewards saying the common one.</p>
+
+      <h2>Every cutoff at once</h2>
+      <p class="note-anchor">Most models don't hand you a yes or a no. They give a score: a probability of sand, a share of the neighbours' votes, or, for the simplest model of all, the gamma ray itself. A cutoff turns the score into calls, and as Figure 5.1 showed, every cutoff scores differently. A <strong>ROC curve</strong> shows every cutoff at once: for each one, how much of the sand it finds (the hit rate, which is recall) against how much of everything else it wrongly calls sand (the false-alarm rate).<span class="note">ROC stands for receiver operating characteristic, a name left over from 1940s radar, where the question was whether a blip was an aircraft.</span></p>
+
+      <section class="figure" id="fig-roc" aria-label="Figure 5.2"></section>
+
+      <p>The area under the ROC curve, <strong>AUC</strong>, scores the ranking before anyone chooses a cutoff. That makes it good for comparing models, and blind to the cutoff you'll actually use: a model with a fine AUC can still make poor calls with a badly placed cutoff. It's also blind to how rare the class is, because both of its rates are shares of the truth. That's a strength when you compare wells with different amounts of sand, and a weakness when the class is rare: thousands of correct rejections make a handful of false alarms look tiny. The <strong>precision–recall curve</strong> and its summary, <strong>average precision</strong>, don't have that blind spot. When the class you're after is rare (coal, a thin pay zone, bad hole), look at precision–recall.</p>
+
+      <h2>Six facies, one against the rest</h2>
+      <p>With more than two classes, everything so far still works, one facies at a time. Pick a facies, and the six-by-six confusion matrix from chapter 4 splits into the same four boxes as the sand cutoff: its hits on the diagonal, its misses along its row, its false alarms down its column, and everything else. That gives each facies its own precision, recall and F1, and, using the model's vote share for it as a score, its own ROC curve and AUC. This is <strong>one against the rest</strong> (one-vs-rest), and it's how scikit-learn's classification report is built.</p>
+
+      <section class="figure" id="fig-ovr" aria-label="Figure 5.3"></section>
+
+      <p class="note-anchor">The report has one row per facies. <strong>Support</strong> is how many samples of that facies are really there; check it before trusting a row, because a precision worked out from four samples swings by 25 points with one more. The coal row with 75 neighbours makes the chapter's sharpest point: recall 0%, ROC AUC near 100%. The calls and the scores behind them are different things, and each metric judges only one of them.<span class="note">When a facies is never called, its precision has nothing to divide by. scikit-learn reports 0 and prints a warning; the figure says so instead.</span></p>
+
+      <h2>Six facies, one number?</h2>
+      <p>The report ends with averages, because reports usually want one number. There are several ways to average, and they disagree in exactly the case chapter 4 warned about.</p>
+
+      <section class="figure" id="fig-averages" aria-label="Figure 5.4"></section>
+
+      <p>Averages that weight each facies by its number of samples are dominated by shale and sand. <strong>Macro</strong> averages, and balanced accuracy, give every facies an equal say, so a facies that's never found drags them down hard. If the rare facies matter to you, report a macro average, or better, the recall for each facies. And don't let a macro AUC stand in for them: it judges the scores, so it can't see a facies that's never called.</p>
+
+      <h2>Fill it in yourself</h2>
+      <p>The quickest way to get a feel for these scores is to push them around. Change the matrix one tap at a time and watch which numbers move, and which don't.</p>
+
+      <section class="figure" id="fig-fill" aria-label="Figure 5.5"></section>
+
+      <p>A few taps make the pattern plain. A hit or a mistake in a big class moves accuracy and the weighted averages; in a small class it barely touches them but swings the macro averages, because each facies gets an equal vote there whatever its size. And a mistake always counts twice: one facies' miss is another's false alarm.</p>
+
+      <h2>How far off?</h2>
+      <p class="note-anchor">For a regression, every prediction has an error, and the metrics summarise them in different ways. Here the "model" is density porosity, and the truth is the porosity measured on 420 core plugs. Break it in different ways and see which numbers notice.<span class="note">p.u. is a porosity unit: one percent of the rock's volume. 0.01 v/v is 1 p.u.</span></p>
+
+      <section class="figure" id="fig-regression" aria-label="Figure 5.6"></section>
+
+      <p><strong>Bias</strong> tells you whether the model reads high or low on average, and it's the one error that's easy to fix. <strong>MAE</strong> is the typical miss, in the same units as the log. <strong>RMSE</strong> is like MAE but squares each miss first, so a few big misses count for a lot; it's always at least as big as MAE, and the gap between them tells you whether a few bad samples are doing the damage. <strong>R²</strong> compares the model with the laziest one possible, predicting the average every time. It doesn't have units, which makes it easy to quote and easy to misread: a high R² can still hide a bias, and R² depends on how varied the truth is, so the same model gets a lower R² in a well with a narrow porosity range.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>A classification report from a real blind well, where the rare facies really are rare.</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 5.7"></section>
+
+      <h2 id="cheat-sheet">The cheat sheet</h2>
+      <div class="cheat-wrap">
+        <table class="cheat">
+          <thead>
+            <tr><th>Metric</th><th>The question it answers</th><th>Watch out</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Accuracy</th><td>How many samples did it get right?</td><td>Rewards always saying the common answer.</td></tr>
+            <tr><th>Precision</th><td>When it says "sand", how often is it sand?</td><td>Can be perfect while missing most of the sand.</td></tr>
+            <tr><th>Recall</th><td>Of all the sand, how much did it find?</td><td>Can be perfect by calling everything sand.</td></tr>
+            <tr><th>F1</th><td>Precision and recall together</td><td>Treats a miss and a false alarm as equally bad, which your job may not.</td></tr>
+            <tr><th>Balanced accuracy, macro F1</th><td>How well does it do on every class, rare ones included?</td><td>A tiny class with a few errors can swing them.</td></tr>
+            <tr><th>Weighted F1</th><td>How well does it do, sample by sample?</td><td>Hides rare classes, like accuracy.</td></tr>
+            <tr><th>Micro average</th><td>Pool every class's boxes, then score</td><td>With one label per sample it's just accuracy.</td></tr>
+            <tr><th>Confusion matrix</th><td>Which classes does it mistake for which?</td><td>Rows give recall, columns precision. Look at the counts as well as the shares.</td></tr>
+            <tr><th>Support</th><td>How many true samples of each class are there?</td><td>A score from a handful of samples is mostly luck.</td></tr>
+            <tr><th>ROC AUC</th><td>Does the score rank the class above the rest, whatever the cutoff?</td><td>Says nothing about the cutoff you use; flatters when the class is rare.</td></tr>
+            <tr><th>Average precision</th><td>How precise is it as it finds more of the class?</td><td>Its floor is the class's share, not 50%, so compare it with that.</td></tr>
+            <tr><th>One-vs-rest AUC, macro</th><td>Does it rank every class well against the others?</td><td>Can be near perfect while a class is never called.</td></tr>
+            <tr><th>Bias</th><td>Does it read high or low on average?</td><td>Zero bias can hide big errors that cancel out.</td></tr>
+            <tr><th>MAE</th><td>How far off is a typical prediction?</td><td>Says nothing about the worst misses.</td></tr>
+            <tr><th>RMSE</th><td>How far off, with big misses counting extra?</td><td>A handful of bad samples can dominate it.</td></tr>
+            <tr><th>R²</th><td>How much better than predicting the average?</td><td>No units; depends on how varied the truth is; can hide a bias.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Other names you'll meet. <strong>Specificity</strong> is recall for the "not" class: the share of non-sand left alone, one minus the false-alarm rate. <strong>Cohen's kappa</strong> is accuracy corrected for the agreement you'd get by chance, so 0 means no better than guessing in the right proportions. The <strong>Matthews correlation coefficient</strong> condenses all four boxes into one number from −1 to 1 that stays fair when one class is rare. <strong>Log loss</strong> (cross-entropy) scores the probabilities themselves rather than the calls, and punishes confident mistakes hardest.</p>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>Choose the question first, then the metric that answers it. The best cutoff, or model, depends on which mistakes cost you more.</li>
+          <li>Accuracy flatters when one answer is common. Read the report one class at a time with its support, and remember that ROC AUC judges the scores, not the calls: use precision–recall when the class is rare.</li>
+          <li>For regression, quote bias and a typical miss (MAE or RMSE) in the log's own units, not just R².</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/data-quality-considerations-for-machine-learning-models-dcbe9cab34cb" target="_blank" rel="noopener">Data Quality Considerations for Machine Learning Models</a></p>
+        </div>
+        <div>
+          <h3>Next: decision trees</h3>
+          <p><a href="../decision-trees/">Could a computer choose our cutoffs?</a> Facies by a tree of yes-or-no questions.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

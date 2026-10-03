@@ -64,17 +64,32 @@ const labs: Lab[] = [
       "Put a logging tool in a cut-away borehole and watch it measure. Gamma rays scatter, neutrons slow, currents flow and sound waves travel through the rock you set, so you can see what each tool responds to and what fools it.",
     wip: true,
   },
+  {
+    href: "/labs/fit-lab/",
+    image: "/images/labs/fit-lab.jpg",
+    alt: "Fit Lab workbench: a facies classifier's decision regions on a gamma ray and density crossplot beside predicted and true facies logs",
+    chip: "2D · MACHINE LEARNING",
+    title: "Fit Lab",
+    kicker: "Machine learning on well logs",
+    description:
+      "How machine learning algorithms learn from well logs. Try each task by hand, then watch the algorithm do it step by step, across ten chapters, a workbench and five challenges on real FORCE 2020 wells.",
+    points: [
+      { lead: "Try it first.", text: "Group the samples or draw the line yourself, then see how the algorithm does." },
+      { lead: "Ten algorithms, in order.", text: "From k-means and regression to random forests, neural networks and isolation forests." },
+      { lead: "Real wells.", text: "Every chapter runs on the FORCE 2020 wells as well as a teaching field." },
+    ],
+  },
 ];
 ---
 
-<BaseLayout title="Labs - Andy McDonald" description="Interactive 3D explainers for subsurface concepts: rock physics, logging while drilling and logging tools.">
+<BaseLayout title="Labs - Andy McDonald" description="Interactive explainers for subsurface concepts: rock physics, logging while drilling, logging tools and machine learning on well logs.">
   <Navbar slot="nav" />
 
   <section class="section page-head">
     <span class="section-kicker">Labs</span>
     <h1>Interactive labs</h1>
     <p class="section-lede">
-      Interactive 3D explainers for subsurface concepts. Change the rock, drill the well, and see what happens. They run in
+      Interactive explainers for subsurface concepts. Change the rock, drill the well, and see what happens. They run in
       the browser with nothing to install.
     </p>
   </section>

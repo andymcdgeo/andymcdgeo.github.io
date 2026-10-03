@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Linear regression: a trend with a procedure · Fit Lab</title>
+    <meta name="description" content="How well does porosity predict permeability? Draw a poro-perm line by hand, then watch least squares and gradient descent find the best one." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/regression-B-SrpZvo.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="modulepreload" crossorigin href="../assets/data-HiAZ1lSs.js">
+    <link rel="modulepreload" crossorigin href="../assets/linechart-DXxhyCnp.js">
+    <link rel="modulepreload" crossorigin href="../assets/stepper-c2Ws7IrS.js">
+    <link rel="modulepreload" crossorigin href="../assets/linreg-DoHo_m4p.js">
+    <link rel="modulepreload" crossorigin href="../assets/metrics-CzD-6QEP.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 2 · Supervised learning</div>
+        <h1>Linear regression: a trend with a procedure</h1>
+        <p class="standfirst">How well does porosity predict permeability? Every petrophysicist has drawn a line through core data. Here's how a computer decides which line is best, how it finds it, and how a line can fit too well.</p>
+        <div class="meta"><span>9 minutes</span><span>Core from Wells A, B and C</span><span>420 core plugs</span></div>
+      </div>
+
+      <h2>Fit the line yourself</h2>
+      <p class="note-anchor">These are core plugs from Sand A in Wells A and B: 281 small cylinders of rock, each with its porosity and permeability measured in the laboratory. Permeability goes on a log scale because it spans orders of magnitude, so a straight line here means log₁₀ k = a + b·φ. Drag the line to fit the plugs as well as you can.<span class="note">In the teaching field, permeability comes from Pore Lab's Kozeny-Carman model, so it depends on grain size and sorting as well as porosity. That's where the scatter comes from.</span></p>
+
+      <section class="figure" id="fig-trend" aria-label="Figure 2.1"></section>
+
+      <p class="note-anchor">What makes one line better than another? Each plug's miss is the vertical gap between it and the line. Square every miss and add them up: the line with the smallest total is the <em>least-squares</em> line. Squaring makes every miss count as positive and makes big misses count for much more than small ones. Switch to squares in the figure and watch the big ones dominate as you move the line.<span class="note">Misses are measured up and down only, in decades of permeability, as if porosity were exact. Regress porosity on permeability instead and you get a different line.</span></p>
+      <p>For a straight line there's a formula for the best answer, so the computer doesn't need to search. Most models don't have one.</p>
+
+      <h2>Rolling downhill</h2>
+      <p>Every possible line has an error, so all the lines together make a landscape: two directions (the line's level and its slope) and a height (the error). The least-squares line sits at the bottom of the valley. A model with no formula has to find the bottom by walking: work out which way is downhill from where it is, take a step, and repeat. That's <strong>gradient descent</strong>, and it's how neural networks learn in chapter 8.</p>
+
+      <section class="figure" id="fig-descent" aria-label="Figure 2.2"></section>
+
+      <p>The one thing you have to choose is the size of each step, the <em>learning rate</em>. Too small and it crawls. Too big and every step overshoots the valley floor by more than the last, until the error blows up. In between, it zig-zags across the valley and settles at the same answer the formula gives.</p>
+
+      <h2>How bendy should the line be?</h2>
+      <p class="note-anchor">A straight line is a choice. A curve can follow the plugs more closely. Below, the model learns from just 16 plugs from Well A, then it's tested on 139 plugs from Well C, a well it has never seen. Raise the degree of the curve and watch both errors.<span class="note">Why test on a whole new well rather than on plugs left out of the same well? Plugs a foot apart are near-copies of each other. Chapter 4 shows what goes wrong if you mix them.</span></p>
+
+      <section class="figure" id="fig-bend" aria-label="Figure 2.3"></section>
+
+      <p>The error on the training plugs only ever goes down: a bendier curve can always get closer to the points it learned from. The error on Well C improves a little, then explodes. By degree 7 the curve is threading between 16 plugs and swinging wildly where it has no plugs to hold it. That's <strong>overfitting</strong>: the model has learned the noise in its training data, not the rock.</p>
+
+      <h2>From core to log</h2>
+      <p>The point of a poro-perm line is to predict permeability where there's no core. Apply the least-squares line from Figure 2.1 to Well C's density porosity log and you get a permeability log, which you can check against Well C's own core and, because this is the teaching field, the true permeability.</p>
+
+      <section class="figure" id="fig-permlog" aria-label="Figure 2.4"></section>
+
+      <p>The prediction follows the big swings and gets the detail wrong, because porosity is only part of the story. In the teaching field, as in real rock, grain size and sorting change permeability at the same porosity. A model can only use what it's given: if it needs to know grain size, it needs a log that responds to it.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>Chapter 2's lines ran through core plugs from three close wells. A real line has to carry from the wells it was fitted on to the next one.</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 2.5"></section>
+
+      <h2 id="words">Words you'll meet</h2>
+      <p>Regression comes with its own vocabulary, and scikit-learn's <code>LinearRegression</code> uses it. Here they are in plain words, with scikit-learn's name where it has one.</p>
+      <dl class="glossary">
+        <div><dt>Slope and intercept</dt><dd>The two numbers of a straight line: how much the answer changes per unit of the input, and where it starts. <code>coef_</code>, <code>intercept_</code></dd></div>
+        <div><dt>Residual</dt><dd>The miss for one sample: the true value minus the prediction.</dd></div>
+        <div><dt>Least squares</dt><dd>Choosing the line that makes the sum of the squared residuals as small as possible. Also called ordinary least squares, or OLS.</dd></div>
+        <div><dt>Loss</dt><dd>The number training tries to make small; here the mean squared error. Also called the cost or objective.</dd></div>
+        <div><dt>Gradient descent</dt><dd>Finding the bottom of the loss by repeatedly stepping downhill: work out which way the loss falls fastest, and take a small step that way.</dd></div>
+        <div><dt>Learning rate</dt><dd>How big each downhill step is. Too small and it crawls; too big and it overshoots and can blow up.</dd></div>
+        <div><dt>Polynomial features</dt><dd>Powers of the input (porosity squared, cubed and so on) added as extra inputs, so a straight-line method can fit a curve. <code>PolynomialFeatures</code>, <code>degree</code></dd></div>
+        <div><dt>Overfitting and underfitting</dt><dd>Too flexible a model chases the noise in its training samples; too stiff a one misses the real shape. Both show up as poor scores on new samples.</dd></div>
+        <div><dt>Training and test error</dt><dd>The miss on the samples the model learned from, and on samples it didn't. Only the second tells you how it will do.</dd></div>
+        <div><dt>Log transform</dt><dd>Fitting log<sub>10</sub> of permeability instead of permeability, because permeability spans orders of magnitude and its scatter grows with its size.</dd></div>
+        <div><dt>Extrapolation</dt><dd>Predicting outside the range of the training data, where the fitted line has no evidence either way.</dd></div>
+      </dl>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>Least squares picks the line with the smallest sum of squared misses. For a straight line there's a formula.</li>
+          <li>Gradient descent finds the same answer by walking downhill. The learning rate decides whether it crawls, settles or blows up.</li>
+          <li>More flexibility always fits the training data better. Only data the model hasn't seen tells you whether it helped.</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Try any combination</h3>
+          <p>A straight line against a forest and a network, predicting sonic, in the <a href="../workbench/?target=sonic&amp;algo=line">workbench</a>.</p>
+        </div>
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/porosity-permeability-relationships-using-linear-regression-in-python-eef406dc6997" target="_blank" rel="noopener">Porosity-Permeability Relationships Using Linear Regression in Python</a></p>
+        </div>
+        <div>
+          <h3>Next: k-nearest neighbours</h3>
+          <p><a href="../k-nearest-neighbours/">Which lithology is this sample, going by the wells we know?</a> Classifying facies by a vote of the most similar samples.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

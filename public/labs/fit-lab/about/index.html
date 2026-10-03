@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About · Fit Lab</title>
+    <meta name="description" content="What Fit Lab is, how its chapters work, where its wells and algorithms come from, and what inspired it." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/page-DIaNLSEq.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">About</div>
+        <h1>About Fit Lab</h1>
+        <p class="standfirst">Fit Lab explains the machine learning algorithms used on well logs by letting you do each job by hand first, then watching the algorithm do the same job, one step at a time, on the same samples.</p>
+      </div>
+
+      <h2>How a chapter works</h2>
+      <p>Each chapter starts with a subsurface question rather than an algorithm: can the logs find the facies on their own, how well does porosity predict permeability, which samples are bad hole. Then:</p>
+      <ul>
+        <li><strong>You first.</strong> You try the job yourself: place the centroids, draw the trend, set the cutoffs, sketch the sonic. You're scored the same way the algorithm will be.</li>
+        <li><strong>The algorithm.</strong> It does the same job, step by step, with controls to go forwards and back.</li>
+        <li><strong>The model at work.</strong> The fitted model on a well it hasn't seen, with what it gets right and wrong.</li>
+        <li><strong>Show the maths.</strong> Drawers with the equations behind a figure, for when you want them and out of the way when you don't.</li>
+        <li><strong>What to remember</strong>: three lines to keep.</li>
+        <li><strong>Words you'll meet</strong>: the jargon in plain words, in a box you can open from the bottom right of every chapter at any point. All the terms are also in the <a href="../glossary/">glossary</a>.</li>
+        <li><strong>Try it on real wells.</strong> The same idea on wells from the FORCE 2020 dataset, where the tidy lessons get messier.</li>
+      </ul>
+
+      <h2>The wells</h2>
+      <p>Most figures use six synthetic wells, built from the rock physics in Probe Lab, so the true facies, porosity and permeability are known at every depth. That's what lets the lab show where a model was right and wrong, not just its score. The wells have the problems real wells have, on purpose: noise, a washout, a missing sonic, a well logged with older tools, a rock harder than any in the others, and beds thinner than the tools can see. <a href="../data/">More about the data.</a></p>
+
+      <h2>The algorithms</h2>
+      <p>Every algorithm is written for the lab, small enough that each step can be drawn: no machine learning library runs in your browser. Each one is checked against scikit-learn, the Python library most readers will use. Where no randomness is involved (k-means from the same start, linear regression, k-nearest neighbours, decision trees and every metric) the lab gives scikit-learn's answers. Where it is (random forests, neural networks, isolation forests), the lab's results fall within the spread scikit-learn gives over ten random seeds. The <a href="../assumptions/">Assumptions</a> page lists every difference.</p>
+
+      <h2>The workbench and challenges</h2>
+      <p>The <a href="../workbench/">workbench</a> puts the algorithms, wells and settings on one screen, so you can try combinations no chapter shows; the whole setup lives in the address, so you can share it. The <a href="../challenges/">challenges</a> are short "beat the algorithm" puzzles, one for each of the main lessons.</p>
+
+      <h2>Your settings</h2>
+      <p>The <strong>Aa</strong> menu in the top bar sets the theme (light, dark, or whatever your device uses) and the text size. Those settings, the chapters you've read and your challenge bests are kept in your browser only, and the lab works fully without them. Pages are counted anonymously with GoatCounter, as across the rest of the site.</p>
+
+      <h2>Inspired by</h2>
+      <p>The Labs series was inspired by Ryan Sael's <a href="https://sael.net/plane-of-focus/">The Plane of Focus</a>, an interactive lens lab that explains camera focus by letting you turn the focus ring and watch the sharp plane move. Fit Lab also owes a great deal to explainers that make algorithms visible: R2D3's <a href="https://r2d3.us">A visual introduction to machine learning</a>, <a href="https://mlu-explain.github.io">MLU-Explain</a>, <a href="https://ciechanow.ski">Bartosz Ciechanowski</a>'s articles, the <a href="https://playground.tensorflow.org">TensorFlow Playground</a>, Naftali Harris's <a href="https://www.naftaliharris.com/blog/visualizing-k-means-clustering/">Visualizing K-Means Clustering</a>, <a href="https://seeing-theory.brown.edu">Seeing Theory</a> and <a href="https://distill.pub">Distill</a>.</p>
+      <p>Made by <a href="../creator/">Andy McDonald</a>. <a href="../changelog/">What's changed</a>.</p>
+      <p class="caption">&copy; 2026 Andy McDonald. All rights reserved. The code, figures, text and synthetic wells in Fit Lab may not be copied, republished or reused without written permission. You are welcome to link to it and quote short excerpts with credit. <a href="../creator/#rights">Rights and third-party notices</a>.</p>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>

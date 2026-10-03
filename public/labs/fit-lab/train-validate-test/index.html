@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Train, validate and test · Fit Lab</title>
+    <meta name="description" content="Why can 98% accuracy be useless? Random splits, blind wells, validation and the confusion matrix, on six wells." />
+    <script>
+      try {
+        var t = localStorage.getItem('fitlab:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        var s = Number(localStorage.getItem('fitlab:text'));
+        if (s >= 0.9 && s <= 1.3) document.documentElement.style.setProperty('--text-scale', s);
+      } catch (e) {}
+    </script>
+    <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-Dw2PUmD8.svg" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="../assets/blind-Bwq5rmHx.js"></script>
+    <link rel="modulepreload" crossorigin href="../assets/page-DIaNLSEq.js">
+    <link rel="modulepreload" crossorigin href="../assets/surface-DtJp_-Dh.js">
+    <link rel="modulepreload" crossorigin href="../assets/shared-B4sSmm3j.js">
+    <link rel="modulepreload" crossorigin href="../assets/logstrip-BjHQ8CIT.js">
+    <link rel="modulepreload" crossorigin href="../assets/force-D_mNjbC2.js">
+    <link rel="modulepreload" crossorigin href="../assets/figReal-CqD_dSAQ.js">
+    <link rel="modulepreload" crossorigin href="../assets/rng-CF1C7Ptq.js">
+    <link rel="modulepreload" crossorigin href="../assets/data-HiAZ1lSs.js">
+    <link rel="modulepreload" crossorigin href="../assets/linechart-DXxhyCnp.js">
+    <link rel="modulepreload" crossorigin href="../assets/validation-DE1D0iDZ.js">
+    <link rel="modulepreload" crossorigin href="../assets/model-DKEpt-Rm.js">
+    <link rel="stylesheet" crossorigin href="../assets/page-CGMmoqYr.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="../">
+        <svg viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#1d1b17" /><path d="M5.5 18.5 20.5 7.5" stroke="#d6a446" stroke-width="2.2" stroke-linecap="round" /><circle cx="8.5" cy="13.5" r="2" fill="#f6f1e6" /><circle cx="13.5" cy="15.5" r="2" fill="#f6f1e6" /><circle cx="17" cy="8.5" r="2" fill="#f6f1e6" /></svg>
+        Fit Lab
+      </a>
+      <nav class="topnav" aria-label="Lab">
+        <a href="../" aria-current="page">Chapters</a>
+        <a class="hide-narrow" href="../workbench/">Workbench</a>
+        <a class="hide-narrow" href="../challenges/">Challenges</a>
+      </nav>
+    </header>
+
+    <main class="chapter">
+      <div class="chapter-head">
+        <div class="kicker">Chapter 4 · Testing honestly</div>
+        <h1>Train, validate and test</h1>
+        <p class="standfirst">Why can 98% accuracy be useless? A score is only worth the test behind it. Here's how to split your wells so the number you report is the number you'll get.</p>
+        <div class="meta"><span>12 minutes</span><span>All six wells</span><span>3,672 samples</span></div>
+      </div>
+
+      <h2>Six wells, one score</h2>
+      <p class="note-anchor">Chapter 3's best model, seven neighbours on five logs, got 98.5% of Well C right. Now all six wells are in. Wells A, B and C were drilled close together on the crest of the field; D, E and F are step-outs, further away. The quickest way to test a model is to shuffle every sample and hold back a random 30%.<span class="note">In the teaching field the step-out wells differ the way real wells do: Well D has a washed-out shale and more compacted shales, Well E was logged decades earlier with older tools, and Well F's lower sand is feldspathic.</span></p>
+
+      <section class="figure" id="fig-guess" aria-label="Figure 4.1"></section>
+
+      <p>Nothing about the model changed between those two numbers. Only the test did.</p>
+
+      <h2>Why the random split leaks</h2>
+      <p>Look at where Well D goes wrong.</p>
+
+      <section class="figure" id="fig-leak" aria-label="Figure 4.2"></section>
+
+      <p>Samples from the same well share its hole, its mud, its tools and its rock. Shuffle them and the test set is full of near-copies of the training set: the model is marked on questions it has already seen the answers to. Hold out whole wells instead and the test asks the question you actually care about: how will the model do on a well it has never seen?</p>
+
+      <h2>Train, validate, test</h2>
+      <p class="note-anchor">A model has settings, and choosing them is learning too. Pick k by looking at a well's score, and the model now knows something about that well. So the wells get three jobs: <strong>train</strong> wells the model learns from, <strong>validation</strong> wells for choosing settings, and <strong>test</strong> wells, sealed until every choice is made. Try different roles below.<span class="note">With only six wells, any one validation well is a small sample. Cross-validation by well lets each non-test well take a turn and shows how much the score varies from well to well.</span></p>
+
+      <section class="figure" id="fig-split" aria-label="Figure 4.3"></section>
+
+      <p>The rule that makes the test worth anything: open it once. Look at the test score, change k, and look again, and you're using the test well to choose k. It has quietly become a validation well, and its score will flatter you just as the random split did.</p>
+
+      <h2>Testing in blocks</h2>
+      <p class="note-anchor">Holding out whole wells needs wells to spare. With one or two, you can't afford to. The fallback is to hold out <strong>blocks</strong> of depth: cut each well into slabs a few metres thick, hide some slabs, train on the rest, and rotate. The question is how thick the slabs should be.<span class="note">Permeability here is predicted the same way facies were in chapter 3, by asking the seven most similar samples and taking the average of their permeabilities.</span></p>
+
+      <section class="figure" id="fig-blocks" aria-label="Figure 4.4"></section>
+
+      <p>Too thin and the blocks leak like the random split: every test sample has bed-mates in training. Too thick and they go wrong the other way: a block holding a whole formation takes every example of its rock with it, and the model is tested on something it was never shown. Aim for blocks thicker than the beds and the tools' vertical resolution, thinner than the formations, with a small gap at each edge. And remember what blocks can't do: they test the model on the well you have. Only another well can tell you about a washout or an old tool your well doesn't contain.</p>
+
+      <h2>Accuracy hides the rare facies</h2>
+      <p>One number can't describe a model that predicts six facies. Chapter 3 showed that a big k outvotes the rare ones. Here's how that looks in the scores.</p>
+
+      <section class="figure" id="fig-confusion" aria-label="Figure 4.5"></section>
+
+      <p>Report recall for each facies, especially the rare ones that matter: the coal that changes your net-to-gross, the anhydrite that seals the trap. And report each test well on its own: an average across wells can hide one well that went badly wrong.</p>
+
+      <h2>The well logged with old tools</h2>
+      <p>Wells logged years apart, with different tools and different calibrations, rarely agree exactly. A model trained on one set of tools can be thrown by another.</p>
+
+      <section class="figure" id="fig-drift" aria-label="Figure 4.6"></section>
+
+      <p>Normalisation is the standard fix for a calibration difference, and it works on Well E. On Well D it backfires, because the trouble there isn't calibration, it's bad hole. Know which problem you have before you fix it: check the caliper before you rescale the logs.</p>
+
+      <h2>Try it on real wells</h2>
+      <p>The leak is easy to show on synthetic wells, where it was built in. Is it as big on real ones?</p>
+
+      <section class="figure" id="fig-real" aria-label="Figure 4.7"></section>
+
+      <h2 id="words">Words you'll meet</h2>
+      <p>Validation has its own vocabulary, and scikit-learn's <code>model_selection</code> tools use it. Here they are in plain words, with scikit-learn's name where it has one.</p>
+      <dl class="glossary">
+        <div><dt>Training set</dt><dd>The samples a model learns from.</dd></div>
+        <div><dt>Validation set</dt><dd>The samples used to choose settings, such as k, and to compare models. Used often, so it gets used up.</dd></div>
+        <div><dt>Test set, or blind well</dt><dd>Samples kept back until the very end and used once, to report how the model will do on new data.</dd></div>
+        <div><dt>Random split</dt><dd>Dealing samples into sets at random. Fine for independent samples; for logs it puts near-copies on both sides. <code>train_test_split</code></dd></div>
+        <div><dt>Leakage</dt><dd>Information from the test samples reaching the model during training, so the score flatters it. Neighbouring depths are the commonest leak in well data.</dd></div>
+        <div><dt>Hyperparameter</dt><dd>A setting chosen by you, not learned from the data: k, a tree's depth, the number of trees.</dd></div>
+        <div><dt>Cross-validation</dt><dd>Splitting the training data into folds, holding each out in turn and averaging the scores, so every sample is used for both training and checking. <code>KFold</code>, <code>cross_val_score</code></dd></div>
+        <div><dt>Grouped cross-validation</dt><dd>Folds made of whole groups, here whole wells, so no well is on both sides. <code>GroupKFold</code>, <code>LeaveOneGroupOut</code></dd></div>
+        <div><dt>Block cross-validation</dt><dd>Folds made of depth blocks within a well, when there are too few wells to hold any out. Blocks must be thick enough not to leak, and thin enough not to starve the training data.</dd></div>
+        <div><dt>Tuning</dt><dd>Trying settings and keeping the best on validation data. <code>GridSearchCV</code>, with a grouped splitter for wells</dd></div>
+        <div><dt>Confusion matrix</dt><dd>True facies against predicted, counting every combination. Rows give recall, columns precision (chapter 5). <code>confusion_matrix</code></dd></div>
+        <div><dt>Dataset shift</dt><dd>New data that differs from the training data, such as a well logged with older tools. Also called domain shift.</dd></div>
+        <div><dt>Normalisation</dt><dd>Rescaling one well's log to match a reference, for example matching its 5th and 95th percentiles, to remove tool and calibration differences before modelling.</dd></div>
+      </dl>
+
+      <section class="remember">
+        <h2>What to remember</h2>
+        <ol>
+          <li>Test on whole wells the model has never seen. A random split of samples tests the model on near-copies of its training data.</li>
+          <li>Use three sets: train to fit, validate to choose settings, and test once, at the end. Short of wells, test in blocks thicker than the beds and thinner than the formations.</li>
+          <li>Report recall for each facies and a score for each well. One number can hide a rare facies that's never found and a well that went wrong.</li>
+        </ol>
+      </section>
+
+      <div class="next-steps">
+        <div>
+          <h3>Try any combination</h3>
+          <p>A blind well against a random fifth, on the teaching field or the real wells, in the <a href="../workbench/?split=random">workbench</a>.</p>
+        </div>
+        <div>
+          <h3>Read more</h3>
+          <p><a href="https://andymcdonaldgeo.substack.com/p/data-quality-considerations-for-machine-learning-models-dcbe9cab34cb" target="_blank" rel="noopener">Data Quality Considerations for Machine Learning Models</a></p>
+        </div>
+        <div>
+          <h3>Next: metrics, plainly</h3>
+          <p><a href="../metrics/">Which number tells you a model is any good?</a> Accuracy, precision, recall, F1, RMSE and R², without the jargon.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot">
+      <p>Fit Lab, a draft in the Labs series. The teaching field is synthetic: six fictional wells logged with the rock physics from Probe Lab.</p>
+      <nav aria-label="About the lab"><a href="../about/">About</a> · <a href="../glossary/">Glossary</a> · <a href="../assumptions/">Assumptions</a> · <a href="../data/">Data</a> · <a href="../changelog/">Changelog</a> · <a href="../creator/">Creator</a></nav>
+      <p class="rights">&copy; 2026 Andy McDonald. All rights reserved. <a href="../creator/#rights">Rights</a> · <a href="../third-party-notices.txt">Third-party notices</a></p>
+      <div class="am-mark am-mark--top" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    </footer>
+
+  </body>
+</html>
