@@ -72,9 +72,12 @@
         color: rgba(238, 240, 243, 0.4); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7); }
       .am-mark--top { top: max(10px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); }
       .am-mark--br { right: 14px; bottom: max(10px, env(safe-area-inset-bottom)); }
-      @media (max-width: 700px) { .am-mark span { display: none; }
-        .am-mark, .am-mark--top, .am-mark--br { top: 50%; bottom: auto; left: auto; right: 2px; font-size: 10px;
-          transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; } }
+      @media (max-width: 700px) { .am-mark span { display: none; } }
+      /* Portrait: lower, on the main view, and much fainter */
+      @media (orientation: portrait) {
+        .am-mark, .am-mark--top, .am-mark--br { position: absolute; top: 36%; bottom: auto; left: 50%; right: auto;
+          transform: translate(-50%, -50%); writing-mode: horizontal-tb; font-size: 13px; letter-spacing: 0.1em;
+          color: rgba(238, 240, 243, 0.16); text-shadow: 0 0 3px rgba(0, 0, 0, 0.22); } }
     </style>
     <script>
       document.addEventListener("contextmenu", function (e) {
