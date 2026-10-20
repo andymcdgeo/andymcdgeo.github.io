@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Operate a petrographic microscope in your browser: rotate the stage, cross the polars, insert the gypsum plate and identify minerals in 21 thin sections." />
+    <meta name="theme-color" content="#0a0c10" />
+    <title>Microscope Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0c10'/%3E%3Ccircle cx='16' cy='16' r='11' fill='%23111'/%3E%3Cpath d='M16 5a11 11 0 0 1 11 11H16z' fill='%23e05aa8'/%3E%3Cpath d='M27 16a11 11 0 0 1-11 11V16z' fill='%2346b8e8'/%3E%3Cpath d='M16 27A11 11 0 0 1 5 16h11z' fill='%23e8c56a'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23cfd6e0' stroke-width='1.6'/%3E%3C/svg%3E" />
+    <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="./assets/main-5IL4TFMs.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-P2Xu9kJm.js">
+    <link rel="stylesheet" crossorigin href="./assets/main-D-amrZhK.css">
+  </head>
+  <body>
+    <div class="app" id="app">
+      <header class="top">
+        <div class="brand"><span class="kicker">Rocks in thin section</span><h1>Microscope <b>Lab</b></h1></div>
+        <button class="pill" id="tray-btn" aria-haspopup="dialog">Slide box</button>
+        <div class="slide-name" id="slide-name"></div>
+        <a class="pill ghost" href="./creator.html">About</a>
+      </header>
+
+      <main class="stagearea" id="stagearea">
+        <div class="eyepiece" id="eyepiece">
+          <canvas id="view" aria-label="The view down the microscope eyepiece. Drag to move the slide, drag the outer ring to rotate the stage, scroll to focus, point at a grain to identify it."></canvas>
+          <canvas id="overlay" aria-hidden="true"></canvas>
+          <svg class="ring" id="ring" aria-label="Rotating stage: drag to turn"></svg>
+          <div class="hud tl" id="hud-mode"></div>
+          <div class="hud tr" id="hud-mag"></div>
+          <div class="hud bl" id="hud-stage"></div>
+          <div class="scalebar" id="scalebar"><span></span><b></b></div>
+          <div class="loading" id="loading" hidden>Cutting the section…</div>
+          <div class="tip" id="tip" hidden></div>
+        </div>
+        <p class="hint" id="hint">Drag to move the slide · drag the ring to rotate the stage · scroll to focus · point at a grain</p>
+      </main>
+
+      <aside class="side" id="side">
+        <section class="card scope">
+          <div class="diagram" id="diagram"></div>
+          <div class="controls">
+            <div class="row" role="group" aria-label="Objective">
+              <span class="lab">Objective</span>
+              <div class="seg" id="objectives"></div>
+            </div>
+            <div class="row">
+              <button class="toggle big" id="analyser" aria-pressed="false"><i></i><span>Analyser</span><small>crossed polars</small></button>
+              <button class="toggle big" id="plate" aria-pressed="false"><i class="lam"></i><span>λ plate</span><small>gypsum, 551 nm</small></button>
+            </div>
+            <label class="slider"><span class="lab">Stage</span><input type="range" id="stage" min="0" max="360" step="0.5" value="0" /><output id="stage-out">0°</output></label>
+            <div class="row quick">
+              <button class="pill small" data-rot="-45">−45°</button><button class="pill small" data-rot="-1">−1°</button><button class="pill small" data-rot="1">+1°</button><button class="pill small" data-rot="45">+45°</button><button class="pill small" id="spin">Spin</button>
+            </div>
+            <label class="slider"><span class="lab">Focus</span><input type="range" id="focus" min="-250" max="250" step="1" value="0" /><output id="focus-out">in focus</output></label>
+            <label class="slider"><span class="lab">Light</span><input type="range" id="light" min="0" max="1" step="0.01" value="0.6" /><output id="light-out"></output></label>
+            <label class="slider"><span class="lab">Aperture</span><input type="range" id="aperture" min="0" max="1" step="0.01" value="0.7" /><output id="aperture-out"></output></label>
+          </div>
+        </section>
+
+        <section class="card panel">
+          <nav class="tabs" role="tablist">
+            <button role="tab" data-tab="grain" aria-selected="true">Grain</button>
+            <button role="tab" data-tab="chart">Michel-Lévy</button>
+            <button role="tab" data-tab="quiz">Identify</button>
+            <button role="tab" data-tab="photos">Photos</button>
+            <button role="tab" data-tab="notes">How it works</button>
+          </nav>
+          <div class="tabbody" id="tab-grain"></div>
+          <div class="tabbody" id="tab-chart" hidden></div>
+          <div class="tabbody" id="tab-quiz" hidden></div>
+          <div class="tabbody" id="tab-photos" hidden></div>
+          <div class="tabbody" id="tab-notes" hidden></div>
+        </section>
+      </aside>
+    </div>
+
+    <dialog class="tray" id="tray" aria-labelledby="tray-title">
+      <div class="tray-head"><h2 id="tray-title">Slide box</h2><form method="dialog"><button class="pill">Close</button></form></div>
+      <div id="tray-body"></div>
+    </dialog>
+
+    <dialog class="photo" id="photo-dlg"><form method="dialog"><button class="pill close">Close</button></form><img alt="" /><p></p></dialog>
+
+    <div class="am-mark" style="--am-x: 36%; --am-y: 92%; --am-px: 50%; --am-py: 50%" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
+    <style>.am-mark{z-index:2147483000;pointer-events:none;-webkit-user-select:none;user-select:none;white-space:nowrap;left:var(--am-x);top:var(--am-y);letter-spacing:.12em;color:#fff3;text-shadow:0 0 2px #00000059;font:500 14px/1 Outfit,Segoe UI,system-ui,sans-serif;position:fixed;transform:translate(-50%,-50%)}@media (orientation:portrait){.am-mark{left:var(--am-px);top:var(--am-py);font-size:13px}}@media (width<=700px){.am-mark span{display:none}}</style>
+    <script>
+      document.addEventListener("contextmenu", function (e) {
+        if (!(e.target instanceof Element && e.target.closest("input, textarea, [contenteditable]"))) e.preventDefault();
+      });
+    </script>
+  </body>
+</html>

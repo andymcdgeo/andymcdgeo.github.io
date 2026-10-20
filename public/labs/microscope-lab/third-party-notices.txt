@@ -1,0 +1,8 @@
+Third-party notices for Microscope Lab
+Microscope Lab itself is copyright (c) 2026 Andy McDonald. All rights reserved.
+
+Microscope Lab ships no third-party code at run time. It is built with Vite and TypeScript (development tools only).
+
+Photographs in ./photos/ are from Wikimedia Commons and remain under their own licences (CC0, CC BY 2.0, CC BY 3.0,
+CC BY-SA 2.5, CC BY-SA 3.0 and CC BY-SA 4.0). Each is credited with its author, licence and source link where it is
+shown in the lab and on the About page.
