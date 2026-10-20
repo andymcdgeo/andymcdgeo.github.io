@@ -11,15 +11,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0c10'/%3E%3Ccircle cx='16' cy='16' r='11' fill='%23111'/%3E%3Cpath d='M16 5a11 11 0 0 1 11 11H16z' fill='%23e05aa8'/%3E%3Cpath d='M27 16a11 11 0 0 1-11 11V16z' fill='%2346b8e8'/%3E%3Cpath d='M16 27A11 11 0 0 1 5 16h11z' fill='%23e8c56a'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23cfd6e0' stroke-width='1.6'/%3E%3C/svg%3E" />
     <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-    <script type="module" crossorigin src="./assets/main-5IL4TFMs.js"></script>
+    <script type="module" crossorigin src="./assets/main-CoNYx9Vp.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-P2Xu9kJm.js">
-    <link rel="stylesheet" crossorigin href="./assets/main-D-amrZhK.css">
+    <link rel="stylesheet" crossorigin href="./assets/main-C2CJp6WC.css">
   </head>
   <body>
     <div class="app" id="app">
       <header class="top">
         <div class="brand"><span class="kicker">Rocks in thin section</span><h1>Microscope <b>Lab</b></h1></div>
-        <button class="pill" id="tray-btn" aria-haspopup="dialog">Slide box</button>
+        <div class="slidenav">
+          <button class="pill nav" id="slide-prev" aria-label="Previous slide" title="Previous slide ( [ )">&#8249;</button>
+          <button class="pill" id="tray-btn" aria-haspopup="dialog" title="Choose a slide (S)">Slide box</button>
+          <button class="pill nav" id="slide-next" aria-label="Next slide" title="Next slide ( ] )">&#8250;</button>
+        </div>
         <div class="slide-name" id="slide-name"></div>
         <a class="pill ghost" href="./creator.html">About</a>
       </header>
@@ -33,8 +37,11 @@
           <div class="hud tr" id="hud-mag"></div>
           <div class="hud bl" id="hud-stage"></div>
           <div class="scalebar" id="scalebar"><span></span><b></b></div>
+          <button class="pill small realbtn" id="real-btn" aria-haspopup="dialog">Real photo</button>
           <div class="loading" id="loading" hidden>Cutting the section…</div>
           <div class="tip" id="tip" hidden></div>
+          <!-- Watermark in the centre of the field of view, just below the cross-hairs so it never hides the grain under them -->
+          <div class="am-mark" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
         </div>
         <p class="hint" id="hint">Drag to move the slide · drag the ring to rotate the stage · scroll to focus · point at a grain</p>
       </main>
@@ -79,14 +86,25 @@
     </div>
 
     <dialog class="tray" id="tray" aria-labelledby="tray-title">
-      <div class="tray-head"><h2 id="tray-title">Slide box</h2><form method="dialog"><button class="pill">Close</button></form></div>
+      <div class="tray-head"><h2 id="tray-title">Slide box</h2><span class="tray-keys">Arrow keys to move · Enter to load · Esc to close</span><form method="dialog"><button class="pill small">Close</button></form></div>
       <div id="tray-body"></div>
     </dialog>
 
-    <dialog class="photo" id="photo-dlg"><form method="dialog"><button class="pill close">Close</button></form><img alt="" /><p></p></dialog>
-
-    <div class="am-mark" style="--am-x: 36%; --am-y: 92%; --am-px: 50%; --am-py: 50%" aria-hidden="true">&copy; Andy McDonald<span> &middot; andymcdonald.scot</span></div>
-    <style>.am-mark{z-index:2147483000;pointer-events:none;-webkit-user-select:none;user-select:none;white-space:nowrap;left:var(--am-x);top:var(--am-y);letter-spacing:.12em;color:#fff3;text-shadow:0 0 2px #00000059;font:500 14px/1 Outfit,Segoe UI,system-ui,sans-serif;position:fixed;transform:translate(-50%,-50%)}@media (orientation:portrait){.am-mark{left:var(--am-px);top:var(--am-py);font-size:13px}}@media (width<=700px){.am-mark span{display:none}}</style>
+    <dialog class="photo" id="photo-dlg" aria-labelledby="ph-title">
+      <div class="ph-head">
+        <h2 id="ph-title">Real photomicrograph</h2>
+        <span class="ph-count"></span>
+        <form method="dialog"><button class="pill small">Close</button></form>
+      </div>
+      <div class="ph-frame">
+        <button class="ph-nav ph-prev" aria-label="Previous photo">&#8249;</button>
+        <img alt="" />
+        <button class="ph-nav ph-next" aria-label="Next photo">&#8250;</button>
+      </div>
+      <p class="ph-cap"></p>
+      <p class="ph-note">A real rock, photographed down a microscope. The view in the lab is generated, so grains will not match one for one.</p>
+    </dialog>
+
     <script>
       document.addEventListener("contextmenu", function (e) {
         if (!(e.target instanceof Element && e.target.closest("input, textarea, [contenteditable]"))) e.preventDefault();
