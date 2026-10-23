@@ -2,6 +2,7 @@
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
+    <style>html,body{color:#e8edf5;background:#0b0d12;margin:0}</style>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="A tropical carbonate platform in 3D: see where each limestone forms, and look at its thin section under the microscope. Dunham and Folk classification, explained." />
     <meta name="theme-color" content="#0b0d12" />
@@ -11,12 +12,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0d12'/%3E%3Cpath d='M3 22c5-2 7-9 13-9s8 6 13 5v9H3z' fill='%2340c8d0'/%3E%3Ccircle cx='11' cy='19' r='3' fill='%23f0a3b0'/%3E%3Ccircle cx='19' cy='21' r='2.4' fill='%23e8c56a'/%3E%3C/svg%3E" />
     <script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-    <script type="module" crossorigin src="./assets/main-cV6nCCUE.js"></script>
+    <script type="module" crossorigin src="./assets/main-NOZQefHf.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-P2Xu9kJm.js">
-    <link rel="modulepreload" crossorigin href="./assets/three-KWu99RW6.js">
-    <link rel="stylesheet" crossorigin href="./assets/main-JtB0LybH.css">
+    <link rel="modulepreload" crossorigin href="./assets/dom-8z6N3jC_.js">
+    <link rel="modulepreload" crossorigin href="./assets/three-Bgupzm-R.js">
+    <link rel="stylesheet" crossorigin href="./assets/dom-D6deQeSi.css">
+    <link rel="stylesheet" crossorigin href="./assets/main-BGE-dJbH.css">
   </head>
   <body>
+    <div class="boot" id="boot" role="status">
+      <style>.boot{z-index:50;color:#9fb0c3;background:#0b0d12;place-items:center;font:500 15px Outfit,system-ui,sans-serif;transition:opacity .5s;display:grid;position:fixed;inset:0}.boot.done{opacity:0;pointer-events:none}.boot div{justify-items:center;gap:14px;display:grid}.boot i{border:3px solid #1d2a38;border-top-color:#46d3d8;border-radius:50%;width:34px;height:34px;animation:.9s linear infinite boot-spin}@keyframes boot-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.boot i{animation:none}}</style>
+      <div><i></i><span>Building the reef…</span></div>
+    </div>
     <canvas id="scene" aria-label="A 3D carbonate platform, from the deep basin to the tidal flats. Drag to orbit, pinch or scroll to zoom, right-drag to pan."></canvas>
     <div class="labels" id="labels"></div>
     <div class="overlay" id="hud"></div>
